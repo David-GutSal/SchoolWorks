@@ -32,8 +32,24 @@ header{
 .page-icon{
     width: 6.5rem;
 }
+.icons-home-series-chapters  {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+.icons-home-series-chapters a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    font-family: Poppins, sans-serif;
+    gap: 0.1rem;
+}
+.icons-home-series-chapters img {
+    width: 2em;
+    height: auto;
+}
 img {
-    overflow: hidden;
     text-indent: -100vw;
     height: auto;
     max-width: 100%;
@@ -58,12 +74,14 @@ a{
     display: inline-block;
     height: 1em;
     width: 1em;
+    display: flex;
+    align-items: center;
 }
 #icon-home{
     vertical-align: middle;
     width: 1em;
     height: 1em;
-    
+    margin-right: 1rem;
 }
 span{
     font-family: Poppins, sans-serif;
@@ -80,7 +98,8 @@ span{
     height: 2em;
     width: 2em;
     padding-left: 2em;
-    display: none;
+    display: flex;
+    align-items: center;
 }
 .icon-chapters-link{
     font-size: 1.25rem;
@@ -90,16 +109,23 @@ span{
     height: 2em;
     width: 2em;
     padding-left: 2em;
-    display: none;
+    display: flex;
+    align-items: center;
 }
 .icon-title{
-    background-color: #fcd34d40;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: none;
+    background-color: transparent;
+    padding: 0;
 }
 h2{
     font-family: Poppins, sans-serif;
     color: inherit;
     text-decoration: inherit;
 }
+
+
 #img-RedStorm-link{
     font-size: 1.25rem;
     line-height: 1.75rem;

@@ -23,11 +23,40 @@ header{
     height: 6em;
     width: 6em;
 }
+<<<<<<< HEAD
 .icons-left{
     position: absolute;
     position: relative;
     width: 25em;
     height: 4em;
+=======
+.icons-home-series-chapters  {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+.icons-home-series-chapters a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    font-family: Poppins, sans-serif;
+    gap: 0.1rem;
+}
+.icons-home-series-chapters img {
+    width: 2em;
+    height: auto;
+}
+img {
+    text-indent: -100vw;
+    height: auto;
+    max-width: 100%;
+    display: block;
+}
+a{
+    color: inherit;
+    text-decoration: inherit;
+>>>>>>> 15a6b828e725090507a7c5a128954a62cc2cfc02
     font-family: Poppins, sans-serif;
     border: 3px solid rgb(255, 81, 0);
     left: 7em;
@@ -36,6 +65,7 @@ header{
 .icons-home-series-chapters{
     position: absolute;
     position: relative;
+<<<<<<< HEAD
     width: 24em;
     height: 3em;
     border: 3px solid rgb(0, 38, 255);
@@ -70,4 +100,93 @@ header{
     position: absolute;
     top: 1em;
     left: 8.4em;
+=======
+    width: 10em;
+}
+.icon-home-link{
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    color: inherit;
+    display: inline-block;
+    height: 1em;
+    width: 1em;
+    display: flex;
+    align-items: center;
+}
+#icon-home{
+    vertical-align: middle;
+    width: 1em;
+    height: 1em;
+    margin-right: 1rem;
+}
+span{
+    font-family: Poppins, sans-serif;
+    border-style: solid;
+    border-width: 0;
+    box-sizing: border-box;
+
+}
+.icon-series-link{
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    color: inherit;
+    display: inline-block;
+    height: 2em;
+    width: 2em;
+    padding-left: 2em;
+    display: flex;
+    align-items: center;
+}
+.icon-chapters-link{
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    color: inherit;
+    display: inline-block;
+    height: 2em;
+    width: 2em;
+    padding-left: 2em;
+    display: flex;
+    align-items: center;
+}
+.icon-title{
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: none;
+    background-color: transparent;
+    padding: 0;
+}
+h2{
+    font-family: Poppins, sans-serif;
+    color: inherit;
+    text-decoration: inherit;
+}
+
+
+#img-RedStorm-link{
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    color: inherit;
+    display: inline-block;
+    height: 15em;
+    width: 15em;
+    text-align: center;
+}
+#img-PeerlessDad-link{
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    color: inherit;
+    display: inline-block;
+    height: 15em;
+    width: 15em;
+    text-align: center;
+}
+#img-TalesOfDemonsAndgods-link{
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    color: inherit;
+    display: inline-block;
+    height: 15em;
+    width: 15em;
+    text-align: center;
+>>>>>>> 15a6b828e725090507a7c5a128954a62cc2cfc02
 }

@@ -29,7 +29,7 @@ header{
     width: 70%;
     height: 9em;
     left: 17em;
-    border: 2px solid black;
+    
 }
 .container-icons{
     box-sizing: border-box;
@@ -151,6 +151,6 @@ span{
     float: left;
     border: 3px solid black;
     width: 13%;
-    height: 60em;
+    height: 57.5em;
     top: 0;
 }

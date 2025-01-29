@@ -34,6 +34,7 @@ header{
     left: 17em;
     
 }
+
 .container-icons{
     box-sizing: border-box;
     position: absolute;
@@ -48,116 +49,66 @@ header{
     height: 6em;
     width: 6em;
 }
-.icons-left{
-    box-sizing: border-box;
-    position: absolute;
-    position: relative;
-    width: 25em;
-    height: 4em;
-    font-family: Poppins, sans-serif;
-    left: 7em;
-    top: 1.1em;
+.icons-left {
+    display: flex;
+    justify-content: flex-start;
+    width: auto; 
 }
-.focus-bg{
-    background-color: yellow;
+.icons-home-series-chapters {
+    margin-left: 6.5em;
+    display: flex; 
+    gap: 1em; 
+    align-items: center;
+    justify-content: flex-start; 
+    width: auto;
+    padding: 0.5em;
 }
-.icons-home-series-chapters{
-    box-sizing: border-box;
-    position: absolute;
-    position: relative;
-    width: 24em;
-    height: 3em;
-    top: 0.3em;
-    margin: auto;
+
+.icon-home-link, .icon-series-link, .icon-chapters-link, .icons-search-link, .icons-user-link {
+    display: inline-flex; 
+    align-items: center;
+    gap: 0.5em; 
+    padding: 0.2em 0.4em;
+    border-radius: 10px; 
+    transition: background-color 0.3s ease;
+    min-width: 5em; 
+    min-height: 3em; 
+    justify-content: center;
+    text-decoration: none;
 }
-#icon-home{
-    position: absolute;
-    height: 1.5em;
-    width: 1.5em;
-    top: 0.7em;
+
+.icon-home-link:hover, .icon-series-link:hover, .icon-chapters-link:hover, .icons-search-link:hover, .icons-user-link:hover {
+    background-color:  rgba(41, 53, 71, 0.911); 
 }
-.icon-home-link:hover{
-    position: relative;
+.icon-home-link img, .icons-search-link img, .icons-user-link img{
+    width: 1em;
+    height: 1em;
 }
-#span-home{
-    position: absolute;
-    top: 1em;
-    left: 1.8em;
+.icon-series-link img, .icon-chapters-link img {
+    width: 2em;
+    height: 2em;
 }
-#icon-series{
-    position: absolute;
-    height: 2.7em;
-    width: 2.7em;
-    top: 0.2em;
-    left: 5.8em;
-}
-.icon-series-link:hover{
-    position: relative;
-}
-#span-series{
-    position: absolute;
-    top: 1em;
-    left: 8.4em;
-}
-#icon-chapters{
-    position: absolute;
-    height: 2.7em;
-    width: 2.7em;
-    top: 0.2em;
-    left: 13em;
-}
-.icon-chapters-link:hover{
-    position: relative;
-}
-#span-chapters{
-    position: absolute;
-    top: 1em;
-    left: 15.8em;
-}
-span{
+
+span {
     color: white;
     font-family: Poppins, sans-serif;
 }
-.icons-right{
+
+.icons-right {
     box-sizing: border-box;
-    position: absolute;
-    position: relative;
-    width: 7em;
-    height: 4em;
-    top: -2.9em;
-    right: -73em;
+    width: auto;
+    height: auto;
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    margin-left: auto;
+    padding: 0.5em;
 }
-.icons-search-user{
-    box-sizing: border-box;
-    position: absolute;
-    position: relative;
-    width: 6em;
-    height: 3em;
-    top: 0.3em;
-    margin: auto;
-}
-#icon-search{
-    position: absolute;
-    height: 1.5em;
-    width: 1.5em;
-    top: 0.7em;
-}
-.icons-search-link:hover{
-    position: relative;
-    background-color: yellow;
-}
-#icon-user{
-    position: absolute;
-    height: 1.5em;
-    width: 1.5em;
-    top: 0.8em;
-    left: 4em;
-}
-.icons-user-link:hover{
-    position: relative;
-}
-a:hover{
-    background-color: yellow;
+
+.icons-search-user {
+    display: flex;
+    gap: 1em; 
+    align-items: center; 
 }
 .left-ad{
     position: absolute;
@@ -176,14 +127,40 @@ a:hover{
     height: 100%;
     right: 0;
     top: 2.7em;
-    z-index: 1;
+    z-index: 2;
 }
 .menu-intro{
     position: relative;
     position: absolute;
-    border: 2px solid black;
     left: 18em;
-    top: 15em;
-    height: 55%;
+    top: 12em;
+    height: 40%;
     width: 69%;
+}
+.img-left-link{
+    display: block;
+    float: left;
+    width: 50%;
+    height: 98%;
+    border-radius: 5px;
+    overflow: hidden;
+    
+}
+.img-right1-link, .img-right2-link{
+    float: right;
+    display: block;
+    width: 48%;
+    height: 45%;
+    overflow: hidden;
+    border-radius: 5px;
+    margin-left: 1em;
+}
+.img-right2-link{
+    margin-top: 1.7em;
+}
+.img-left{
+    width: 100%;
+}
+.img-right1, .img-right2{
+    width: 100%;
 }

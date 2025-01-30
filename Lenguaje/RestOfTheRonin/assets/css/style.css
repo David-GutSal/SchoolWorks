@@ -1,24 +1,37 @@
 body{
     background-color: rgb(31 41 55);
 }
+@font-face{
+    font-family:Poopins;
+    src: url(../font/Poppins-Medium.ttf);
+}
+@font-face{
+    font-family:PoopinsLight;
+    src: url(../font/Poppins-Light.ttf);
+}
 #info{
     position: absolute;
     position: relative;
     display: block;
+    width: 100%;
     height: 1.5rem;
     top: 0;
     background-color: yellow;
     z-index: 1;
-    position:sticky;
+    position:fixed;
 }
 #icon-info{
     position: absolute;
     left: 36%;
+    top: 17%;
 }
-p{
-    text-align: center;
-    font-family: Poppins, sans-serif;
-    
+#text-info{
+    position: absolute;
+    z-index: 3;
+    top: -63%;
+    left: 37%;
+    font-family: PoopinsLight, sans-serif;
+    font-size: 15px;
 }
 #ocultar-btn{
     position: absolute;
@@ -34,7 +47,6 @@ header{
     left: 17em;
     
 }
-
 .container-icons{
     box-sizing: border-box;
     position: absolute;
@@ -163,4 +175,21 @@ span {
 }
 .img-right1, .img-right2{
     width: 100%;
+}
+#span-right1{
+    font-family: Poopins, sans-serif;
+    position: absolute;
+    left: 70%;
+    top: 37%;
+    z-index: 1;
+    font-size: 1.5em;
+}
+#span-right2{
+    font-family: Poopins, sans-serif;
+    position: absolute;
+    left: 67%;
+    top: 88.4%;
+    z-index: 1;
+    font-size: 1.5em;
+    z-index: 10;
 }

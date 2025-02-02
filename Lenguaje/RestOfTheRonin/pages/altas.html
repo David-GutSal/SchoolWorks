@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link rel="stylesheet" href="../assets/css/altas.css" />
+    <script src="../assets/js/script.js" defer></script>
+    <title>Alta - RestOfTheRonin</title>
+  </head>
+  <body>
+    <header>
+      <div id="info">
+        <img id="icon-info" src="../assets/img/icons/i.svg" alt="icon-info" />
+        <p id="text-info">
+          Esta página muestra algunos manhwas, manhuas y mangas
+        </p>
+        <button id="ocultar-btn">X</button>
+      </div>
+      <div class="container-icons">
+        <a class="icon-page-link" href="../index.html">
+          <img
+            class="page-icon"
+            src="../assets/img/icons/vecteezy_warrior-head-with-helmet_23959262.png"
+            alt="RestOfTheRonin" />
+        </a>
+        <div class="icons-left">
+          <nav class="icons-home-search-user">
+            <a class="icon-home-link" href="../index.html">
+              <img
+                id="icon-home"
+                src="../assets/img/icons/home-ico.png"
+                alt="icon-home" /><span>Inicio</span></a>
+            <a class="icon-search-link" href="../pages/noticias.html">
+              <img
+                id="icon-search"
+                src="../assets/img/icons/search-ico.png"
+                alt="icon-search" /><span>Noticias</span></a>
+            <a class="icon-user-link" href="../pages/altas.html">
+              <img
+                id="icon-user"
+                src="../assets/img/icons/user-ico.png"
+                alt="icon-user" /><span>Usuario</span></a>
+          </nav>
+        </div>
+      </div>
+      <div id="titleDiv">
+        <h1>Rest of the Ronin</h1>
+      </div>
+    </header>
+    <div class="sing-up">
+      <form action="#">
+        <label for="name">Nombre:</label>
+        <input type="text" id="name" name="name" required>
+        <br/>
+        <label for="lastName">Apellidos:</label>
+        <input type="text" id="lastName" name="lastName" required>
+        <br/>
+        <label for="dni">DNI:</label>
+        <input type="text" id="dni" name="dni" pattern="[0-9]{8}[A-Z]" required>
+        <br/>
+        <label for="addres">Dirección:</label>
+        <input type="text" id="addres" name="addres" pattern="C/[A-z]+\sNº\d\sP[A-Z]{1}" required>
+        <br/>
+        <label for="city">Ciudad:</label>
+        <input type="text" id="city" name="city" required>
+        <br/>
+        <label for="postalCode">Código Postal:</label>
+        <input type="number" id="postalCode" name="postalCode" pattern="[0-9]{5}" required list="sugerencias-cp">
+        <datalist id="sugerencias-cp">
+          <option value="28001">
+          <option value="28002">
+          <option value="28003">
+          <option value="28004">
+          <option value="28005">
+        </datalist>
+        <br/>
+        <label for="country">País:</label>
+        <input type="text" id="country" name="country" required>
+        <br/>
+        <label for="birthday">Fecha de Nacimiento:</label>
+        <input type="date" id="birthday" name="birthday">
+        <br/>
+        <label for="mail">Email: </label>
+        <input type="email" id="mail" name="mail" placeholder="correo@correo.es">
+        <br/>
+        <label for="password">Password: </label>
+        <input type="password" id="password" name="password" pattern="_[A-Za-z]{7}_\w{5}&\d{2}" required>
+        <br/>
+        <label for="genere">Sexo: </label>
+        <input type="radio" id="genere" name="genere"  required>
+        <input type="radio" id="genere" name="genere"  required>
+        <br/>
+        <label for="hobbies">Aficiones:</label>
+        <br>
+        <label for="hobbies">Aficion1:</label>
+        <input type="checkbox" id="hobbies1" name="hobbies">
+        <label for="hobbies">Aficion2:</label>
+        <input type="checkbox" id="hobbies2" name="hobbies">
+        <label for="hobbies">Aficion3:</label>
+        <input type="checkbox" id="hobbies3" name="hobbies">
+        <label for="hobbies">Aficion4:</label>
+        <input type="checkbox" id="hobbies4" name="hobbies">
+        <br>
+        <label for="hobbies">Otra afición:</label>
+        <br>
+        <textarea name="hobbies" id="hobbiesExtra" rows="2"></textarea>
+        <br/>
+        <label for="picture">Foto de perfil:</label>
+        <input type="file" value="Login">
+        <br>
+        <input type="submit" value="Enviar">
+        <input type="reset" value="Borrar">
+        <input type="reset" value="Cancelar">
+      </form>
+    </div>
+    <footer>
+      <p id="contact">Contacto: restoftheroning@manga.com</p>
+    </footer>
+  </body>
+</html>

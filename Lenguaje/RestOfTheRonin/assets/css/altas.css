@@ -1,23 +1,138 @@
-.sing-up{
-    position: relative;
-    width: 45%;
-    height: auto;
-    top: 15rem;
-    left: 30%;
+.sing-up {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    text-align: left;
+    font-family: 'Poopins', sans-serif;
+}
+
+.sing-up form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 8em;
+    margin-bottom: 2em;
     border: 1px solid black;
-    border-radius: 15px 15px;
+    box-shadow: 0 0 10px rgb(163, 0, 0);
+    border-radius: 10px;
+    padding: 15px;
+    position: relative;
+    background-color: rgb(22, 29, 39);
 }
 
-.sing-up:hover{
-    scale:calc(1.1);
+.sing-up form::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, yellow, transparent);
+    transform: scaleY(0);
+    transform-origin: top;
+    animation: animateBorderLeft 20s linear forwards;
 }
 
-form{
-    margin: 3%;
+.sing-up form::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, yellow, transparent);
+    transform: scaleY(0);
+    transform-origin: top;
+    animation: animateBorderRight 20s linear forwards;
 }
 
-form input{
-    margin: 5px 5px;
+@keyframes animateBorderLeft {
+    0% {
+        transform: scaleY(0);
+    }
+    100% {
+        transform: scaleY(1);
+    }
 }
 
+@keyframes animateBorderRight {
+    0% {
+        transform: scaleY(0);
+    }
+    100% {
+        transform: scaleY(1);
+    }
+}
 
+.sing-up label {
+    font-weight: bold;
+    display: inline-block;
+    width: 150px;
+    color: white;
+}
+
+.sing-up input[type="text"], .sing-up input[type="number"], .sing-up input[type="email"],
+.sing-up input[type="password"], .sing-up input[type="date"], .sing-up textarea, .sing-up select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+    width: calc(100% - 170px);
+    display: inline-block;
+}
+
+.sing-up input[type="radio"], .sing-up input[type="checkbox"] {
+    margin-left: 10px;
+}
+
+.sing-up textarea {
+    resize: vertical;
+    height: 60px;
+    width: calc(100% - 170px);
+}
+
+.sing-up input[type="file"] {
+    margin-top: 10px;
+}
+
+.sing-up .sexo {
+    display: flex;
+    align-items: center;
+}
+
+.sing-up .sexo label {
+    width: auto;
+    margin-right: 10px;
+}
+
+.sing-up .aficiones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.sing-up .aficiones label {
+    width: auto;
+}
+
+.sing-up .botones {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.sing-up input[type="submit"], .sing-up input[type="reset"], .sing-up input[type="button"] {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #333;
+    color: #fff;
+    font-size: 1em;
+    cursor: pointer;
+    font-family: 'Poopins', sans-serif;
+}
+ 
+.sing-up input[type="submit"]:hover, .sing-up input[type="reset"]:hover, .sing-up input[type="button"]:hover {
+    background-color: #555;
+}

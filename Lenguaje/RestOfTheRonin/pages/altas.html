@@ -88,18 +88,20 @@
         <input type="password" id="password" name="password" pattern="_[A-Za-z]{7}_\w{5}&\d{2}" required>
         <br/>
         <label for="genere">Sexo: </label>
-        <input type="radio" id="genere" name="genere"  required>
-        <input type="radio" id="genere" name="genere"  required>
+        <label for="genere-male">Hombre:</label>
+        <input type="radio" id="genere-male" name="genere" value="male" required>
+        <label for="genere-female">Mujer:</label>
+        <input type="radio" id="genere-female" name="genere" value="female" required>
         <br/>
         <label for="hobbies">Aficiones:</label>
         <br>
-        <label for="hobbies">Aficion1:</label>
+        <label for="hobbies">Leer mangas:</label>
         <input type="checkbox" id="hobbies1" name="hobbies">
-        <label for="hobbies">Aficion2:</label>
+        <label for="hobbies">Ver anime:</label>
         <input type="checkbox" id="hobbies2" name="hobbies">
-        <label for="hobbies">Aficion3:</label>
+        <label for="hobbies">Coleccionar figuras:</label>
         <input type="checkbox" id="hobbies3" name="hobbies">
-        <label for="hobbies">Aficion4:</label>
+        <label for="hobbies">Asistir a convenciones:</label>
         <input type="checkbox" id="hobbies4" name="hobbies">
         <br>
         <label for="hobbies">Otra afición:</label>
@@ -111,7 +113,7 @@
         <br>
         <input type="submit" value="Enviar">
         <input type="reset" value="Borrar">
-        <input type="reset" value="Cancelar">
+        <input type="reset" value="Cancelar" onclick="window.location.href='../index.html';">
       </form>
     </div>
     <footer>

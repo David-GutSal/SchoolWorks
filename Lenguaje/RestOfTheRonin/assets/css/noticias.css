@@ -13,7 +13,7 @@
     flex: 3;
 }
 
-.news {
+.news, .ad-new{
     background-color: rgb(18, 26, 36);
     padding: 15px;
     border-radius: 8px;
@@ -24,13 +24,13 @@
 .news h2 {
     font-size: 1.5em;
     margin-bottom: 10px;
-    color: #ffffff;
+    color: white;
     font-family: 'Poopins', sans-serif;
 }
 
 .news p {
     font-size: 1em;
-    color: #ffffff;
+    color: rgb(189, 189, 189);
     line-height: 1.6;
     font-family: 'Poopins', sans-serif;
 }
@@ -55,7 +55,7 @@
 
 .read-more span{
     animation-name: pointAnimation;
-    animation-duration: 30s;
+    animation-duration: 40s;
     animation-direction: reverse;
 }
 
@@ -86,13 +86,13 @@
 .ad h3 {
     font-size: 1.2em;
     margin-bottom: 10px;
-    color: #333;
+    color: white;
     font-family: 'Poopins', sans-serif;
 }
 
 .ad p {
     font-size: 1em;
-    color: #666;
+    color: rgb(189, 189, 189);
     line-height: 1.6;
     font-family: Arial, Helvetica, sans-serif;
 }
@@ -127,6 +127,6 @@
     font-family: 'Poopins', sans-serif;
 }
 
-.boton-volver:hover {
-    background-color: #555;
+.principalPage-botton:hover {
+    background-color: #747373;
 }

@@ -139,21 +139,20 @@ h1 {
     font-family: 'Anime Ace', sans-serif;
     font-size: 2.5rem;
     background: linear-gradient(to right, rgb(255, 0, 0), rgb(60, 255, 0));
-    background-size: 0% 100%;
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
     
-    view-timeline-name: --titulo-scroll;
+    view-timeline-name: --title-scroll;
     view-timeline-axis: block;
 
-    animation: rellenarTexto linear both;
-    animation-timeline: --titulo-scroll;
+    animation: fill-out-text linear both;
+    animation-timeline: --title-scroll;
 }
 
-@keyframes rellenarTexto {
+@keyframes fill-out-text {
     from { background-size: 0% 100%; }
-    to { background-size: 100% 100%; }
+    to { background-size: 1% 100%; }
 }
 
 .left-ad, .right-ad {

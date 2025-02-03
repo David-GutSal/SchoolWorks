@@ -35,6 +35,30 @@
     font-family: 'Poopins', sans-serif;
 }
 
+.link-news{
+    font-family: 'Poopins', sans-serif;
+}
+
+@keyframes pointAnimation {
+    from {
+        color: red;
+        
+    }
+    50% {
+        color: blue;
+    }
+    to {
+        color: chartreuse;
+        
+    }
+}
+
+.read-more span{
+    animation-name: pointAnimation;
+    animation-duration: 30s;
+    animation-direction: reverse;
+}
+
 .read-more {
     display: inline-block;
     margin-top: 10px;
@@ -43,7 +67,7 @@
     font-weight: bold;
 }
 
-.leer-mas:hover {
+.read-more:hover {
     text-decoration: underline;
 }
 

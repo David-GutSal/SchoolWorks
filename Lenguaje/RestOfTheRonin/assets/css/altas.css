@@ -1,3 +1,18 @@
+#icon-info {
+    position: absolute;
+    left: 27%;
+    top: 17%;
+}
+
+#text-info {
+    position: absolute;
+    z-index: 3;
+    top: -63%;
+    left: 28%;
+    font-family: 'PoopinsLight', sans-serif;
+    font-size: 15px;
+}
+
 .sing-up {
     max-width: 600px;
     margin: 20px auto;
@@ -11,7 +26,7 @@
     flex-direction: column;
     gap: 10px;
     margin-top: 8em;
-    margin-bottom: 2em;
+    margin-bottom: 7em;
     border: 1px solid black;
     box-shadow: 0 0 10px rgb(163, 0, 0);
     border-radius: 10px;
@@ -81,10 +96,6 @@
     display: inline-block;
 }
 
-.sing-up input[type="radio"], .sing-up input[type="checkbox"] {
-    margin-left: 10px;
-}
-
 .sing-up textarea {
     resize: vertical;
     height: 60px;
@@ -95,19 +106,18 @@
     margin-top: 10px;
 }
 
-.sing-up .sexo {
+.sing-up .genere {
     display: flex;
     align-items: center;
 }
 
-.sing-up .sexo label {
+.sing-up .genere label {
     width: auto;
     margin-right: 10px;
 }
 
 .sing-up .aficiones {
     display: flex;
-    flex-wrap: wrap;
     gap: 10px;
 }
 
@@ -135,4 +145,16 @@
  
 .sing-up input[type="submit"]:hover, .sing-up input[type="reset"]:hover, .sing-up input[type="button"]:hover {
     background-color: #555;
+}
+
+footer h4{
+    font-family: "Montserrat", serif;
+    font-size: 20px;
+    margin-left: 0%;
+}
+footer li{
+    font-family: "Montserrat", serif;
+    font-size: 15px;
+    margin-left: 0%;
+    list-style: none;
 }

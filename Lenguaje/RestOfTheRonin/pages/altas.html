@@ -13,7 +13,7 @@
       <div id="info">
         <img id="icon-info" src="../assets/img/icons/i.svg" alt="icon-info" />
         <p id="text-info">
-          Esta página muestra algunos manhwas, manhuas y mangas
+          Si te encuentras en esta pagina significa que no estas registrado en nuestra pagina, rellene el formulario para continuar.
         </p>
         <button id="ocultar-btn">X</button>
       </div>
@@ -66,13 +66,13 @@
         <input type="text" id="city" name="city" required>
         <br/>
         <label for="postalCode">Código Postal:</label>
-        <input type="number" id="postalCode" name="postalCode" pattern="[0-9]{5}" required list="sugerencias-cp">
-        <datalist id="sugerencias-cp">
-          <option value="28001">
-          <option value="28002">
-          <option value="28003">
-          <option value="28004">
-          <option value="28005">
+        <input type="number" id="postalCode" name="postalCode" pattern="[0-9]{5}" required list="suggestions-postalCode">
+        <datalist id="suggestions-postalCode">
+          <option value="35769">
+          <option value="12456">
+          <option value="75318">
+          <option value="97823">
+          <option value="07854">
         </datalist>
         <br/>
         <label for="country">País:</label>
@@ -88,24 +88,23 @@
         <input type="password" id="password" name="password" pattern="_[A-Za-z]{7}_\w{5}&\d{2}" required>
         <br/>
         <label for="genere">Sexo: </label>
-        <label for="genere-male">Hombre:</label>
-        <input type="radio" id="genere-male" name="genere" value="male" required>
-        <label for="genere-female">Mujer:</label>
-        <input type="radio" id="genere-female" name="genere" value="female" required>
+        <select name="genere" id="genere" required>
+          <optgroup label="Seleccione una opción:">
+            <option>Masculino</option>
+            <option>Femenino</option>
+          </optgroup>
+        </select>
         <br/>
         <label for="hobbies">Aficiones:</label>
-        <br>
-        <label for="hobbies">Leer mangas:</label>
-        <input type="checkbox" id="hobbies1" name="hobbies">
-        <label for="hobbies">Ver anime:</label>
-        <input type="checkbox" id="hobbies2" name="hobbies">
-        <label for="hobbies">Coleccionar figuras:</label>
-        <input type="checkbox" id="hobbies3" name="hobbies">
-        <label for="hobbies">Asistir a convenciones:</label>
-        <input type="checkbox" id="hobbies4" name="hobbies">
+        <input type="text" id="hobbies" name="hobbies" list="suggestions-hobbies" required>
+        <datalist id="suggestions-hobbies">
+          <option value="Coleccionar figuras">
+          <option value="Leer mangas">
+          <option value="Ver anime">
+          <option value="Asistir a convenciones">
+        </datalist>
         <br>
         <label for="hobbies">Otra afición:</label>
-        <br>
         <textarea name="hobbies" id="hobbiesExtra" rows="2"></textarea>
         <br/>
         <label for="picture">Foto de perfil:</label>
@@ -117,7 +116,12 @@
       </form>
     </div>
     <footer>
-      <p id="contact">Contacto: restoftheroning@manga.com</p>
+      <h4>Contacto:</h4>
+      <ul>
+        <li class="contact">Correo: restoftheroning@manga.com</li>
+        <li class="contact">Teléfono: +34 698359719</li>
+        <li class="contact">Dirección: ColegioCalasanz, Salamanca</li>
+      </ul>
     </footer>
   </body>
 </html>

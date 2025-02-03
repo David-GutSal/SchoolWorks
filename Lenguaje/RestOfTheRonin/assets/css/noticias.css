@@ -1,3 +1,18 @@
+#icon-info {
+    position: absolute;
+    left: 40%;
+    top: 17%;
+}
+
+#text-info {
+    position: absolute;
+    z-index: 3;
+    top: -63%;
+    left: 41%;
+    font-family: 'PoopinsLight', sans-serif;
+    font-size: 15px;
+}
+
 .news-container {
     max-width: 1200px;
     margin: 20px auto;
@@ -13,7 +28,7 @@
     flex: 3;
 }
 
-.news, .ad-new{
+.news, .ad-new, .offer{
     background-color: rgb(18, 26, 36);
     padding: 15px;
     border-radius: 8px;
@@ -38,6 +53,8 @@
 .link-news{
     font-family: 'Poopins', sans-serif;
 }
+
+
 
 @keyframes pointAnimation {
     from {
@@ -73,14 +90,14 @@
 
 .ad {
     flex: 1;
-}
-
-.ad {
     background-color: #fff;
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
+    position: relative;
+    overflow: visible;
+    height: 28em;
 }
 
 .ad h3 {
@@ -109,11 +126,34 @@
     text-decoration: underline;
 }
 
+@keyframes moveUpDown {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+.ad-new, .offer {
+    position: absolute;
+    width: 100%;
+    animation: moveUpDown 4s ease-in-out infinite;
+}
+
+.ad-new{
+    margin-top: 5%;
+}
+
+.offer {
+    animation-delay: 0.3s;
+    margin-top: 75%;
+}
 
 .principalPage-botton-div {
     text-align: center;
     margin: 20px 0;
-    margin-bottom: 5%;
+    margin-bottom: 8.6%;
 }
 
 .principalPage-botton {
@@ -129,4 +169,16 @@
 
 .principalPage-botton:hover {
     background-color: #747373;
+}
+
+footer h4{
+    font-family: "Montserrat", serif;
+    font-size: 20px;
+    margin-left: 0%;
+}
+footer li{
+    font-family: "Montserrat", serif;
+    font-size: 15px;
+    margin-left: 0%;
+    list-style: none;
 }

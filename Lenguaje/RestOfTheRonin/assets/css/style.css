@@ -3,7 +3,6 @@ body {
     height: 100%;
 }
 
-
 @font-face {
     font-family: 'Montserrat';
     src: url(../font/Montserrat-Light.otf);
@@ -93,6 +92,28 @@ header {
     margin-left: 6.5em; 
 }
 
+.home-container {
+    position: relative;
+    display: inline-block;
+}
+
+.home-container:hover .icon-series-link {
+    display: block;
+}
+
+.icon-series-link {
+    display: none;
+    position: absolute;
+    top: 100.5%;
+    left: 1em;
+    background-color: rgba(41, 53, 71, 0.911);
+    padding: 0.2em 0.4em;
+    text-decoration: none;
+    border-radius: 5px;
+    white-space: nowrap;
+    color: white;
+}
+
 .icons-home-search-user {
     display: flex;
     gap: 1em;
@@ -158,14 +179,24 @@ h1 {
     to { background-position: 0 0;}
 
 }
+
+.ad-container{
+    border: 1px solid black;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 9;
+}
+
 .left-ad, .right-ad {
-    position: fixed;
-    top: 0;
-    bottom: 0;
+    position: absolute;
+    height: 35em;
     width: 13%;
     background-color: rgb(27, 36, 48); 
-    z-index: 11;
+    z-index: 15;
     border-radius: 20px;
+    top: 4em;
+    margin-top: 5%;
 }
 
 .left-ad {
@@ -276,7 +307,59 @@ h1 {
     100% { transform: translateX(0%); }
 }
 
+.table-container{
+    width: 80em;
+    position:relative;
+    margin: 0 auto;
+}
 
+table {
+    width: 100%; 
+    border-collapse: collapse; 
+    margin: 20px 0; 
+    font-family: Arial, sans-serif;
+    background-color: rgb(126, 126, 126); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    font-family: 'Poopins', sans-serif;
+    font-size: 15px;
+}
+
+th {
+    background-color: #333;
+    color: #fff;
+    font-weight: bold;
+    padding: 15px;
+    text-align: left;
+    border-bottom: 2px solid #444;
+}
+
+td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    color: #141414;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+    transition: background-color 0.3s ease;
+}
+
+td:first-child {
+    font-weight: bold;
+    color: #141414;
+}
+
+td:last-child {
+    font-weight: bold;
+    color: #28a745;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
 
 .video-container{
     width: 70%;

@@ -3,7 +3,7 @@
 - Interacciones:
     - Arriba a la derecha un boton para quitar el mensaje de la descripcion.
     - Icono de la pagina te lleva a la pagina principal.
-    - Icono de inicio te lleva a la pagina principal.
+    - Icono de inicio te lleva a la pagina principal. / Aparece otro boton debajo que te lleva a una pagina donde ver series
     - Icono con una lupa te lleva a la sección de noticias.
     - Icono de usuario te lleva al formulario.
     - Las tres primeras imagenes tienen un enlace a una pagina externa donde puedes leer estos manhwas, son dos paginas distintas (una se repie).
@@ -16,6 +16,9 @@
 
 - Posibles errores:
     - Al final de la pagina es posible que algunos videos de youtube no funcionen, dia 03, si funcionan.
+
+- Anuncios: 
+    - Los anuncios se reproducen solos y en silencio
 
 ## Pagina de noticias:
 - Nuevas Interacciones:

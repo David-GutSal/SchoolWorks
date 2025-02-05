@@ -166,6 +166,8 @@ h1 {
     background-color: rgb(27, 36, 48); 
     z-index: 11;
     border-radius: 20px;
+    opacity: 0;
+    animation: short-video-fade 6s ease-in-out forwards;
 }
 
 .left-ad {
@@ -174,6 +176,16 @@ h1 {
 
 .right-ad {
     right: 0;
+}
+
+@keyframes short-video-fade {
+    0% {
+        opacity: 0;
+        
+    }
+    100% {
+        opacity: 1;
+    }
 }
 
 .left-short1, .right-short1{

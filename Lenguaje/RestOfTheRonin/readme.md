@@ -11,6 +11,7 @@
 - Animaciones:
     - El titulo de la pagina tiene una animacion pero es experimental, solo funciona el primer tic del scrol del raton. La idea era que se rellenara de color a medida que descendias en la pagina.
     - En el medio de la pagina una serie de imagenes que se mueven de izquierda a derecha.
+    - Los anuncios laterales tienen un efecto 
     - El apartado de contacto tiene un efecto de aparicion.
 
 - Posibles errores:

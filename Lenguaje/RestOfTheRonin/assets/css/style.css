@@ -195,13 +195,8 @@ h1 {
     background-color: rgb(27, 36, 48); 
     z-index: 15;
     border-radius: 20px;
-<<<<<<< HEAD
-    opacity: 0;
-    animation: short-video-fade 6s ease-in-out forwards;
-=======
     top: 4em;
     margin-top: 5%;
->>>>>>> cd45d7027cf831e506a02b5b4b54261c385dc785
 }
 
 .left-ad {

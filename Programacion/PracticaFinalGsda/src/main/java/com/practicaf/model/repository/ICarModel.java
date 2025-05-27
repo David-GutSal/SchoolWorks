@@ -1,5 +1,5 @@
 package com.practicaf.model.repository;
 
-public class CarModel implements ICarModel{
+public interface ICarModel {
 
 }

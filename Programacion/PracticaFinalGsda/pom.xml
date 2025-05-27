@@ -17,5 +17,11 @@
 	    <artifactId>lombok</artifactId>
 	    <version>1.18.38</version>
 	</dependency>
+	<!-- https://mvnrepository.com/artifact/org.jasypt/jasypt -->
+	<dependency>
+	    <groupId>org.jasypt</groupId>
+	    <artifactId>jasypt</artifactId>
+	    <version>1.9.3</version>
+	</dependency>
 </dependencies>
 </project>

@@ -1,5 +1,5 @@
 package com.practicaf.model.repository;
 
-public class UserModel {
+public class UserModel implements IUserModel{
 
 }

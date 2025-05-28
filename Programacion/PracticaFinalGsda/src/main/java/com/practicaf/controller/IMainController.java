@@ -1,9 +1,9 @@
 package com.practicaf.controller;
 
-import com.practicaf.model.entities.Car;
+import com.practicaf.model.entities.AddCar;
 
 public interface IMainController {
 
-	boolean addCar(Car car);
+	boolean addCar(AddCar car);
 
 }

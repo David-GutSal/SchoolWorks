@@ -7,10 +7,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Car {
+public class Cars {
 	private String brand;
 	private String model;
 	private String plate;
 	private String year;
-	private String userName;
 }

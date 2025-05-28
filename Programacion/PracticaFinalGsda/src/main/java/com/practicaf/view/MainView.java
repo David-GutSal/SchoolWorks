@@ -1,11 +1,13 @@
 package com.practicaf.view;
 
 import javax.swing.JFrame;
+
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+import com.practicaf.model.entities.AddCar;
+
 import javax.swing.JButton;
-import com.practicaf.model.entities.Car;
 import javax.swing.JList;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -25,7 +27,7 @@ public class MainView extends JFrame implements ActionListener {
 	private JButton btnShareCar;
 	private JButton btnExpense_Information;
 	private JButton btnLogOut;
-	private JList<Car> carList;
+	private JList<AddCar> carList;
 	private Login login;
 	private JLabel lblNewLabel_1;
 	private CarView carView;
@@ -68,7 +70,7 @@ public class MainView extends JFrame implements ActionListener {
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblNewLabel_1);
 
-		carList = new JList<Car>();
+		carList = new JList<AddCar>();
 		sl_contentPane.putConstraint(SpringLayout.NORTH, carList, 126, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, carList, 266, SpringLayout.WEST, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, carList, 313, SpringLayout.NORTH, contentPane);

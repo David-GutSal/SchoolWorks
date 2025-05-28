@@ -6,7 +6,8 @@ import javax.swing.border.EmptyBorder;
 
 import com.practicaf.controller.IMainController;
 import com.practicaf.controller.MainController;
-import com.practicaf.model.entities.Car;
+import com.practicaf.model.entities.AddCar;
+
 import javax.swing.JTextField;
 
 import java.awt.event.ActionEvent;
@@ -117,7 +118,7 @@ public class CarView extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnAccept) {
-			Car car = new Car(textBrand.getText(), textModel.getText(), textPlate.getText(), textYear.getText(), userName.getText());
+			AddCar car = new AddCar(textBrand.getText(), textModel.getText(), textPlate.getText(), textYear.getText(), userName.getText());
 			if (mainController.addCar(car)) {
 				System.out.println("Coche agregado");
 				this.dispose();

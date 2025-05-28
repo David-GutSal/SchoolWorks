@@ -56,7 +56,7 @@ public class Login extends JFrame implements ActionListener {
 	public Login() throws ClassNotFoundException, SQLException, IOException {
 		this.auth = new AuthController();
 		this.signIn = new SignIn();
-		this.mainView = new MainView(this);
+		this.mainView = new MainView(this, "");
 
 		setTitle("Login");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -121,7 +121,9 @@ public class Login extends JFrame implements ActionListener {
 			if (auth.login(user)) {
 				System.out.println("Acceso concedido");
 				this.setVisible(false);
-				mainView.run();
+				mainView.setVisible(true);
+				mainView.setUserName(textUser.getText());
+				mainView.setVisible(true);
 				
 			}else {
 				System.out.println("Acceso denegado");
@@ -133,4 +135,5 @@ public class Login extends JFrame implements ActionListener {
 			this.dispose();
 		}
 	}
+	
 }

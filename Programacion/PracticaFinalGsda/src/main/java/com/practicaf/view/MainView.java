@@ -2,6 +2,7 @@ package com.practicaf.view;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import com.practicaf.model.entities.Car;
@@ -10,6 +11,8 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.swing.SwingConstants;
 import javax.swing.SpringLayout;
@@ -25,17 +28,21 @@ public class MainView extends JFrame implements ActionListener {
 	private JList<Car> carList;
 	private Login login;
 	private JLabel lblNewLabel_1;
-	private AddCarView addCarView;
+	private CarView carView;
 
 	/**
 	 * Launch the application.
+	 * @param string 
+	 * @param userName 
+	 * @throws IOException 
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
-	public void run() {
-		this.setVisible(true);
-	}
 
-	public MainView(Login login) {
+	public MainView(Login login, String userName) throws ClassNotFoundException, SQLException, IOException {
 		this.login = login;
+		this.carView = new CarView(userName);
+		
 		setTitle("Menu");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 467, 440);
@@ -97,6 +104,9 @@ public class MainView extends JFrame implements ActionListener {
 
 	}
 
+	public void setUserName(String userName) {
+		 this.carView.setUserName(userName);
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btnLogOut) {
@@ -105,6 +115,7 @@ public class MainView extends JFrame implements ActionListener {
 		}
 		if(e.getSource() == btnAddCar) {
 			System.out.println("Menu: Agregar coche");
+			carView.setVisible(true);
 		}
 		if(e.getSource() == btnShareCar) {
 			System.out.println("Menu: Compartir coche");

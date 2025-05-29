@@ -29,8 +29,9 @@ public class CarView extends JFrame implements ActionListener {
 	private JTextField textYear;
 	private JButton btnAccept;
 	private JButton btnCancel;
-	private JTextField userName;
+	private JTextField textUserName;
 	private IMainController mainController;
+	private MainView mainView;
 
 	/**
 	 * Launch the application.
@@ -38,14 +39,16 @@ public class CarView extends JFrame implements ActionListener {
 
 	/**
 	 * Create the frame.
+	 * @param mainView 
 	 * 
 	 * @throws IOException
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	public CarView(String userName) throws ClassNotFoundException, SQLException, IOException {
+	public CarView(MainView mainView, String userName) throws ClassNotFoundException, SQLException, IOException {
 		this.mainController = new MainController();
-		this.userName = new JTextField(userName);
+		this.textUserName = new JTextField(userName);
+		this.mainView = mainView;
 		
 		
 		setTitle("Car Information");
@@ -118,9 +121,10 @@ public class CarView extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnAccept) {
-			AddCar car = new AddCar(textBrand.getText(), textModel.getText(), textPlate.getText(), textYear.getText(), userName.getText());
-			if (mainController.addCar(car)) {
+			AddCar car = new AddCar(textBrand.getText(), textModel.getText(), textPlate.getText(), textYear.getText(), textUserName.getText());
+			if(mainController.addCar(car)) {
 				System.out.println("Coche agregado");
+				mainView.actualizarLista(textUserName.getText());
 				this.dispose();
 			}
 
@@ -132,6 +136,6 @@ public class CarView extends JFrame implements ActionListener {
 	}
 
     public void setUserName(String userName) {
-        this.userName.setText(userName);
+        this.textUserName.setText(userName);
     }
 }

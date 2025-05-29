@@ -12,4 +12,8 @@ public class Cars {
 	private String model;
 	private String plate;
 	private String year;
+	
+	public String toString() {
+		return " " + brand + " - " + model + " - " + plate + " - " + year;
+	}
 }

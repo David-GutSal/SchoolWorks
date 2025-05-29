@@ -121,9 +121,7 @@ public class Login extends JFrame implements ActionListener {
 			if (auth.login(user)) {
 				System.out.println("Acceso concedido");
 				this.setVisible(false);
-				mainView.setVisible(true);
-				mainView.setUserName(textUser.getText());
-				mainView.setVisible(true);
+				mainView.viewStart(textUser.getText());
 				
 			}else {
 				System.out.println("Acceso denegado");

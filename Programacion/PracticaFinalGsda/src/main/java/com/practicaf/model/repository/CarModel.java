@@ -71,31 +71,29 @@ public class CarModel implements ICarModel {
 		return true;
 	}
 
-	public List<Cars> carList() {
-		String query = "SELECT c.brand AS b, c.model AS m, c.plate AS p, c.year AS y "
-				+ "FROM Car c \r\n"
-				+ "INNER JOIN Owner o ON c.id_car = o.id_car "
-				+ "INNER JOIN User u ON u.id_user = o.id_user "
-				+ "WHERE u.name = ?";
-
-		try {
-			List<Cars> cars = new ArrayList<>();
-			PreparedStatement ps2 = connection.prepareStatement(query);
-
-			ResultSet rs = ps2.executeQuery();
-
-			while (rs.next()) {
-				String brand = rs.getString(1);
-				String model = rs.getString(2);
-				String plate = rs.getString(3);
-				String year = rs.getString(4);
-
-				Cars car = new Cars(brand, model, plate, year);
-				cars.add(car);
-			}
-			return cars;
-		} catch (Exception e) {
-			return null;
-		}
+	public List<Cars> carList(String userName) {
+	    String query = "SELECT c.brand AS b, c.model AS m, c.plate AS p, c.year AS y "
+	            + "FROM Car c "
+	            + "INNER JOIN Owner o ON c.id_car = o.id_car "
+	            + "INNER JOIN User u ON u.id_user = o.id_user "
+	            + "WHERE u.name = ?";
+	    List<Cars> cars = new ArrayList<>();
+	    try {
+	        PreparedStatement ps2 = connection.prepareStatement(query);
+	        
+	        ps2.setString(1, userName); 
+	        ResultSet rs = ps2.executeQuery();
+	        while (rs.next()) {
+	            String brand = rs.getString(1);
+	            String model = rs.getString(2);
+	            String plate = rs.getString(3);
+	            String year = rs.getString(4);
+	            Cars car = new Cars(brand, model, plate, year);
+	            cars.add(car);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return cars;
 	}
 }

@@ -7,7 +7,6 @@ import javax.swing.border.EmptyBorder;
 
 import com.practicaf.controller.IMainController;
 import com.practicaf.controller.MainController;
-import com.practicaf.model.entities.AddCar;
 import com.practicaf.model.entities.Cars;
 
 import javax.swing.DefaultListModel;
@@ -19,14 +18,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import javax.swing.SwingConstants;
-import javax.swing.SpringLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -57,11 +51,11 @@ public class MainView extends JFrame implements ActionListener {
 	 * @throws ClassNotFoundException
 	 */
 
-	public MainView(Login login, String userName) throws ClassNotFoundException, SQLException, IOException {
+	public MainView(Login login) throws ClassNotFoundException, SQLException, IOException {
 		this.login = login;
 		this.mainController = new MainController();
-		this.carView = new CarView(this, userName);
-		this.shareCarView = new ShareCarView(userName);
+		this.carView = new CarView(this);
+		this.shareCarView = new ShareCarView();
 
 		listModel = new DefaultListModel<>();
 		carList = new JList<>(listModel);
@@ -138,13 +132,14 @@ public class MainView extends JFrame implements ActionListener {
 
 	}
 
-	public void viewStart(String userName) {
+	public void viewShow(String userName) {
 		this.carView.setUserName(userName);
-		actualizarLista(userName);
+		this.shareCarView.setUserName(userName);
+		actualizarList(userName);
 		this.setVisible(true);
 	}
 	
-	public void actualizarLista(String userName) {
+	public void actualizarList(String userName) {
 		List<Cars> cars = mainController.requestCarList(userName);
 		listModel.clear();
 		listModel.addAll(cars);
@@ -163,7 +158,7 @@ public class MainView extends JFrame implements ActionListener {
 		}
 		if (e.getSource() == btnShareCar) {
 			System.out.println("Menu: Compartir coche");
-			shareCarView.setVisible(true);
+			shareCarView.viewShow();
 		}
 		if (e.getSource() == btnExpense_Information) {
 			System.out.println("Menu: Gastos e información");

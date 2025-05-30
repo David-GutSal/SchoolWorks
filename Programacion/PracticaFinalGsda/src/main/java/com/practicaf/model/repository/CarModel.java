@@ -24,7 +24,7 @@ public class CarModel implements ICarModel {
 		String queryInsertCar = "INSERT INTO Car (brand, model, plate, year) VALUES (?, ?, ?, ?)";
 		String querySelectUser = "SELECT id_user FROM User WHERE name LIKE ?";
 		String queryInsertOwner = "INSERT INTO Owner (id_user, id_car) VALUES (?, ?)";
-		String querySelectCar = "SELECT id_car FROM Car WHERE brand LIKE ? OR model LIKE ? OR plate LIKE ? OR year = ?";
+		String querySelectCar = "SELECT id_car FROM Car WHERE brand LIKE ? AND model LIKE ? AND plate LIKE ? AND year = ?";
 
 		try (PreparedStatement ps1 = connection.prepareStatement(queryInsertCar);
 				PreparedStatement ps2 = connection.prepareStatement(querySelectUser);

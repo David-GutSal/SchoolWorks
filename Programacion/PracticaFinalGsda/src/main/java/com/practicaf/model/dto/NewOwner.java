@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class NewOwner {
-	private String owner;
+	private String Owner;
 	private String uuid;
-	private Cars newOwner;
+	private Cars sharedCar;
 }

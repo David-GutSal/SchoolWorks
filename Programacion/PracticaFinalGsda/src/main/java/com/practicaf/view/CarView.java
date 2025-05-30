@@ -45,9 +45,9 @@ public class CarView extends JFrame implements ActionListener {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	public CarView(MainView mainView, String userName) throws ClassNotFoundException, SQLException, IOException {
+	public CarView(MainView mainView) throws ClassNotFoundException, SQLException, IOException {
 		this.mainController = new MainController();
-		this.textUserName = new JTextField(userName);
+		this.textUserName = new JTextField();
 		this.mainView = mainView;
 		
 		
@@ -124,7 +124,7 @@ public class CarView extends JFrame implements ActionListener {
 			AddCar car = new AddCar(textBrand.getText(), textModel.getText(), textPlate.getText(), textYear.getText(), textUserName.getText());
 			if(mainController.addCar(car)) {
 				System.out.println("Coche agregado");
-				mainView.actualizarLista(textUserName.getText());
+				mainView.actualizarList(textUserName.getText());
 				this.dispose();
 			}
 

@@ -1,7 +1,7 @@
 package com.practicaf.view;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
+
 import javax.swing.border.EmptyBorder;
 
 import com.practicaf.controller.IMainController;
@@ -10,14 +10,13 @@ import com.practicaf.model.dto.NewOwner;
 import com.practicaf.model.entities.Cars;
 
 import net.miginfocom.swing.MigLayout;
-import javax.swing.JTextField;
-import javax.swing.JButton;
+
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.awt.event.ActionEvent;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
+import java.util.List;
+import java.awt.Component;
 
 public class ShareCarView extends JFrame implements ActionListener {
 
@@ -27,69 +26,101 @@ public class ShareCarView extends JFrame implements ActionListener {
 	private JButton btnCancel;
 	private JComboBox<Cars> comboSelectCar;
 	private JTextField textUuid;
-	private JTextField textUserName;
 	private IMainController mainController;
-	
-	/**
-	 * Launch the application.
-	 */
+	private String userName;
+	private Component horizontalStrut;
+	private Component horizontalGlue;
+	private Component horizontalGlue_1;
+	private Component horizontalStrut_1;
 
-	/**
-	 * Create the frame.
-	 * @throws IOException 
-	 * @throws SQLException 
-	 * @throws ClassNotFoundException 
-	 */
-	public ShareCarView(String userName) throws ClassNotFoundException, SQLException, IOException {
+	public ShareCarView() throws ClassNotFoundException, SQLException, IOException {
 		this.mainController = new MainController();
-		this.textUserName = new JTextField(userName);
-		
+
 		setTitle("Share Car");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 350, 150);
+		setBounds(100, 100, 445, 163);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new MigLayout("", "[30px][grow][][][][][grow]", "[20px][][][]"));
-		
+
 		JLabel lblNewLabel_1 = new JLabel("Seleccione un coche:");
 		contentPane.add(lblNewLabel_1, "cell 0 1 5 1");
-		
+
 		JLabel lblNewLabel = new JLabel("ID: Usuario");
 		contentPane.add(lblNewLabel, "cell 6 1");
-		
-		comboSelectCar = new JComboBox<Cars>();
+
+		comboSelectCar = new JComboBox<>();
 		contentPane.add(comboSelectCar, "cell 0 2 5 1,growx");
 		comboSelectCar.addActionListener(this);
-		
+
 		textUuid = new JTextField();
 		contentPane.add(textUuid, "cell 6 2,growx");
 		textUuid.setColumns(10);
-		
+
 		btnAccept = new JButton("Aceptar");
-		contentPane.add(btnAccept, "flowx,cell 6 3");
+		contentPane.add(btnAccept, "flowx,cell 6 3,alignx left");
 		btnAccept.addActionListener(this);
 		
+		horizontalStrut = Box.createHorizontalStrut(20);
+		contentPane.add(horizontalStrut, "cell 6 3,alignx right");
+		
+		horizontalGlue = Box.createHorizontalGlue();
+		contentPane.add(horizontalGlue, "cell 6 3");
+		
+		horizontalGlue_1 = Box.createHorizontalGlue();
+		contentPane.add(horizontalGlue_1, "cell 6 3");
+		
+		horizontalStrut_1 = Box.createHorizontalStrut(20);
+		contentPane.add(horizontalStrut_1, "cell 6 3");
+
 		btnCancel = new JButton("Cancelar");
-		contentPane.add(btnCancel, "cell 6 3");
+		btnCancel.setHorizontalAlignment(SwingConstants.RIGHT);
+		contentPane.add(btnCancel, "cell 6 3,alignx right");
 		btnCancel.addActionListener(this);
+
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == btnAccept) {
-			Cars selectedCar = (Cars) comboSelectCar.getSelectedItem();
-			NewOwner owner = new NewOwner(textUserName.getText(), textUuid.getText(), selectedCar);
-			if(mainController.addCarOwner(owner)) {
-				System.out.println("Propietario agregado");
-				this.dispose();
-			}
-		}
-		if(e.getSource() == btnCancel) {
-			this.dispose();
-		}
-		
+	    if (e.getSource() == comboSelectCar) {
+	        System.out.println("Evento de JComboBox disparado");
+	        System.out.println("Cantidad de elementos: " + comboSelectCar.getItemCount());
+	        
+	        if (comboSelectCar.getSelectedItem() != null) {
+	            btnAccept.setEnabled(true);
+	        } else {
+	            btnAccept.setEnabled(false);
+	        }
+	    }
+	    if (e.getSource() == btnAccept) {
+	        Cars selectedCar = (Cars) comboSelectCar.getSelectedItem();
+	        NewOwner owner = new NewOwner(userName, textUuid.getText(), selectedCar);
+	        if (mainController.addCarOwner(owner)) {
+	            System.out.println("Propietario agregado");
+	            this.dispose();
+	        }
+	    }
+	    if (e.getSource() == btnCancel) {
+	        this.dispose();
+	    }
 	}
 
+	public void requestList(String userName) {
+		List<Cars> cars = mainController.requestCarList(userName);
+		comboSelectCar.removeAllItems();
+		for (Cars car : cars) {
+			comboSelectCar.addItem(car);
+		}
+	}
+	
+    public void setUserName(String userName) {
+    	this.userName = userName;
+    }
+    
+	public void viewShow() {
+		requestList(this.userName);
+		this.setVisible(true);
+	}
 }

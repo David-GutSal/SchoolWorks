@@ -6,8 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.practicaf.model.entities.UserLogIn;
-import com.practicaf.model.entities.UserSignIn;
+import com.practicaf.model.dto.UserLogInDto;
+import com.practicaf.model.dto.UserSignInDto;
 
 public class AuthModel implements IAuthModel {
 	private Connection connection;
@@ -17,7 +17,7 @@ public class AuthModel implements IAuthModel {
 		this.connection = DatabaseConnection.getConnection();
 	}
 
-	public boolean register(UserSignIn signInUser) {
+	public boolean register(UserSignInDto signInUser) {
 		try {
 			String query = "INSERT INTO User (name, password, uuid) value (?, ?, ?)";
 			PreparedStatement ps1 = connection.prepareStatement(query);
@@ -34,7 +34,7 @@ public class AuthModel implements IAuthModel {
 		return true;
 	}
 
-	public UserLogIn byName(String name) {
+	public UserLogInDto byName(String name) {
 		String query = "SELECT name, password FROM User WHERE name like ?";
 
 		try {
@@ -49,7 +49,7 @@ public class AuthModel implements IAuthModel {
 				String nameDb = rs.getString(1);
 				String password = rs.getString(2);
 
-				UserLogIn user = new UserLogIn(nameDb, password);
+				UserLogInDto user = new UserLogInDto(nameDb, password);
 				return user;
 			} else {
 				return null;

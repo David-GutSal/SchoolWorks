@@ -1,14 +1,14 @@
 package com.practicaf.controller;
 
-import com.practicaf.model.entities.UserLogIn;
-import com.practicaf.model.entities.UserSignIn;
+import com.practicaf.model.dto.UserLogInDto;
+import com.practicaf.model.dto.UserSignInDto;
 
 
 public interface IAuthController {
 
 
-	boolean register(UserSignIn user);
+	boolean register(UserSignInDto user);
 
-	boolean login(UserLogIn logInUser);
+	boolean login(UserLogInDto logInUser);
 
 }

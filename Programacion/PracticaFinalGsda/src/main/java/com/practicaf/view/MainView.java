@@ -7,7 +7,7 @@ import javax.swing.border.EmptyBorder;
 
 import com.practicaf.controller.IMainController;
 import com.practicaf.controller.MainController;
-import com.practicaf.model.entities.Cars;
+import com.practicaf.model.dto.CarResponseDto;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -34,11 +34,12 @@ public class MainView extends JFrame implements ActionListener {
 	private JButton btnShareCar;
 	private JButton btnExpense_Information;
 	private JButton btnLogOut;
-	private DefaultListModel<Cars> listModel;
-	private JList<Cars> carList;
+	private DefaultListModel<CarResponseDto> listModel;
+	private JList<CarResponseDto> carList;
 	private Login login;
 	private CarView carView;
 	private ShareCarView shareCarView;
+	private ExpensesInfView expensesInfView;
 	private IMainController mainController;
 
 	/**
@@ -56,6 +57,7 @@ public class MainView extends JFrame implements ActionListener {
 		this.mainController = new MainController();
 		this.carView = new CarView(this);
 		this.shareCarView = new ShareCarView();
+		this.expensesInfView = new ExpensesInfView(this);
 
 		listModel = new DefaultListModel<>();
 		carList = new JList<>(listModel);
@@ -86,47 +88,35 @@ public class MainView extends JFrame implements ActionListener {
 
 		btnLogOut = new JButton("Cerrar sesion");
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(5)
-							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 441, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(177)
-							.addComponent(btnLogOut))
-						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-							.addGap(5)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(btnAddCar, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnShareCar, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnExpense_Information, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE))
-							.addPreferredGap(ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(lblNewLabel_1, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(carList, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE))))
-					.addContainerGap())
-		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(45)
-					.addComponent(lblNewLabel)
-					.addGap(31)
-					.addComponent(lblNewLabel_1)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(btnAddCar)
-							.addGap(62)
-							.addComponent(btnShareCar)
-							.addGap(56)
-							.addComponent(btnExpense_Information))
-						.addComponent(carList, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE))
-					.addGap(31)
-					.addComponent(btnLogOut))
-		);
+		gl_contentPane.setHorizontalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addGroup(gl_contentPane
+				.createSequentialGroup()
+				.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup().addGap(5).addComponent(lblNewLabel,
+								GroupLayout.PREFERRED_SIZE, 441, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup().addGap(177).addComponent(btnLogOut))
+						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup().addGap(5)
+								.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+										.addComponent(btnAddCar, GroupLayout.PREFERRED_SIZE, 172,
+												GroupLayout.PREFERRED_SIZE)
+										.addComponent(btnShareCar, GroupLayout.PREFERRED_SIZE, 172,
+												GroupLayout.PREFERRED_SIZE)
+										.addComponent(btnExpense_Information, GroupLayout.PREFERRED_SIZE, 172,
+												GroupLayout.PREFERRED_SIZE))
+								.addPreferredGap(ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+								.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+										.addComponent(lblNewLabel_1, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE,
+												GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+										.addComponent(carList, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 211,
+												Short.MAX_VALUE))))
+				.addContainerGap()));
+		gl_contentPane.setVerticalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup().addGap(45).addComponent(lblNewLabel).addGap(31)
+						.addComponent(lblNewLabel_1).addPreferredGap(ComponentPlacement.RELATED)
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPane.createSequentialGroup().addComponent(btnAddCar).addGap(62)
+										.addComponent(btnShareCar).addGap(56).addComponent(btnExpense_Information))
+								.addComponent(carList, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE))
+						.addGap(31).addComponent(btnLogOut)));
 		contentPane.setLayout(gl_contentPane);
 		btnLogOut.addActionListener(this);
 
@@ -135,14 +125,17 @@ public class MainView extends JFrame implements ActionListener {
 	public void viewShow(String userName) {
 		this.carView.setUserName(userName);
 		this.shareCarView.setUserName(userName);
-		actualizarList(userName);
+		this.expensesInfView.setUserName(userName);
+		updateList(userName);
 		this.setVisible(true);
 	}
-	
-	public void actualizarList(String userName) {
-		List<Cars> cars = mainController.requestCarList(userName);
+
+	public void updateList(String userName) {
+		List<CarResponseDto> carResponseDto = mainController.requestCarList(userName);
 		listModel.clear();
-		listModel.addAll(cars);
+		listModel.addAll(carResponseDto);
+		System.out.println( "Numero de coches" + listModel.getSize());
+		
 	}
 
 	@Override
@@ -154,7 +147,7 @@ public class MainView extends JFrame implements ActionListener {
 		if (e.getSource() == btnAddCar) {
 			System.out.println("Menu: Agregar coche");
 			carView.setVisible(true);
-			
+
 		}
 		if (e.getSource() == btnShareCar) {
 			System.out.println("Menu: Compartir coche");
@@ -162,6 +155,8 @@ public class MainView extends JFrame implements ActionListener {
 		}
 		if (e.getSource() == btnExpense_Information) {
 			System.out.println("Menu: Gastos e información");
+			expensesInfView.viewShow();
+			this.setVisible(false);
 		}
 
 	}

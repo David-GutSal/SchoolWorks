@@ -1,4 +1,4 @@
-package com.practicaf.model.entities;
+package com.practicaf.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class UserLogIn {
+public class UserSignInDto {
 	private String name;
 	private String password;
+	private String uuid;
 }

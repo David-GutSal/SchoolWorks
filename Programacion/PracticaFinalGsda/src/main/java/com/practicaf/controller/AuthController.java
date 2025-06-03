@@ -8,8 +8,8 @@ import org.jasypt.util.password.StrongPasswordEncryptor;
 
 import com.practicaf.model.AuthModel;
 import com.practicaf.model.IAuthModel;
-import com.practicaf.model.entities.UserLogIn;
-import com.practicaf.model.entities.UserSignIn;
+import com.practicaf.model.dto.UserLogInDto;
+import com.practicaf.model.dto.UserSignInDto;
 
 public class AuthController implements IAuthController{
 	private StrongPasswordEncryptor passwordEncryptor;
@@ -20,7 +20,7 @@ public class AuthController implements IAuthController{
 		this.passwordEncryptor = new StrongPasswordEncryptor();
 	}
 	
-	public boolean register(UserSignIn signInUser) {
+	public boolean register(UserSignInDto signInUser) {
 		String encrypted = this.passwordEncryptor.encryptPassword(signInUser.getPassword());
 		String code = UUID.nameUUIDFromBytes(signInUser.getName().getBytes()).toString();
 		
@@ -32,9 +32,9 @@ public class AuthController implements IAuthController{
 		return result;
 	}
 	
-	public boolean login(UserLogIn logInUser) {
+	public boolean login(UserLogInDto logInUser) {
 		
-		UserLogIn userDb = this.authModel.byName(logInUser.getName());
+		UserLogInDto userDb = this.authModel.byName(logInUser.getName());
 		
 		if(userDb == null) {
 			return false;

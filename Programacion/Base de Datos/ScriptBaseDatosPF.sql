@@ -2,7 +2,7 @@ create table Car(
 	id_car int primary key auto_increment,
     brand varchar(50),
     model varchar(20),
-    plate varchar(7),
+    plate varchar(7) unique,
     year int CHECK (year >= 1 AND year <= 9999)
 );
 
@@ -14,32 +14,30 @@ create table User(
 );
 
 create table Owner(
-	id_user int,
-    id_car int,
-    primary key(id_car, id_user),
-    foreign key (id_car) references Car (id_car),
-    foreign key (id_user) references User (id_user)
+	car_plate varchar(7),
+    user_name varchar(20),
+    primary key(car_plate, user_name),
+    foreign key (car_plate) references Car (plate),
+    foreign key (user_name) references User (name)
 );
 
 create table Expense(
 	expense_id int primary key auto_increment,
-    id_car int,
+    car_plate varchar(7),
     type enum('Revision', 'Gasolina', 'ITV', 'Aceite', 'Otros'),
     mileage int,
     date date,
     amount double,
     description varchar(400),
-    foreign key Car (id_car) references Car (id_car)
+    foreign key (car_plate) references Car (plate)
 );
 
-drop table Expense;
-drop table User;
+/*drop table Expense;
 drop table Owner;
 drop table Car;
+drop table User;*/
 
 SELECT * FROM Expense;
 SELECT * FROM User;
 SELECT * FROM Owner;
 SELECT * FROM Car;
-
-SELECT c.id_car FROM Car c INNER JOIN Owner o ON c.id_car = o.id_car INNER JOIN User u ON o.id_user = u.id_user WHERE c.brand LIKE 'A' and c.model LIKE 'AS'and c.plate LIKE '1234QWE' and c.year = 1000 and u.name = 'A';

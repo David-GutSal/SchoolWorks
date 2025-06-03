@@ -1,4 +1,4 @@
-package com.practicaf.model.entities;
+package com.practicaf.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,10 +7,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class AddCar {
+public class CarResponseDto {
 	private String brand;
 	private String model;
 	private String plate;
-	private String year;
-	private String userName;
+	private int year;
+	
+	public String toString() {
+		return " " + brand + " - " + model + " - " + plate + " - " + year;
+	}
+
 }

@@ -2,16 +2,20 @@ package com.practicaf.controller;
 
 import java.util.List;
 
-import com.practicaf.model.dto.NewOwner;
-import com.practicaf.model.entities.AddCar;
-import com.practicaf.model.entities.Cars;
+import com.practicaf.model.dto.CarCreateDto;
+import com.practicaf.model.dto.CarResponseDto;
+import com.practicaf.model.dto.OwnerDto;
 
 public interface IMainController {
 
-	boolean addCar(AddCar car);
+	boolean carCreateDto(CarCreateDto car);
 
-	List<Cars> requestCarList(String userName);
+	List<CarResponseDto> requestCarList(String userName);
 
-	boolean addCarOwner(NewOwner owner);
+	boolean addCarOwner(OwnerDto owner);
+
+	boolean deleteCar(CarResponseDto selectedCar, String userName);
+
+	boolean editCar(CarResponseDto editedCar, String oldPlate);
 
 }

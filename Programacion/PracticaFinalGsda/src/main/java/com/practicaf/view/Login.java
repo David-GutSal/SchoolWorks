@@ -7,7 +7,7 @@ import javax.swing.border.EmptyBorder;
 
 import com.practicaf.controller.AuthController;
 import com.practicaf.controller.IAuthController;
-import com.practicaf.model.entities.UserLogIn;
+import com.practicaf.model.dto.UserLogInDto;
 
 import javax.swing.JButton;
 import javax.swing.SpringLayout;
@@ -117,7 +117,7 @@ public class Login extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnAccept) {
-			UserLogIn user = new UserLogIn(textUser.getText(), textPassword.getText());
+			UserLogInDto user = new UserLogInDto(textUser.getText(), textPassword.getText());
 			if (auth.login(user)) {
 				System.out.println("Acceso concedido");
 				this.setVisible(false);

@@ -1,12 +1,13 @@
 package com.practicaf.view;
 
 import javax.swing.JFrame;
+
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import com.practicaf.controller.IMainController;
 import com.practicaf.controller.MainController;
-import com.practicaf.model.entities.AddCar;
+import com.practicaf.model.dto.CarCreateDto;
 
 import javax.swing.JTextField;
 
@@ -39,7 +40,8 @@ public class CarView extends JFrame implements ActionListener {
 
 	/**
 	 * Create the frame.
-	 * @param mainView 
+	 * 
+	 * @param mainView
 	 * 
 	 * @throws IOException
 	 * @throws SQLException
@@ -49,8 +51,7 @@ public class CarView extends JFrame implements ActionListener {
 		this.mainController = new MainController();
 		this.textUserName = new JTextField();
 		this.mainView = mainView;
-		
-		
+
 		setTitle("Car Information");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 320, 230);
@@ -121,21 +122,36 @@ public class CarView extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnAccept) {
-			AddCar car = new AddCar(textBrand.getText(), textModel.getText(), textPlate.getText(), textYear.getText(), textUserName.getText());
-			if(mainController.addCar(car)) {
-				System.out.println("Coche agregado");
-				mainView.actualizarList(textUserName.getText());
-				this.dispose();
-			}
+			try {
 
+				CarCreateDto car = new CarCreateDto(textBrand.getText(), textModel.getText(), textPlate.getText(),
+						Integer.parseInt(textYear.getText()), textUserName.getText());
+
+				if (mainController.carCreateDto(car)) {
+					System.out.println("Coche agregado");
+					mainView.updateList(textUserName.getText());
+					this.dispose();
+					clearText();
+				}
+			} catch (NumberFormatException i) {
+				System.out.println("El texto introducido no es un número entero válido.");
+			}
+			
 		}
-		if(e.getSource() == btnCancel) {
+		if (e.getSource() == btnCancel) {
 			this.dispose();
 		}
 
 	}
 
-    public void setUserName(String userName) {
-        this.textUserName.setText(userName);
-    }
+	public void setUserName(String userName) {
+		this.textUserName.setText(userName);
+	}
+	
+	public void clearText() {
+		textBrand.setText("");
+		textModel.setText("");
+		textPlate.setText("");
+		textYear.setText("");
+	}
 }

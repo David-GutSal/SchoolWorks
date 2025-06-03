@@ -6,8 +6,8 @@ import javax.swing.border.EmptyBorder;
 
 import com.practicaf.controller.IMainController;
 import com.practicaf.controller.MainController;
-import com.practicaf.model.dto.NewOwner;
-import com.practicaf.model.entities.Cars;
+import com.practicaf.model.dto.CarResponseDto;
+import com.practicaf.model.dto.OwnerDto;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -24,7 +24,7 @@ public class ShareCarView extends JFrame implements ActionListener {
 	private JPanel contentPane;
 	private JButton btnAccept;
 	private JButton btnCancel;
-	private JComboBox<Cars> comboSelectCar;
+	private JComboBox<CarResponseDto> comboSelectCar;
 	private JTextField textUuid;
 	private IMainController mainController;
 	private String userName;
@@ -38,7 +38,7 @@ public class ShareCarView extends JFrame implements ActionListener {
 
 		setTitle("Share Car");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 445, 163);
+		setBounds(100, 100, 460, 163);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -95,8 +95,8 @@ public class ShareCarView extends JFrame implements ActionListener {
 	        }
 	    }
 	    if (e.getSource() == btnAccept) {
-	        Cars selectedCar = (Cars) comboSelectCar.getSelectedItem();
-	        NewOwner owner = new NewOwner(userName, textUuid.getText(), selectedCar);
+	        CarResponseDto selectedCar = (CarResponseDto) comboSelectCar.getSelectedItem();
+	        OwnerDto owner = new OwnerDto(userName, textUuid.getText(), selectedCar);
 	        if (mainController.addCarOwner(owner)) {
 	            System.out.println("Propietario agregado");
 	            this.dispose();
@@ -108,9 +108,9 @@ public class ShareCarView extends JFrame implements ActionListener {
 	}
 
 	public void requestList(String userName) {
-		List<Cars> cars = mainController.requestCarList(userName);
+		List<CarResponseDto> carResponseDto = mainController.requestCarList(userName);
 		comboSelectCar.removeAllItems();
-		for (Cars car : cars) {
+		for (CarResponseDto car : carResponseDto) {
 			comboSelectCar.addItem(car);
 		}
 	}

@@ -11,7 +11,7 @@ import javax.swing.border.EmptyBorder;
 
 import com.practicaf.controller.AuthController;
 import com.practicaf.controller.IAuthController;
-import com.practicaf.model.entities.UserSignIn;
+import com.practicaf.model.dto.UserSignInDto;
 
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
@@ -102,7 +102,7 @@ public class SignIn extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnAccept) {
-			UserSignIn user = new UserSignIn(textUser.getText(), textPassword.getText(), "");
+			UserSignInDto user = new UserSignInDto(textUser.getText(), textPassword.getText(), "");
 			if (auth.register(user)) {
 				System.out.println("Usuario agregado");
 				this.dispose();

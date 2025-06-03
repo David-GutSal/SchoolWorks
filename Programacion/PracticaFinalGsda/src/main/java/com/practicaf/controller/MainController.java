@@ -6,9 +6,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.practicaf.model.dto.NewOwner;
-import com.practicaf.model.entities.AddCar;
-import com.practicaf.model.entities.Cars;
+import com.practicaf.model.dto.CarCreateDto;
+import com.practicaf.model.dto.CarResponseDto;
+import com.practicaf.model.dto.OwnerDto;
 import com.practicaf.model.repository.CarModel;
 import com.practicaf.model.repository.ICarModel;
 import com.practicaf.model.repository.IOwnerModel;
@@ -23,19 +23,32 @@ public class MainController implements IMainController {
 		this.ownerModel = new OwnerModel();
 	}
 
-	public boolean addCar(AddCar car) {
-		boolean result = this.carModel.addCar(car);
+	public boolean carCreateDto(CarCreateDto car) {
+		boolean result = this.carModel.carCreateDto(car);
 		return result;
 	}
 
 	@Override
-	public List<Cars> requestCarList(String userName) {
+	public List<CarResponseDto> requestCarList(String userName) {
 		return carModel.carList(userName);
 	}
 
 	@Override
-	public boolean addCarOwner(NewOwner owner) {
+	public boolean addCarOwner(OwnerDto owner) {
 		boolean result = ownerModel.addCarOwner(owner);
+		return result;
+	}
+
+	@Override
+	public boolean deleteCar(CarResponseDto selectedCar, String userName) {
+		boolean result = ownerModel.deleteCar(selectedCar, userName);
+		return result;
+		
+	}
+
+	@Override
+	public boolean editCar(CarResponseDto editedCar, String oldPlate) {
+		boolean result = this.carModel.carEditDto(editedCar, oldPlate);
 		return result;
 	}
 

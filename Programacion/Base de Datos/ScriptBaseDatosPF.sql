@@ -41,3 +41,5 @@ SELECT * FROM Expense;
 SELECT * FROM User;
 SELECT * FROM Owner;
 SELECT * FROM Car;
+
+SELECT c.brand AS b, c.model AS m, c.plate AS p, c.year AS y FROM Car c INNER JOIN Owner o ON c.plate = o.car_plate INNER JOIN User u ON u.name = o.user_name WHERE u.name = ?

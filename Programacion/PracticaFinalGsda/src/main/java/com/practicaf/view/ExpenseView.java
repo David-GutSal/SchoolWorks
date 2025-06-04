@@ -2,6 +2,7 @@ package com.practicaf.view;
 
 import java.awt.EventQueue;
 
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -11,13 +12,25 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
+import com.practicaf.controller.IMainController;
+import com.practicaf.controller.MainController;
+import com.practicaf.model.dto.CarResponseDto;
+import com.practicaf.model.dto.ExpenseDto;
+
 import javax.swing.JButton;
 import javax.swing.SpringLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import java.util.regex.Pattern;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.sql.SQLException;
 
-public class ExpenseView extends JFrame {
+public class ExpenseView extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -25,27 +38,22 @@ public class ExpenseView extends JFrame {
 	private JTextField textDate;
 	private JTextField textDescription;
 	private JTextField textImport;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ExpenseView frame = new ExpenseView();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private JButton btnAccpet;
+	private JButton btnCancel;
+	private JComboBox<String> comboExpenseType;
+	private IMainController mainController;
+	private String carPlate;
 
 	/**
 	 * Create the frame.
+	 * @param comboSelectCar 
+	 * @throws IOException 
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
-	public ExpenseView() {
+	public ExpenseView(String plate) throws ClassNotFoundException, SQLException, IOException {
+		this.carPlate = plate;
+		this.mainController = new MainController();
 		setTitle("Expense");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -57,7 +65,7 @@ public class ExpenseView extends JFrame {
 		SpringLayout sl_contentPane = new SpringLayout();
 		contentPane.setLayout(sl_contentPane);
 		
-		JComboBox comboExpenseType = new JComboBox();
+		comboExpenseType = new JComboBox();
 		sl_contentPane.putConstraint(SpringLayout.NORTH, comboExpenseType, 79, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, comboExpenseType, 30, SpringLayout.WEST, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.EAST, comboExpenseType, 138, SpringLayout.WEST, contentPane);
@@ -92,17 +100,20 @@ public class ExpenseView extends JFrame {
 		contentPane.add(textDescription);
 		textDescription.setColumns(10);
 		
-		JButton btnAccpet = new JButton("Aceptar");
+		btnAccpet = new JButton("Aceptar");
 		sl_contentPane.putConstraint(SpringLayout.NORTH, btnAccpet, 199, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, btnAccpet, 163, SpringLayout.WEST, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.EAST, btnAccpet, 271, SpringLayout.WEST, contentPane);
 		contentPane.add(btnAccpet);
+		btnAccpet.addActionListener(this);
+		btnAccpet.setEnabled(false);
 		
-		JButton btnCancel = new JButton("Cancelar");
+		btnCancel = new JButton("Cancelar");
 		sl_contentPane.putConstraint(SpringLayout.NORTH, btnCancel, 199, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, btnCancel, 275, SpringLayout.WEST, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.EAST, btnCancel, 384, SpringLayout.WEST, contentPane);
 		contentPane.add(btnCancel);
+		btnCancel.addActionListener(this);
 		
 		JLabel lblExpenseType = new JLabel("Tipo de Gasto*");
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblExpenseType, 59, SpringLayout.NORTH, contentPane);
@@ -129,11 +140,47 @@ public class ExpenseView extends JFrame {
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblDescription, 167, SpringLayout.WEST, contentPane);
 		contentPane.add(lblDescription);
 		
-		JLabel lblNewLabel = new JLabel("Añadiendo gasto");
-		sl_contentPane.putConstraint(SpringLayout.NORTH, lblNewLabel, 10, SpringLayout.NORTH, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.EAST, lblNewLabel, -99, SpringLayout.EAST, contentPane);
-		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 25));
-		contentPane.add(lblNewLabel);
+		JLabel lblTitle = new JLabel("Añadiendo gasto");
+		sl_contentPane.putConstraint(SpringLayout.NORTH, lblTitle, 10, SpringLayout.NORTH, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.EAST, lblTitle, -99, SpringLayout.EAST, contentPane);
+		lblTitle.setFont(new Font("Arial", Font.PLAIN, 25));
+		contentPane.add(lblTitle);
 	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnAccpet) {
+			if (validateDate() && validateMileage() && validateImport()){
+				ExpenseDto expense = new ExpenseDto(comboExpenseType.getSelectedItem().toString(), Integer.parseInt(textMileage.getText()), textDate.getText(), Double.parseDouble(textImport.getText()), textDescription.getText());
+				if(mainController.addExpense(carPlate, expense)) {
+					System.out.println("Gasto agregado a la base de datos");
+				}
+			}
+		}
+		
+	}
+
+	public void viewShow() {
+		this.setVisible(true);
+	}
+	
+    private boolean validateDate() {
+        String datePattern = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/(\\d{4})$";
+        return Pattern.matches(datePattern, this.textDate.getText());
+    }
+    
+    private boolean validateMileage() {
+        try {
+            Integer.parseInt(textMileage.getText());
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+    
+    private boolean validateImport() {
+        String importPattern = "^\\d+(\\.\\d{1,2})?$";
+        return Pattern.matches(importPattern, textImport.getText());
+    }
 
 }

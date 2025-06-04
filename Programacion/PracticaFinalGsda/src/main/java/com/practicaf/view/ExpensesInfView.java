@@ -47,6 +47,7 @@ public class ExpensesInfView extends JFrame implements ActionListener {
 	private JScrollPane scrollPane;
 	private JComboBox<String> comboSort;
 	private MainView mainView;
+	private ExpenseView expenseView;
 
 	/**
 	 * Launch the application.
@@ -66,6 +67,7 @@ public class ExpensesInfView extends JFrame implements ActionListener {
 		setResizable(false);
 		this.mainController = new MainController();
 		this.mainView = mainView;
+		
 
 		comboSelectCar = new JComboBox();
 		comboSort = new JComboBox();
@@ -228,6 +230,7 @@ public class ExpensesInfView extends JFrame implements ActionListener {
 				textModel.setText(selectedCar.getModel());
 				textPlate.setText(selectedCar.getPlate());
 				textYear.setText(Integer.toString(selectedCar.getYear()));
+				mainController.requestExpenses(selectedCar);
 			} else {
 				tglbtnEditCar.setEnabled(false);
 				btnDeleteCar.setEnabled(false);
@@ -293,7 +296,14 @@ public class ExpensesInfView extends JFrame implements ActionListener {
 
 		if (e.getSource() == btnAddExpense) {
 			System.out.println("Añadir gasto");
-
+			CarResponseDto selectedCar = (CarResponseDto) comboSelectCar.getSelectedItem();
+			try {
+				this.expenseView = new ExpenseView(selectedCar.getPlate());
+			} catch (ClassNotFoundException | IOException | SQLException e1) {
+				e1.printStackTrace();
+			}
+			expenseView.viewShow();
+			
 			String tipoDeGasto = "Ejemplo";
 			String kilometraje = "1000";
 			String fecha = "2023-10-01";

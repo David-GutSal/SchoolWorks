@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.practicaf.model.dto.CarCreateDto;
 import com.practicaf.model.dto.CarResponseDto;
+import com.practicaf.model.dto.ExpenseDto;
 import com.practicaf.model.dto.OwnerDto;
 
 public interface IMainController {
@@ -19,5 +20,9 @@ public interface IMainController {
 	boolean editCar(CarResponseDto editedCar, String oldPlate);
 
 	String requestUuid(String userName);
+
+	boolean addExpense(String carPlate, ExpenseDto expense);
+
+	void requestExpenses(CarResponseDto selectedCar);
 
 }

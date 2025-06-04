@@ -8,9 +8,12 @@ import java.util.List;
 
 import com.practicaf.model.dto.CarCreateDto;
 import com.practicaf.model.dto.CarResponseDto;
+import com.practicaf.model.dto.ExpenseDto;
 import com.practicaf.model.dto.OwnerDto;
 import com.practicaf.model.repository.CarModel;
+import com.practicaf.model.repository.ExpenseModel;
 import com.practicaf.model.repository.ICarModel;
+import com.practicaf.model.repository.IExpenseModel;
 import com.practicaf.model.repository.IOwnerModel;
 import com.practicaf.model.repository.IUserModel;
 import com.practicaf.model.repository.OwnerModel;
@@ -20,11 +23,13 @@ public class MainController implements IMainController {
 	private ICarModel carModel;
 	private IOwnerModel ownerModel;
 	private IUserModel userModel;
+	private IExpenseModel expenselModel;
 
 	public MainController() throws ClassNotFoundException, SQLException, IOException {
 		this.carModel = new CarModel();
 		this.ownerModel = new OwnerModel();
 		this.userModel = new UserModel();
+		this.expenselModel = new ExpenseModel();
 	}
 
 	public boolean carCreateDto(CarCreateDto car) {
@@ -63,6 +68,18 @@ public class MainController implements IMainController {
 			return uuid;
 		}
 			return uuid = "Not Found";
+	}
+
+	@Override
+	public boolean addExpense(String carPlate, ExpenseDto expense) {
+		boolean result = expenselModel.addExpense(carPlate, expense);
+		return result;
+	}
+
+	@Override
+	public void requestExpenses(CarResponseDto selectedCar) {
+		expenselModel.requestExpenses(selectedCar);
+		
 	}
 
 }

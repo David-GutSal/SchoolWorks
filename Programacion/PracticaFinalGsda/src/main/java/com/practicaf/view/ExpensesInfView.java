@@ -63,6 +63,7 @@ public class ExpensesInfView extends JFrame implements ActionListener {
 	 * @throws ClassNotFoundException
 	 */
 	public ExpensesInfView(MainView mainView) throws ClassNotFoundException, SQLException, IOException {
+		setResizable(false);
 		this.mainController = new MainController();
 		this.mainView = mainView;
 

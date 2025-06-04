@@ -34,6 +34,7 @@ public class ShareCarView extends JFrame implements ActionListener {
 	private Component horizontalStrut_1;
 
 	public ShareCarView() throws ClassNotFoundException, SQLException, IOException {
+		setResizable(false);
 		this.mainController = new MainController();
 
 		setTitle("Share Car");

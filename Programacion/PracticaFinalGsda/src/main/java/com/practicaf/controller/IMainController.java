@@ -18,4 +18,6 @@ public interface IMainController {
 
 	boolean editCar(CarResponseDto editedCar, String oldPlate);
 
+	String requestUuid(String userName);
+
 }

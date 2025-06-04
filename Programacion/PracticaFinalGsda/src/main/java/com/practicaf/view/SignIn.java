@@ -50,6 +50,7 @@ public class SignIn extends JFrame implements ActionListener {
 	 */
 
 	public SignIn() throws ClassNotFoundException, SQLException, IOException {
+		setResizable(false);
 		this.auth = new AuthController();
 
 		setTitle("Sign In");

@@ -48,6 +48,7 @@ public class CarView extends JFrame implements ActionListener {
 	 * @throws ClassNotFoundException
 	 */
 	public CarView(MainView mainView) throws ClassNotFoundException, SQLException, IOException {
+		setResizable(false);
 		this.mainController = new MainController();
 		this.textUserName = new JTextField();
 		this.mainView = mainView;

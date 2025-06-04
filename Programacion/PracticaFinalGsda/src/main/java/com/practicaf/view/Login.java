@@ -54,6 +54,7 @@ public class Login extends JFrame implements ActionListener {
 	 */
 
 	public Login() throws ClassNotFoundException, SQLException, IOException {
+		setResizable(false);
 		this.auth = new AuthController();
 		this.signIn = new SignIn();
 		this.mainView = new MainView(this);

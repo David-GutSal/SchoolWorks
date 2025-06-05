@@ -1,28 +1,18 @@
 package com.practicaf.view;
 
-import java.awt.EventQueue;
-
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.FormSpecs;
-import com.jgoodies.forms.layout.RowSpec;
 import com.practicaf.controller.IMainController;
 import com.practicaf.controller.MainController;
-import com.practicaf.model.dto.CarResponseDto;
 import com.practicaf.model.dto.ExpenseDto;
 
 import javax.swing.JButton;
 import javax.swing.SpringLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.util.regex.Pattern;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -69,7 +59,7 @@ public class ExpenseView extends JFrame implements ActionListener {
 		sl_contentPane.putConstraint(SpringLayout.NORTH, comboExpenseType, 79, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, comboExpenseType, 30, SpringLayout.WEST, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.EAST, comboExpenseType, 138, SpringLayout.WEST, contentPane);
-		comboExpenseType.setModel(new DefaultComboBoxModel(new String[] {"Revición", "Gasolina", "ITV", "Aceite", "Otros"}));
+		comboExpenseType.setModel(new DefaultComboBoxModel(new String[] {"Revision", "Gasolina", "ITV", "Aceite", "Otros"}));
 		contentPane.add(comboExpenseType);
 		
 		textMileage = new JTextField();
@@ -106,7 +96,6 @@ public class ExpenseView extends JFrame implements ActionListener {
 		sl_contentPane.putConstraint(SpringLayout.EAST, btnAccpet, 271, SpringLayout.WEST, contentPane);
 		contentPane.add(btnAccpet);
 		btnAccpet.addActionListener(this);
-		btnAccpet.setEnabled(false);
 		
 		btnCancel = new JButton("Cancelar");
 		sl_contentPane.putConstraint(SpringLayout.NORTH, btnCancel, 199, SpringLayout.NORTH, contentPane);
@@ -120,17 +109,17 @@ public class ExpenseView extends JFrame implements ActionListener {
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblExpenseType, 30, SpringLayout.WEST, contentPane);
 		contentPane.add(lblExpenseType);
 		
-		JLabel lblMileage = new JLabel("Kilometraje*");
+		JLabel lblMileage = new JLabel("Kilometraje aprox.*");
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblMileage, 59, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblMileage, 163, SpringLayout.WEST, contentPane);
 		contentPane.add(lblMileage);
 		
-		JLabel lblDate = new JLabel("Fecha (dd/mm/aaaa) *");
+		JLabel lblDate = new JLabel("Fecha (aaaa/mm/dd) *");
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblDate, 59, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblDate, 275, SpringLayout.WEST, contentPane);
 		contentPane.add(lblDate);
 		
-		JLabel lblImport = new JLabel("Importe*");
+		JLabel lblImport = new JLabel("Importe (0.0)*");
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblImport, 125, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblImport, 30, SpringLayout.WEST, contentPane);
 		contentPane.add(lblImport);
@@ -154,8 +143,13 @@ public class ExpenseView extends JFrame implements ActionListener {
 				ExpenseDto expense = new ExpenseDto(comboExpenseType.getSelectedItem().toString(), Integer.parseInt(textMileage.getText()), textDate.getText(), Double.parseDouble(textImport.getText()), textDescription.getText());
 				if(mainController.addExpense(carPlate, expense)) {
 					System.out.println("Gasto agregado a la base de datos");
+					this.dispose();
 				}
 			}
+		}
+		
+		if (e.getSource() == btnCancel) {
+			this.dispose();
 		}
 		
 	}
@@ -165,7 +159,7 @@ public class ExpenseView extends JFrame implements ActionListener {
 	}
 	
     private boolean validateDate() {
-        String datePattern = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/(\\d{4})$";
+        String datePattern = "^(\\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$";
         return Pattern.matches(datePattern, this.textDate.getText());
     }
     

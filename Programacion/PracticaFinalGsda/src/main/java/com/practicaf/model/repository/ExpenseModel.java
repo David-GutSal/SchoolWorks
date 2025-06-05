@@ -21,7 +21,7 @@ public class ExpenseModel implements IExpenseModel {
 
 	@Override
 	public boolean addExpense(String carPlate, ExpenseDto expense) {
-		String queryInsertExpense = "INSERT INTO Expense (car_plate, type, mileage, date, amount, description) VALUES (?, ?, ?, ?, ?)";
+		String queryInsertExpense = "INSERT INTO Expense (car_plate, type, mileage, date, amount, description) VALUES (?, ?, ?, ?, ?, ?)";
 
 		try (PreparedStatement ps1 = connection.prepareStatement(queryInsertExpense);) {
 
@@ -43,26 +43,29 @@ public class ExpenseModel implements IExpenseModel {
 		return true;
 	}
 
-	/*@Override
-	public void requestExpenses(CarResponseDto selectedCar) {
-		String query = "SELECT ";
-		List<CarResponseDto> carResponseDto = new ArrayList<>();
-		try {
-			PreparedStatement ps2 = connection.prepareStatement(query);
+	public List<ExpenseDto> requestExpenses(CarResponseDto selectedCar) {
+	    String query = "SELECT type, mileage, date, amount, description FROM Expense WHERE car_plate LIKE ?";
+	    List<ExpenseDto> expenseList = new ArrayList<>();
+	    try {
+	        PreparedStatement ps2 = connection.prepareStatement(query);
+	        
+	        ps2.setString(1, selectedCar.getPlate());
+	        ResultSet rs = ps2.executeQuery();
+	        
+	        while (rs.next()) {
+	            String type = rs.getString(1);
+	            int mileage = rs.getInt(2);
+	            String date = rs.getString(3);
+	            double amount = rs.getDouble(4);
+	            String description = rs.getString(5);
+	            
+	            ExpenseDto expense = new ExpenseDto(type, mileage, date, amount, description);
+	            expenseList.add(expense);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return expenseList;
+	}
 
-			ps2.setString(1, userName);
-			ResultSet rs = ps2.executeQuery();
-			while (rs.next()) {
-				String brand = rs.getString(1);
-				String model = rs.getString(2);
-				String plate = rs.getString(3);
-				int year = rs.getInt(4);
-				CarResponseDto car = new CarResponseDto(brand, model, plate, year);
-				carResponseDto.add(car);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return carResponseDto;
-	}*/
 }

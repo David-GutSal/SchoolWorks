@@ -16,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
 import com.practicaf.controller.IMainController;
 import com.practicaf.controller.MainController;
 import com.practicaf.model.dto.CarResponseDto;
+import com.practicaf.model.dto.ExpenseDto;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -50,10 +51,6 @@ public class ExpensesInfView extends JFrame implements ActionListener {
 	private ExpenseView expenseView;
 
 	/**
-	 * Launch the application.
-	 */
-
-	/**
 	 * Create the frame.
 	 * 
 	 * @param mainView
@@ -67,7 +64,6 @@ public class ExpensesInfView extends JFrame implements ActionListener {
 		setResizable(false);
 		this.mainController = new MainController();
 		this.mainView = mainView;
-		
 
 		comboSelectCar = new JComboBox();
 		comboSort = new JComboBox();
@@ -189,7 +185,7 @@ public class ExpensesInfView extends JFrame implements ActionListener {
 
 		sl_contentPane.putConstraint(SpringLayout.NORTH, comboSort, 1, SpringLayout.NORTH, btnAddExpense);
 		sl_contentPane.putConstraint(SpringLayout.EAST, comboSort, 253, SpringLayout.WEST, contentPane);
-		comboSort.setModel(new DefaultComboBoxModel<String>(new String[] { "Todos", "Fecha", "Kilometraje" }));
+		comboSort.setModel(new DefaultComboBoxModel(new String[] {"Todos", "Fecha", "Kilometraje"}));
 
 		JLabel lblSort = new JLabel("Ordenar por:");
 		sl_contentPane.putConstraint(SpringLayout.WEST, comboSort, 6, SpringLayout.EAST, lblSort);
@@ -230,7 +226,8 @@ public class ExpensesInfView extends JFrame implements ActionListener {
 				textModel.setText(selectedCar.getModel());
 				textPlate.setText(selectedCar.getPlate());
 				textYear.setText(Integer.toString(selectedCar.getYear()));
-				mainController.requestExpenses(selectedCar);
+				
+				requestExpenseList(selectedCar);
 			} else {
 				tglbtnEditCar.setEnabled(false);
 				btnDeleteCar.setEnabled(false);
@@ -303,19 +300,11 @@ public class ExpensesInfView extends JFrame implements ActionListener {
 				e1.printStackTrace();
 			}
 			expenseView.viewShow();
-			
-			String tipoDeGasto = "Ejemplo";
-			String kilometraje = "1000";
-			String fecha = "2023-10-01";
-			String importe = "150";
-			String descripcion = "ereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
 
-			DefaultTableModel model = (DefaultTableModel) table.getModel();
-			model.addRow(new Object[] { tipoDeGasto, kilometraje, fecha, importe, descripcion });
 		}
 	}
 
-	public void requestList(String userName) {
+	public void requestCarList(String userName) {
 		List<CarResponseDto> carResponseDto = mainController.requestCarList(userName);
 		comboSelectCar.removeAllItems();
 		for (CarResponseDto car : carResponseDto) {
@@ -333,12 +322,24 @@ public class ExpensesInfView extends JFrame implements ActionListener {
 		}
 	}
 
+	public void requestExpenseList(CarResponseDto selectedCar) {
+		
+		List<ExpenseDto> expenseList = mainController.requestExpenses(selectedCar);
+		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		model.setRowCount(0);
+		for (ExpenseDto expense : expenseList) {
+			model.addRow(new Object[] { expense.getExpenseType(), expense.getMileage(), expense.getDate(),
+					expense.getAmount() + "€", expense.getDescription() });
+		}
+
+	}
+
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
 
 	public void viewShow() {
-		requestList(this.userName);
+		requestCarList(this.userName);
 		this.setVisible(true);
 	}
 }

@@ -43,29 +43,50 @@ public class ExpenseModel implements IExpenseModel {
 		return true;
 	}
 
-	public List<ExpenseDto> requestExpenses(CarResponseDto selectedCar) {
-	    String query = "SELECT type, mileage, date, amount, description FROM Expense WHERE car_plate LIKE ?";
-	    List<ExpenseDto> expenseList = new ArrayList<>();
-	    try {
-	        PreparedStatement ps2 = connection.prepareStatement(query);
-	        
-	        ps2.setString(1, selectedCar.getPlate());
-	        ResultSet rs = ps2.executeQuery();
-	        
-	        while (rs.next()) {
-	            String type = rs.getString(1);
-	            int mileage = rs.getInt(2);
-	            String date = rs.getString(3);
-	            double amount = rs.getDouble(4);
-	            String description = rs.getString(5);
-	            
-	            ExpenseDto expense = new ExpenseDto(type, mileage, date, amount, description);
-	            expenseList.add(expense);
-	        }
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	    return expenseList;
+
+	public List<ExpenseDto> requestExpenses(CarResponseDto selectedCar, String selectedFilter, String textMin, String textMax) {
+		StringBuilder query = new StringBuilder("SELECT type, mileage, date, amount, description FROM Expense WHERE car_plate LIKE ?");
+		List<ExpenseDto> expenseList = new ArrayList<>();
+
+		try {
+
+			PreparedStatement ps2 = connection.prepareStatement(query.toString());
+			ps2.setString(1, selectedCar.getPlate());
+
+
+			if ("Fecha".equals(selectedFilter)) {
+
+				query.append(" AND date >= ? AND date <= ?");
+				ps2 = connection.prepareStatement(query.toString());
+				ps2.setString(1, selectedCar.getPlate());
+				ps2.setString(2, textMin); // fecha mínima
+				ps2.setString(3, textMax); // fecha máxima
+			} else if ("Kilometraje".equals(selectedFilter)) {
+
+				query.append(" AND mileage >= ? AND mileage <= ?");
+				ps2 = connection.prepareStatement(query.toString());
+				ps2.setString(1, selectedCar.getPlate());
+				ps2.setInt(2, textMin.isEmpty() ? Integer.MIN_VALUE : Integer.parseInt(textMin)); // kilometraje mínimo
+				ps2.setInt(3, textMax.isEmpty() ? Integer.MAX_VALUE : Integer.parseInt(textMax)); // kilometraje máximo
+			}
+
+			// Ejecutar la consulta
+			ResultSet rs = ps2.executeQuery();
+
+			while (rs.next()) {
+				String type = rs.getString(1);
+				int mileage = rs.getInt(2);
+				String date = rs.getString(3);
+				double amount = rs.getDouble(4);
+				String description = rs.getString(5);
+
+				ExpenseDto expense = new ExpenseDto(type, mileage, date, amount, description);
+				expenseList.add(expense);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return expenseList;
 	}
 
 }

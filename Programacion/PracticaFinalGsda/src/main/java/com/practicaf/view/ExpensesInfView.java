@@ -1,16 +1,22 @@
 package com.practicaf.view;
 
 import javax.swing.JFrame;
-
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JComboBox;
-import javax.swing.SpringLayout;
-import javax.swing.JButton;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JButton;
+import javax.swing.JTable;
+import javax.swing.SpringLayout;
+import javax.swing.DefaultComboBoxModel;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+import java.awt.event.ActionEvent;
+import javax.swing.JToggleButton;
 import javax.swing.table.DefaultTableModel;
 
 import com.practicaf.controller.IMainController;
@@ -19,61 +25,155 @@ import com.practicaf.model.dto.CarResponseDto;
 import com.practicaf.model.dto.ExpenseDto;
 
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.List;
-import javax.swing.SwingConstants;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JToggleButton;
+import java.awt.Component;
+import javax.swing.Box;
 
 public class ExpensesInfView extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-	private IMainController mainController;
 	private String userName;
-	private JTable table;
+	private IMainController mainController;
+	private MainView mainView;
+	private ExpenseView expenseView;
+	private JPanel contentPane;
 	private JTextField textBrand;
 	private JTextField textModel;
 	private JTextField textPlate;
+	private JTextField textMinimum;
 	private JTextField textYear;
-	private JComboBox<CarResponseDto> comboSelectCar;
-	private JButton btnDeleteCar;
-	private JButton btnAddExpense;
-	private JButton btnExit;
-	private JButton btnAccept;
-	private JToggleButton tglbtnEditCar;
+	private JTable table;
 	private JScrollPane scrollPane;
-	private JComboBox<String> comboSort;
-	private MainView mainView;
-	private ExpenseView expenseView;
+	private JTextField textMaximum;
+	private JToggleButton tglbtnEditCar;
+	private JButton btnAddExpense;
+	private JButton btnAccept;
+	private JButton btnDeleteCar;
+	private JButton btnAcceptFilter;
+	private JButton btnExit;
+	private JComboBox<String> comboFilter;
+	private JComboBox<CarResponseDto> comboSelectCar;
 
 	/**
 	 * Create the frame.
-	 * 
-	 * @param mainView
-	 * @param carView
 	 * 
 	 * @throws IOException
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
 	public ExpensesInfView(MainView mainView) throws ClassNotFoundException, SQLException, IOException {
-		setResizable(false);
+		setTitle("Expenses&Information");
 		this.mainController = new MainController();
 		this.mainView = mainView;
 
-		comboSelectCar = new JComboBox();
-		comboSort = new JComboBox();
-		btnDeleteCar = new JButton("Eliminar");
-		btnExit = new JButton("Salir");
-		tglbtnEditCar = new JToggleButton("Editar");
-		btnAccept = new JButton("Guardar Cambios");
-		btnAddExpense = new JButton("Agregar Gasto");
-		table = new JTable();
+		setResizable(false);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 860, 410);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
+		setContentPane(contentPane);
+		SpringLayout sl_contentPane = new SpringLayout();
+		contentPane.setLayout(sl_contentPane);
+
+		JLabel lblSelecCar = new JLabel("Seleccione un coche:");
+		contentPane.add(lblSelecCar);
+
+		comboSelectCar = new JComboBox();
+		sl_contentPane.putConstraint(SpringLayout.WEST, lblSelecCar, 0, SpringLayout.WEST, comboSelectCar);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblSelecCar, -2, SpringLayout.NORTH, comboSelectCar);
+		sl_contentPane.putConstraint(SpringLayout.EAST, lblSelecCar, -5, SpringLayout.EAST, comboSelectCar);
+		sl_contentPane.putConstraint(SpringLayout.WEST, comboSelectCar, 70, SpringLayout.WEST, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, comboSelectCar, -280, SpringLayout.SOUTH, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.EAST, comboSelectCar, -464, SpringLayout.EAST, contentPane);
+		contentPane.add(comboSelectCar);
+		comboSelectCar.addActionListener(this);
+
+		btnDeleteCar = new JButton("Eliminar");
+		sl_contentPane.putConstraint(SpringLayout.NORTH, btnDeleteCar, 0, SpringLayout.NORTH, comboSelectCar);
+		sl_contentPane.putConstraint(SpringLayout.EAST, btnDeleteCar, -278, SpringLayout.EAST, contentPane);
+		contentPane.add(btnDeleteCar);
+		btnDeleteCar.addActionListener(this);
+
+		JLabel lblBrand = new JLabel("Marca:");
+		sl_contentPane.putConstraint(SpringLayout.WEST, lblBrand, 5, SpringLayout.WEST, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblBrand, -256, SpringLayout.SOUTH, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.EAST, lblBrand, -610, SpringLayout.EAST, contentPane);
+		contentPane.add(lblBrand);
+
+		textBrand = new JTextField();
+		sl_contentPane.putConstraint(SpringLayout.WEST, textBrand, 70, SpringLayout.WEST, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, textBrand, -253, SpringLayout.SOUTH, contentPane);
+		contentPane.add(textBrand);
+		textBrand.setColumns(10);
+
+		JLabel lblModel = new JLabel("Modelo:");
+		sl_contentPane.putConstraint(SpringLayout.WEST, lblModel, 5, SpringLayout.WEST, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblModel, -230, SpringLayout.SOUTH, contentPane);
+		contentPane.add(lblModel);
+
+		textModel = new JTextField();
+		sl_contentPane.putConstraint(SpringLayout.EAST, lblModel, -6, SpringLayout.WEST, textModel);
+		sl_contentPane.putConstraint(SpringLayout.WEST, textModel, 70, SpringLayout.WEST, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, textModel, -227, SpringLayout.SOUTH, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.EAST, textModel, 0, SpringLayout.EAST, textBrand);
+		contentPane.add(textModel);
+		textModel.setColumns(10);
+
+		JLabel lblPlate = new JLabel("Matrícula:");
+		sl_contentPane.putConstraint(SpringLayout.WEST, lblPlate, 5, SpringLayout.WEST, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblPlate, -204, SpringLayout.SOUTH, contentPane);
+		contentPane.add(lblPlate);
+
+		textPlate = new JTextField();
+		sl_contentPane.putConstraint(SpringLayout.EAST, lblPlate, -6, SpringLayout.WEST, textPlate);
+		sl_contentPane.putConstraint(SpringLayout.WEST, textPlate, 70, SpringLayout.WEST, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, textPlate, -201, SpringLayout.SOUTH, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.EAST, textPlate, 0, SpringLayout.EAST, textBrand);
+		contentPane.add(textPlate);
+		textPlate.setColumns(10);
+
+		JLabel lblYear = new JLabel("Año:");
+		sl_contentPane.putConstraint(SpringLayout.WEST, lblYear, 5, SpringLayout.WEST, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblYear, -178, SpringLayout.SOUTH, contentPane);
+		contentPane.add(lblYear);
+
+		textYear = new JTextField();
+		sl_contentPane.putConstraint(SpringLayout.EAST, lblYear, -6, SpringLayout.WEST, textYear);
+		sl_contentPane.putConstraint(SpringLayout.WEST, textYear, 70, SpringLayout.WEST, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, textYear, -175, SpringLayout.SOUTH, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.EAST, textYear, 0, SpringLayout.EAST, textBrand);
+		contentPane.add(textYear);
+		textYear.setColumns(10);
+
+		comboFilter = new JComboBox();
+		comboFilter.setModel(new DefaultComboBoxModel(new String[] { "Todos", "Fecha", "Kilometraje" }));
+		sl_contentPane.putConstraint(SpringLayout.WEST, comboFilter, 70, SpringLayout.WEST, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, comboFilter, -147, SpringLayout.SOUTH, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.EAST, comboFilter, -504, SpringLayout.EAST, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.EAST, textBrand, 0, SpringLayout.EAST, comboFilter);
+		contentPane.add(comboFilter);
+		comboFilter.addActionListener(this);
+
+		textMinimum = new JTextField();
+		sl_contentPane.putConstraint(SpringLayout.NORTH, textMinimum, 0, SpringLayout.NORTH, comboFilter);
+		contentPane.add(textMinimum);
+		textMinimum.setColumns(10);
+
+		btnAccept = new JButton("Guardar Cambios");
+		sl_contentPane.putConstraint(SpringLayout.WEST, textMinimum, 0, SpringLayout.WEST, btnAccept);
+		sl_contentPane.putConstraint(SpringLayout.NORTH, btnAccept, -4, SpringLayout.NORTH, lblPlate);
+		sl_contentPane.putConstraint(SpringLayout.WEST, btnAccept, 47, SpringLayout.EAST, textPlate);
+		sl_contentPane.putConstraint(SpringLayout.EAST, btnAccept, -335, SpringLayout.EAST, contentPane);
+		contentPane.add(btnAccept);
+		btnAccept.addActionListener(this);
+
+		btnAddExpense = new JButton("Agregar Gasto");
+		sl_contentPane.putConstraint(SpringLayout.NORTH, btnAddExpense, -1, SpringLayout.NORTH, comboFilter);
+		sl_contentPane.putConstraint(SpringLayout.EAST, btnAddExpense, -22, SpringLayout.EAST, contentPane);
+		contentPane.add(btnAddExpense);
+		btnAddExpense.addActionListener(this);
+
+		table = new JTable();
 		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "TipoDeGasto", "Kilometraje", "Fecha",
 				"Importe", "Descripci\u00F3n(masx: 55 car\u00E1cteres)" }) {
 			Class[] columnTypes = new Class[] { String.class, String.class, String.class, Object.class, String.class };
@@ -92,124 +192,82 @@ public class ExpensesInfView extends JFrame implements ActionListener {
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		table.setFillsViewportHeight(true);
 
-		setTitle("Expenses&Information");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 755, 480);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-		setContentPane(contentPane);
-		SpringLayout sl_contentPane = new SpringLayout();
-		sl_contentPane.putConstraint(SpringLayout.NORTH, comboSelectCar, 46, SpringLayout.NORTH, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.WEST, comboSelectCar, 15, SpringLayout.WEST, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.EAST, comboSelectCar, -73, SpringLayout.WEST, btnDeleteCar);
-		sl_contentPane.putConstraint(SpringLayout.NORTH, scrollPane, 240, SpringLayout.NORTH, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, scrollPane, -9, SpringLayout.NORTH, btnExit);
-		sl_contentPane.putConstraint(SpringLayout.WEST, btnExit, 330, SpringLayout.WEST, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, btnExit, 0, SpringLayout.SOUTH, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, btnAddExpense, -11, SpringLayout.NORTH, scrollPane);
-		sl_contentPane.putConstraint(SpringLayout.EAST, btnAddExpense, 0, SpringLayout.EAST, scrollPane);
-		sl_contentPane.putConstraint(SpringLayout.EAST, scrollPane, 340, SpringLayout.EAST, btnDeleteCar);
-		contentPane.setLayout(sl_contentPane);
-
-		comboSelectCar.setToolTipText("Seleccione un coche");
-		comboSelectCar.addActionListener(this);
-		btnDeleteCar.addActionListener(this);
-		btnExit.addActionListener(this);
-		tglbtnEditCar.addActionListener(this);
-		btnAccept.addActionListener(this);
-		btnAddExpense.addActionListener(this);
-
-		sl_contentPane.putConstraint(SpringLayout.NORTH, btnDeleteCar, 46, SpringLayout.NORTH, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.WEST, btnDeleteCar, 300, SpringLayout.WEST, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.NORTH, table, 11, SpringLayout.SOUTH, btnAddExpense);
-
-		sl_contentPane.putConstraint(SpringLayout.WEST, table, 5, SpringLayout.WEST, comboSelectCar);
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, table, -32, SpringLayout.SOUTH, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.EAST, table, 0, SpringLayout.EAST, btnDeleteCar);
-
-		textBrand = new JTextField();
-		textBrand.setEditable(false);
-		sl_contentPane.putConstraint(SpringLayout.NORTH, textBrand, 22, SpringLayout.SOUTH, comboSelectCar);
-		sl_contentPane.putConstraint(SpringLayout.EAST, textBrand, 0, SpringLayout.EAST, comboSelectCar);
-		contentPane.add(textBrand);
-		textBrand.setColumns(10);
-
-		textModel = new JTextField();
-		textModel.setEditable(false);
-		sl_contentPane.putConstraint(SpringLayout.NORTH, textModel, 6, SpringLayout.SOUTH, textBrand);
-		sl_contentPane.putConstraint(SpringLayout.EAST, textModel, 0, SpringLayout.EAST, comboSelectCar);
-		contentPane.add(textModel);
-		textModel.setColumns(10);
-
-		textPlate = new JTextField();
-		textPlate.setEditable(false);
-		sl_contentPane.putConstraint(SpringLayout.NORTH, textPlate, 6, SpringLayout.SOUTH, textModel);
-		sl_contentPane.putConstraint(SpringLayout.EAST, textPlate, 0, SpringLayout.EAST, comboSelectCar);
-		contentPane.add(textPlate);
-		textPlate.setColumns(10);
-
-		textYear = new JTextField();
-		textYear.setEditable(false);
-		sl_contentPane.putConstraint(SpringLayout.NORTH, textYear, 6, SpringLayout.SOUTH, textPlate);
-		sl_contentPane.putConstraint(SpringLayout.EAST, textYear, 0, SpringLayout.EAST, comboSelectCar);
-		contentPane.add(textYear);
-		textYear.setColumns(10);
-
-		JLabel lblBrand = new JLabel("Marca:");
-		sl_contentPane.putConstraint(SpringLayout.WEST, scrollPane, 0, SpringLayout.WEST, lblBrand);
-		sl_contentPane.putConstraint(SpringLayout.NORTH, lblBrand, 0, SpringLayout.NORTH, textBrand);
-		sl_contentPane.putConstraint(SpringLayout.WEST, lblBrand, 0, SpringLayout.WEST, comboSelectCar);
-		contentPane.add(lblBrand);
-
-		JLabel lblModel = new JLabel("Modelo:");
-		sl_contentPane.putConstraint(SpringLayout.NORTH, lblModel, 0, SpringLayout.NORTH, textModel);
-		sl_contentPane.putConstraint(SpringLayout.WEST, lblModel, 0, SpringLayout.WEST, comboSelectCar);
-		contentPane.add(lblModel);
-
-		JLabel lblPlate = new JLabel("Matrícula:");
-		sl_contentPane.putConstraint(SpringLayout.NORTH, lblPlate, 0, SpringLayout.NORTH, textPlate);
-		sl_contentPane.putConstraint(SpringLayout.WEST, lblPlate, 0, SpringLayout.WEST, comboSelectCar);
-		contentPane.add(lblPlate);
-
-		JLabel lblYear = new JLabel("Año:");
-		sl_contentPane.putConstraint(SpringLayout.NORTH, lblYear, 0, SpringLayout.NORTH, textYear);
-		sl_contentPane.putConstraint(SpringLayout.WEST, lblYear, 0, SpringLayout.WEST, comboSelectCar);
-		contentPane.add(lblYear);
-
-		JLabel lblTitle = new JLabel("Gastos & Información");
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblTitle, -6, SpringLayout.NORTH, btnDeleteCar);
-		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
-		sl_contentPane.putConstraint(SpringLayout.EAST, lblTitle, -216, SpringLayout.EAST, contentPane);
-		lblTitle.setFont(new Font("Arial", Font.PLAIN, 25));
-
-		sl_contentPane.putConstraint(SpringLayout.NORTH, comboSort, 1, SpringLayout.NORTH, btnAddExpense);
-		sl_contentPane.putConstraint(SpringLayout.EAST, comboSort, 253, SpringLayout.WEST, contentPane);
-		comboSort.setModel(new DefaultComboBoxModel(new String[] {"Todos", "Fecha", "Kilometraje"}));
-
-		JLabel lblSort = new JLabel("Ordenar por:");
-		sl_contentPane.putConstraint(SpringLayout.WEST, comboSort, 6, SpringLayout.EAST, lblSort);
-		sl_contentPane.putConstraint(SpringLayout.WEST, lblSort, 0, SpringLayout.WEST, lblBrand);
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblSort, -16, SpringLayout.NORTH, scrollPane);
-
-		sl_contentPane.putConstraint(SpringLayout.NORTH, btnAccept, -1, SpringLayout.NORTH, textYear);
-		sl_contentPane.putConstraint(SpringLayout.WEST, btnAccept, 6, SpringLayout.EAST, textBrand);
-		sl_contentPane.putConstraint(SpringLayout.EAST, btnAccept, 0, SpringLayout.EAST, btnDeleteCar);
-		btnAccept.setVisible(false);
-
-		sl_contentPane.putConstraint(SpringLayout.NORTH, tglbtnEditCar, 6, SpringLayout.SOUTH, lblTitle);
-		sl_contentPane.putConstraint(SpringLayout.WEST, tglbtnEditCar, 6, SpringLayout.EAST, comboSelectCar);
-
-		contentPane.add(lblTitle);
-		contentPane.add(comboSelectCar);
-		contentPane.add(btnDeleteCar);
-		contentPane.add(btnExit);
-		contentPane.add(btnAddExpense);
 		contentPane.add(scrollPane);
-		contentPane.add(comboSort);
-		contentPane.add(lblSort);
+
+		sl_contentPane.putConstraint(SpringLayout.NORTH, scrollPane, 221, SpringLayout.NORTH, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.WEST, scrollPane, 70, SpringLayout.WEST, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, scrollPane, 0, SpringLayout.SOUTH, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.EAST, scrollPane, -22, SpringLayout.EAST, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.NORTH, table, 221, SpringLayout.NORTH, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.WEST, table, 70, SpringLayout.WEST, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, table, 0, SpringLayout.SOUTH, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.EAST, table, -22, SpringLayout.EAST, contentPane);
+
+		JLabel lblFilter = new JLabel("Filtrar por:");
+		sl_contentPane.putConstraint(SpringLayout.NORTH, lblFilter, 4, SpringLayout.NORTH, comboFilter);
+		sl_contentPane.putConstraint(SpringLayout.WEST, lblFilter, 0, SpringLayout.WEST, lblBrand);
+		contentPane.add(lblFilter);
+
+		JLabel lblMin = new JLabel("Min:");
+		sl_contentPane.putConstraint(SpringLayout.NORTH, lblMin, 3, SpringLayout.NORTH, comboFilter);
+		sl_contentPane.putConstraint(SpringLayout.EAST, lblMin, 0, SpringLayout.EAST, comboSelectCar);
+		contentPane.add(lblMin);
+
+		JLabel lblMax = new JLabel("Max:");
+		sl_contentPane.putConstraint(SpringLayout.WEST, btnDeleteCar, 0, SpringLayout.WEST, lblMax);
+		sl_contentPane.putConstraint(SpringLayout.EAST, lblMax, -335, SpringLayout.EAST, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.NORTH, lblMax, 3, SpringLayout.NORTH, comboFilter);
+		contentPane.add(lblMax);
+
+		tglbtnEditCar = new JToggleButton("Editar");
+		sl_contentPane.putConstraint(SpringLayout.EAST, textMinimum, -5, SpringLayout.EAST, tglbtnEditCar);
+		sl_contentPane.putConstraint(SpringLayout.NORTH, tglbtnEditCar, 0, SpringLayout.NORTH, comboSelectCar);
+		sl_contentPane.putConstraint(SpringLayout.WEST, tglbtnEditCar, 20, SpringLayout.EAST, comboSelectCar);
 		contentPane.add(tglbtnEditCar);
-		contentPane.add(btnAccept);
+		tglbtnEditCar.addActionListener(this);
+
+		textMaximum = new JTextField();
+		sl_contentPane.putConstraint(SpringLayout.NORTH, textMaximum, 0, SpringLayout.NORTH, comboFilter);
+		sl_contentPane.putConstraint(SpringLayout.WEST, textMaximum, 6, SpringLayout.EAST, lblMax);
+		sl_contentPane.putConstraint(SpringLayout.EAST, textMaximum, 75, SpringLayout.EAST, lblMax);
+		textMaximum.setColumns(10);
+		contentPane.add(textMaximum);
+
+		btnAcceptFilter = new JButton("Buscar");
+		sl_contentPane.putConstraint(SpringLayout.NORTH, btnAcceptFilter, -1, SpringLayout.NORTH, comboFilter);
+		contentPane.add(btnAcceptFilter);
+		btnAcceptFilter.addActionListener(this);
+
+		btnExit = new JButton("Salir");
+		sl_contentPane.putConstraint(SpringLayout.WEST, btnExit, 0, SpringLayout.WEST, lblBrand);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, btnExit, 0, SpringLayout.SOUTH, table);
+		contentPane.add(btnExit);
+		btnExit.addActionListener(this);
+
+		JLabel lblTitle_p1 = new JLabel("Gastos");
+		sl_contentPane.putConstraint(SpringLayout.WEST, lblTitle_p1, 318, SpringLayout.WEST, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblTitle_p1, -6, SpringLayout.NORTH, lblSelecCar);
+		lblTitle_p1.setFont(new Font("Arial", Font.PLAIN, 25));
+		contentPane.add(lblTitle_p1);
+
+		JLabel lblTitle_p2 = new JLabel("&");
+		sl_contentPane.putConstraint(SpringLayout.NORTH, lblTitle_p2, 0, SpringLayout.NORTH, lblTitle_p1);
+		sl_contentPane.putConstraint(SpringLayout.WEST, lblTitle_p2, 6, SpringLayout.EAST, lblTitle_p1);
+		lblTitle_p2.setFont(new Font("Arial", Font.PLAIN, 25));
+		contentPane.add(lblTitle_p2);
+
+		JLabel lblTitle_p3 = new JLabel("Información");
+		sl_contentPane.putConstraint(SpringLayout.NORTH, lblTitle_p3, 0, SpringLayout.NORTH, lblTitle_p1);
+		sl_contentPane.putConstraint(SpringLayout.WEST, lblTitle_p3, 6, SpringLayout.EAST, lblTitle_p2);
+		lblTitle_p3.setFont(new Font("Arial", Font.PLAIN, 25));
+		contentPane.add(lblTitle_p3);
+
+		Component horizontalStrut = Box.createHorizontalStrut(20);
+		sl_contentPane.putConstraint(SpringLayout.WEST, btnAddExpense, 2, SpringLayout.EAST, horizontalStrut);
+		sl_contentPane.putConstraint(SpringLayout.WEST, horizontalStrut, 668, SpringLayout.WEST, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.EAST, btnAcceptFilter, -6, SpringLayout.WEST, horizontalStrut);
+		sl_contentPane.putConstraint(SpringLayout.NORTH, horizontalStrut, 0, SpringLayout.NORTH, comboFilter);
+		contentPane.add(horizontalStrut);
 	}
 
 	@Override
@@ -226,13 +284,41 @@ public class ExpensesInfView extends JFrame implements ActionListener {
 				textModel.setText(selectedCar.getModel());
 				textPlate.setText(selectedCar.getPlate());
 				textYear.setText(Integer.toString(selectedCar.getYear()));
-				
-				requestExpenseList(selectedCar);
+
 			} else {
 				tglbtnEditCar.setEnabled(false);
 				btnDeleteCar.setEnabled(false);
 				btnAddExpense.setEnabled(false);
 			}
+		}
+
+		if (e.getSource() == comboFilter) {
+			System.out.println("Evento de JComboBox disparado");
+			String selectedFilter = (String) comboFilter.getSelectedItem();
+			CarResponseDto selectedCar = (CarResponseDto) comboSelectCar.getSelectedItem();
+
+			if (selectedFilter.equals("Todos")) {
+				textMinimum.setVisible(false);
+				textMaximum.setVisible(false);
+				btnAcceptFilter.setVisible(false);
+				textMinimum.setText("");
+				textMaximum.setText("");
+				requestExpenseList(selectedCar, selectedFilter, textMinimum.getText(), textMaximum.getText());
+			} else {
+				textMinimum.setVisible(true);
+				textMaximum.setVisible(true);
+				//lblMin.setVisible(true);
+				//lblMax.setVisible(true);
+				btnAcceptFilter.setVisible(true);
+			}
+		}
+
+		if (e.getSource() == btnAcceptFilter) {
+			System.out.println("Filtrando gastos");
+			String selectedFilter = (String) comboFilter.getSelectedItem();
+			CarResponseDto selectedCar = (CarResponseDto) comboSelectCar.getSelectedItem();
+			requestExpenseList(selectedCar, selectedFilter, textMinimum.getText(), textMaximum.getText());
+
 		}
 
 		if (e.getSource() == btnDeleteCar) {
@@ -322,16 +408,17 @@ public class ExpensesInfView extends JFrame implements ActionListener {
 		}
 	}
 
-	public void requestExpenseList(CarResponseDto selectedCar) {
-		
-		List<ExpenseDto> expenseList = mainController.requestExpenses(selectedCar);
+	public void requestExpenseList(CarResponseDto selectedCar, String selectedFilter, String textMin, String textMax) {
+		/*TODO
+		 * Si no hay coches no hace nada
+		 * */
+		List<ExpenseDto> expenseList = mainController.requestExpenses(selectedCar, selectedFilter, textMin, textMax);
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		model.setRowCount(0);
 		for (ExpenseDto expense : expenseList) {
-			model.addRow(new Object[] { expense.getExpenseType(), expense.getMileage(), expense.getDate(),
+			model.addRow(new Object[] { expense.getExpenseType(), expense.getMileage() + "km", expense.getDate(),
 					expense.getAmount() + "€", expense.getDescription() });
 		}
-
 	}
 
 	public void setUserName(String userName) {

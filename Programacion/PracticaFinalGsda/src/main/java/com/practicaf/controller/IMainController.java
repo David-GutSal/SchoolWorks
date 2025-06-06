@@ -23,6 +23,5 @@ public interface IMainController {
 
 	boolean addExpense(String carPlate, ExpenseDto expense);
 
-	List<ExpenseDto> requestExpenses(CarResponseDto selectedCar);
-
+    List<ExpenseDto> requestExpenses(CarResponseDto selectedCar, String selectedFilter, String textMin, String textMax);
 }

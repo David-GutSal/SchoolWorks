@@ -27,6 +27,7 @@ public class SignIn extends JFrame implements ActionListener {
 	private JButton btnAccept;
 	private JButton btnCancel;
 	private IAuthController auth;
+	private Login login;
 
 	/**
 	 * Launch the application.
@@ -34,7 +35,7 @@ public class SignIn extends JFrame implements ActionListener {
 
 	public void run() {
 		try {
-			SignIn frame = new SignIn();
+			SignIn frame = new SignIn(login);
 			frame.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -49,9 +50,10 @@ public class SignIn extends JFrame implements ActionListener {
 	 * @throws ClassNotFoundException
 	 */
 
-	public SignIn() throws ClassNotFoundException, SQLException, IOException {
+	public SignIn(Login login) throws ClassNotFoundException, SQLException, IOException {
 		setResizable(false);
 		this.auth = new AuthController();
+		this.login = login;
 
 		setTitle("Sign In");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -107,9 +109,11 @@ public class SignIn extends JFrame implements ActionListener {
 			if (auth.register(user)) {
 				System.out.println("Usuario agregado");
 				this.dispose();
+				login.setVisible(true);
 			}
 		} else if (e.getSource() == btnCancel) {
 			this.dispose();
+			login.setVisible(true);
 		}
 	}
 }

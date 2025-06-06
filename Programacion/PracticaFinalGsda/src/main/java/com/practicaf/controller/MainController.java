@@ -77,8 +77,8 @@ public class MainController implements IMainController {
 	}
 
 	@Override
-	public List<ExpenseDto> requestExpenses(CarResponseDto selectedCar) {
-		List<ExpenseDto> list = expenselModel.requestExpenses(selectedCar);
+	public List<ExpenseDto> requestExpenses(CarResponseDto selectedCar, String selectedFilter, String textMin, String textMax) {
+		List<ExpenseDto> list = expenselModel.requestExpenses(selectedCar, selectedFilter, textMin, textMax);
 		return list;
 		
 	}

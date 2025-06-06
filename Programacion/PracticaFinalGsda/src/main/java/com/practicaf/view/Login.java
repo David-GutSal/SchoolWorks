@@ -18,19 +18,25 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.sql.SQLException;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.RowSpec;
+import com.jgoodies.forms.layout.FormSpecs;
+import javax.swing.JPasswordField;
+import javax.swing.SwingConstants;
+import java.awt.SystemColor;
 
 public class Login extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textPassword;
 	private JTextField textUser;
 	private JButton btnAccept;
-	private JButton btnCancel;
 	private JButton btnSignIn;
 	private IAuthController auth;
 	private SignIn signIn;
 	private MainView mainView;
+	private JPasswordField textPassword;
 
 	/**
 	 * Launch the application.
@@ -56,7 +62,7 @@ public class Login extends JFrame implements ActionListener {
 	public Login() throws ClassNotFoundException, SQLException, IOException {
 		setResizable(false);
 		this.auth = new AuthController();
-		this.signIn = new SignIn();
+		this.signIn = new SignIn(this);
 		this.mainView = new MainView(this);
 
 		setTitle("Login");
@@ -67,50 +73,48 @@ public class Login extends JFrame implements ActionListener {
 
 		setContentPane(contentPane);
 
-		btnCancel = new JButton("Salir");
-
 		btnAccept = new JButton("Aceptar");
-		SpringLayout sl_contentPane = new SpringLayout();
-		sl_contentPane.putConstraint(SpringLayout.NORTH, btnCancel, 0, SpringLayout.NORTH, btnAccept);
-		sl_contentPane.putConstraint(SpringLayout.EAST, btnCancel, -10, SpringLayout.EAST, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.WEST, btnAccept, 10, SpringLayout.WEST, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, btnAccept, -10, SpringLayout.SOUTH, contentPane);
-		contentPane.setLayout(sl_contentPane);
 		btnAccept.addActionListener(this);
-		btnCancel.addActionListener(this);
-		contentPane.add(btnCancel);
+		SpringLayout sl_contentPane = new SpringLayout();
+		contentPane.setLayout(sl_contentPane);
+		
+		textPassword = new JPasswordField();
+		sl_contentPane.putConstraint(SpringLayout.NORTH, btnAccept, 6, SpringLayout.SOUTH, textPassword);
+		sl_contentPane.putConstraint(SpringLayout.EAST, btnAccept, 0, SpringLayout.EAST, textPassword);
+		sl_contentPane.putConstraint(SpringLayout.WEST, textPassword, 54, SpringLayout.WEST, contentPane);
+		textPassword.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPane.add(textPassword);
 		contentPane.add(btnAccept);
 
 		btnSignIn = new JButton("Registrarce");
+		sl_contentPane.putConstraint(SpringLayout.NORTH, btnSignIn, 6, SpringLayout.SOUTH, textPassword);
+		sl_contentPane.putConstraint(SpringLayout.WEST, btnSignIn, 0, SpringLayout.WEST, textPassword);
+		btnSignIn.setBackground(SystemColor.menu);
 		btnSignIn.setForeground(new Color(0, 0, 255));
-		sl_contentPane.putConstraint(SpringLayout.WEST, btnSignIn, 120, SpringLayout.WEST, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, btnSignIn, -59, SpringLayout.SOUTH, contentPane);
 		btnSignIn.addActionListener(this);
 		contentPane.add(btnSignIn);
+		btnSignIn.setBorderPainted(false);
 
 		JLabel lblPassword = new JLabel("Usuario:");
-		sl_contentPane.putConstraint(SpringLayout.WEST, lblPassword, 102, SpringLayout.WEST, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblPassword, -241, SpringLayout.SOUTH, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblPassword, -231, SpringLayout.SOUTH, contentPane);
+		lblPassword.setHorizontalAlignment(SwingConstants.CENTER);
+		sl_contentPane.putConstraint(SpringLayout.WEST, lblPassword, 136, SpringLayout.WEST, contentPane);
 		contentPane.add(lblPassword);
 
 		JLabel lblContrasea = new JLabel("Contraseña:");
-		sl_contentPane.putConstraint(SpringLayout.WEST, lblContrasea, 0, SpringLayout.WEST, lblPassword);
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblContrasea, -171, SpringLayout.SOUTH, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblContrasea, -161, SpringLayout.SOUTH, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.NORTH, textPassword, 6, SpringLayout.SOUTH, lblContrasea);
+		lblContrasea.setHorizontalAlignment(SwingConstants.CENTER);
+		sl_contentPane.putConstraint(SpringLayout.WEST, lblContrasea, 129, SpringLayout.WEST, contentPane);
 		contentPane.add(lblContrasea);
 
-		textPassword = new JTextField();
-		sl_contentPane.putConstraint(SpringLayout.NORTH, textPassword, 6, SpringLayout.SOUTH, lblContrasea);
-		sl_contentPane.putConstraint(SpringLayout.WEST, textPassword, 0, SpringLayout.WEST, lblPassword);
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, textPassword, -53, SpringLayout.NORTH, btnSignIn);
-		sl_contentPane.putConstraint(SpringLayout.EAST, textPassword, -94, SpringLayout.EAST, contentPane);
-		contentPane.add(textPassword);
-		textPassword.setColumns(10);
-
 		textUser = new JTextField();
+		sl_contentPane.putConstraint(SpringLayout.EAST, textPassword, 0, SpringLayout.EAST, textUser);
 		sl_contentPane.putConstraint(SpringLayout.NORTH, textUser, 6, SpringLayout.SOUTH, lblPassword);
-		sl_contentPane.putConstraint(SpringLayout.WEST, textUser, 0, SpringLayout.WEST, lblPassword);
+		sl_contentPane.putConstraint(SpringLayout.WEST, textUser, 54, SpringLayout.WEST, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, textUser, -20, SpringLayout.NORTH, lblContrasea);
-		sl_contentPane.putConstraint(SpringLayout.EAST, textUser, 0, SpringLayout.EAST, textPassword);
+		sl_contentPane.putConstraint(SpringLayout.EAST, textUser, -53, SpringLayout.EAST, contentPane);
+		textUser.setHorizontalAlignment(SwingConstants.CENTER);
 		textUser.setColumns(10);
 		contentPane.add(textUser);
 	}
@@ -128,10 +132,9 @@ public class Login extends JFrame implements ActionListener {
 				System.out.println("Acceso denegado");
 			}
 		} else if (e.getSource() == btnSignIn) {
+			this.setVisible(false);
 			signIn.run();
 
-		} else if (e.getSource() == btnCancel) {
-			this.dispose();
 		}
 	}
 	

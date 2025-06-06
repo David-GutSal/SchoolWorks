@@ -114,7 +114,7 @@ public class ExpenseView extends JFrame implements ActionListener {
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblMileage, 163, SpringLayout.WEST, contentPane);
 		contentPane.add(lblMileage);
 		
-		JLabel lblDate = new JLabel("Fecha (aaaa/mm/dd) *");
+		JLabel lblDate = new JLabel("Fecha (aaaa-mm-dd) *");
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblDate, 59, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblDate, 275, SpringLayout.WEST, contentPane);
 		contentPane.add(lblDate);

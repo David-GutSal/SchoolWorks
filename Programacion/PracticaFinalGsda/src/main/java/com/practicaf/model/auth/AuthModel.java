@@ -1,4 +1,4 @@
-package com.practicaf.model;
+package com.practicaf.model.auth;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.practicaf.model.DatabaseConnection;
 import com.practicaf.model.dto.UserLogInDto;
 import com.practicaf.model.dto.UserSignInDto;
 

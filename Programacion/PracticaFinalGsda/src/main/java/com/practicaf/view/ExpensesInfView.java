@@ -1,6 +1,7 @@
 package com.practicaf.view;
 
 import javax.swing.JFrame;
+
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
@@ -18,24 +19,27 @@ import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JToggleButton;
 import javax.swing.table.DefaultTableModel;
+import java.awt.Font;
+import java.awt.Component;
+import javax.swing.Box;
+import java.awt.Color;
 
 import com.practicaf.controller.IMainController;
 import com.practicaf.controller.MainController;
 import com.practicaf.model.dto.CarResponseDto;
 import com.practicaf.model.dto.ExpenseDto;
 
-import java.awt.Font;
-import java.awt.Component;
-import javax.swing.Box;
-
 public class ExpensesInfView extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private String userName;
+	private CarResponseDto selectedCar;
 	private IMainController mainController;
 	private MainView mainView;
 	private ExpenseView expenseView;
 	private JPanel contentPane;
+	private JLabel lblMin;
+	private JLabel lblMax;
 	private JTextField textBrand;
 	private JTextField textModel;
 	private JTextField textPlate;
@@ -61,24 +65,27 @@ public class ExpensesInfView extends JFrame implements ActionListener {
 	 * @throws ClassNotFoundException
 	 */
 	public ExpensesInfView(MainView mainView) throws ClassNotFoundException, SQLException, IOException {
-		setTitle("Expenses&Information");
+		setTitle("Expenses & Information");
 		this.mainController = new MainController();
 		this.mainView = mainView;
 
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 860, 410);
+		setBounds(100, 100, 900, 410);
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
+		contentPane.setBackground(Color.WHITE);
 
 		setContentPane(contentPane);
 		SpringLayout sl_contentPane = new SpringLayout();
 		contentPane.setLayout(sl_contentPane);
 
 		JLabel lblSelecCar = new JLabel("Seleccione un coche:");
+		lblSelecCar.setFont(new Font("Arial", Font.BOLD, 12));
+		lblSelecCar.setForeground(Color.DARK_GRAY);
 		contentPane.add(lblSelecCar);
 
-		comboSelectCar = new JComboBox();
+		comboSelectCar = new JComboBox<CarResponseDto>();
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblSelecCar, 0, SpringLayout.WEST, comboSelectCar);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblSelecCar, -2, SpringLayout.NORTH, comboSelectCar);
 		sl_contentPane.putConstraint(SpringLayout.EAST, lblSelecCar, -5, SpringLayout.EAST, comboSelectCar);
@@ -87,31 +94,39 @@ public class ExpensesInfView extends JFrame implements ActionListener {
 		sl_contentPane.putConstraint(SpringLayout.EAST, comboSelectCar, -464, SpringLayout.EAST, contentPane);
 		contentPane.add(comboSelectCar);
 		comboSelectCar.addActionListener(this);
+		comboSelectCar.setFont(new Font("Arial", Font.PLAIN, 12));
 
 		btnDeleteCar = new JButton("Eliminar");
 		sl_contentPane.putConstraint(SpringLayout.NORTH, btnDeleteCar, 0, SpringLayout.NORTH, comboSelectCar);
 		sl_contentPane.putConstraint(SpringLayout.EAST, btnDeleteCar, -278, SpringLayout.EAST, contentPane);
 		contentPane.add(btnDeleteCar);
 		btnDeleteCar.addActionListener(this);
+		btnDeleteCar.setFont(new Font("Arial", Font.PLAIN, 12));
 
 		JLabel lblBrand = new JLabel("Marca:");
+		lblBrand.setFont(new Font("Arial", Font.PLAIN, 12));
+		lblBrand.setForeground(Color.DARK_GRAY);
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblBrand, 5, SpringLayout.WEST, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblBrand, -256, SpringLayout.SOUTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.EAST, lblBrand, -610, SpringLayout.EAST, contentPane);
 		contentPane.add(lblBrand);
 
 		textBrand = new JTextField();
+		textBrand.setFont(new Font("Arial", Font.PLAIN, 12));
 		sl_contentPane.putConstraint(SpringLayout.WEST, textBrand, 70, SpringLayout.WEST, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, textBrand, -253, SpringLayout.SOUTH, contentPane);
 		contentPane.add(textBrand);
 		textBrand.setColumns(10);
 
 		JLabel lblModel = new JLabel("Modelo:");
+		lblModel.setFont(new Font("Arial", Font.PLAIN, 12));
+		lblModel.setForeground(Color.DARK_GRAY);
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblModel, 5, SpringLayout.WEST, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblModel, -230, SpringLayout.SOUTH, contentPane);
 		contentPane.add(lblModel);
 
 		textModel = new JTextField();
+		textModel.setFont(new Font("Arial", Font.PLAIN, 12));
 		sl_contentPane.putConstraint(SpringLayout.EAST, lblModel, -6, SpringLayout.WEST, textModel);
 		sl_contentPane.putConstraint(SpringLayout.WEST, textModel, 70, SpringLayout.WEST, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, textModel, -227, SpringLayout.SOUTH, contentPane);
@@ -120,11 +135,14 @@ public class ExpensesInfView extends JFrame implements ActionListener {
 		textModel.setColumns(10);
 
 		JLabel lblPlate = new JLabel("Matrícula:");
+		lblPlate.setFont(new Font("Arial", Font.PLAIN, 12));
+		lblPlate.setForeground(Color.DARK_GRAY);
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblPlate, 5, SpringLayout.WEST, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblPlate, -204, SpringLayout.SOUTH, contentPane);
 		contentPane.add(lblPlate);
 
 		textPlate = new JTextField();
+		textPlate.setFont(new Font("Arial", Font.PLAIN, 12));
 		sl_contentPane.putConstraint(SpringLayout.EAST, lblPlate, -6, SpringLayout.WEST, textPlate);
 		sl_contentPane.putConstraint(SpringLayout.WEST, textPlate, 70, SpringLayout.WEST, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, textPlate, -201, SpringLayout.SOUTH, contentPane);
@@ -133,11 +151,14 @@ public class ExpensesInfView extends JFrame implements ActionListener {
 		textPlate.setColumns(10);
 
 		JLabel lblYear = new JLabel("Año:");
+		lblYear.setFont(new Font("Arial", Font.PLAIN, 12));
+		lblYear.setForeground(Color.DARK_GRAY);
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblYear, 5, SpringLayout.WEST, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblYear, -178, SpringLayout.SOUTH, contentPane);
 		contentPane.add(lblYear);
 
 		textYear = new JTextField();
+		textYear.setFont(new Font("Arial", Font.PLAIN, 12));
 		sl_contentPane.putConstraint(SpringLayout.EAST, lblYear, -6, SpringLayout.WEST, textYear);
 		sl_contentPane.putConstraint(SpringLayout.WEST, textYear, 70, SpringLayout.WEST, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, textYear, -175, SpringLayout.SOUTH, contentPane);
@@ -145,8 +166,9 @@ public class ExpensesInfView extends JFrame implements ActionListener {
 		contentPane.add(textYear);
 		textYear.setColumns(10);
 
-		comboFilter = new JComboBox();
-		comboFilter.setModel(new DefaultComboBoxModel(new String[] { "Todos", "Fecha", "Kilometraje" }));
+		comboFilter = new JComboBox<String>();
+		comboFilter.setFont(new Font("Arial", Font.PLAIN, 12));
+		comboFilter.setModel(new DefaultComboBoxModel<String>(new String[] { "Todos", "Fecha", "Kilometraje" }));
 		sl_contentPane.putConstraint(SpringLayout.WEST, comboFilter, 70, SpringLayout.WEST, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, comboFilter, -147, SpringLayout.SOUTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.EAST, comboFilter, -504, SpringLayout.EAST, contentPane);
@@ -155,32 +177,42 @@ public class ExpensesInfView extends JFrame implements ActionListener {
 		comboFilter.addActionListener(this);
 
 		textMinimum = new JTextField();
+		textMinimum.setFont(new Font("Arial", Font.PLAIN, 12));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, textMinimum, 0, SpringLayout.NORTH, comboFilter);
 		contentPane.add(textMinimum);
 		textMinimum.setColumns(10);
 
 		btnAccept = new JButton("Guardar Cambios");
-		sl_contentPane.putConstraint(SpringLayout.WEST, textMinimum, 0, SpringLayout.WEST, btnAccept);
+		sl_contentPane.putConstraint(SpringLayout.EAST, btnAccept, -324, SpringLayout.EAST, contentPane);
+		btnAccept.setFont(new Font("Arial", Font.PLAIN, 12));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, btnAccept, -4, SpringLayout.NORTH, lblPlate);
 		sl_contentPane.putConstraint(SpringLayout.WEST, btnAccept, 47, SpringLayout.EAST, textPlate);
-		sl_contentPane.putConstraint(SpringLayout.EAST, btnAccept, -335, SpringLayout.EAST, contentPane);
 		contentPane.add(btnAccept);
 		btnAccept.addActionListener(this);
 
 		btnAddExpense = new JButton("Agregar Gasto");
-		sl_contentPane.putConstraint(SpringLayout.NORTH, btnAddExpense, -1, SpringLayout.NORTH, comboFilter);
+		sl_contentPane.putConstraint(SpringLayout.WEST, btnAddExpense, 711, SpringLayout.WEST, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.EAST, btnAddExpense, -22, SpringLayout.EAST, contentPane);
+		btnAddExpense.setFont(new Font("Arial", Font.PLAIN, 12));
+		sl_contentPane.putConstraint(SpringLayout.NORTH, btnAddExpense, -1, SpringLayout.NORTH, comboFilter);
 		contentPane.add(btnAddExpense);
 		btnAddExpense.addActionListener(this);
 
 		table = new JTable();
+		table.setFont(new Font("Arial", Font.PLAIN, 12));
 		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "TipoDeGasto", "Kilometraje", "Fecha",
-				"Importe", "Descripci\u00F3n(masx: 55 car\u00E1cteres)" }) {
+				"Importe", "Descripción (máx: 55 caracteres)" }) {
+			private static final long serialVersionUID = 1L;
+			@SuppressWarnings("rawtypes")
 			Class[] columnTypes = new Class[] { String.class, String.class, String.class, Object.class, String.class };
 
+			@SuppressWarnings({ "unchecked", "rawtypes" })
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
+			public boolean isCellEditable(int row, int column) {
+		        return false;
+		    }
 		});
 		table.getColumnModel().getColumn(0).setResizable(false);
 		table.getColumnModel().getColumn(0).setPreferredWidth(80);
@@ -204,29 +236,38 @@ public class ExpensesInfView extends JFrame implements ActionListener {
 		sl_contentPane.putConstraint(SpringLayout.EAST, table, -22, SpringLayout.EAST, contentPane);
 
 		JLabel lblFilter = new JLabel("Filtrar por:");
+		lblFilter.setFont(new Font("Arial", Font.PLAIN, 12));
+		lblFilter.setForeground(Color.DARK_GRAY);
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblFilter, 4, SpringLayout.NORTH, comboFilter);
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblFilter, 0, SpringLayout.WEST, lblBrand);
 		contentPane.add(lblFilter);
 
-		JLabel lblMin = new JLabel("Min:");
+		lblMin = new JLabel("Min:");
+		sl_contentPane.putConstraint(SpringLayout.WEST, textMinimum, 7, SpringLayout.EAST, lblMin);
+		lblMin.setFont(new Font("Arial", Font.PLAIN, 12));
+		lblMin.setForeground(Color.DARK_GRAY);
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblMin, 3, SpringLayout.NORTH, comboFilter);
 		sl_contentPane.putConstraint(SpringLayout.EAST, lblMin, 0, SpringLayout.EAST, comboSelectCar);
 		contentPane.add(lblMin);
 
-		JLabel lblMax = new JLabel("Max:");
+		lblMax = new JLabel("Max:");
+		sl_contentPane.putConstraint(SpringLayout.EAST, textMinimum, -18, SpringLayout.WEST, lblMax);
+		lblMax.setFont(new Font("Arial", Font.PLAIN, 12));
+		lblMax.setForeground(Color.DARK_GRAY);
 		sl_contentPane.putConstraint(SpringLayout.WEST, btnDeleteCar, 0, SpringLayout.WEST, lblMax);
 		sl_contentPane.putConstraint(SpringLayout.EAST, lblMax, -335, SpringLayout.EAST, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblMax, 3, SpringLayout.NORTH, comboFilter);
 		contentPane.add(lblMax);
 
 		tglbtnEditCar = new JToggleButton("Editar");
-		sl_contentPane.putConstraint(SpringLayout.EAST, textMinimum, -5, SpringLayout.EAST, tglbtnEditCar);
+		tglbtnEditCar.setFont(new Font("Arial", Font.PLAIN, 12));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, tglbtnEditCar, 0, SpringLayout.NORTH, comboSelectCar);
 		sl_contentPane.putConstraint(SpringLayout.WEST, tglbtnEditCar, 20, SpringLayout.EAST, comboSelectCar);
 		contentPane.add(tglbtnEditCar);
 		tglbtnEditCar.addActionListener(this);
 
 		textMaximum = new JTextField();
+		textMaximum.setFont(new Font("Arial", Font.PLAIN, 12));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, textMaximum, 0, SpringLayout.NORTH, comboFilter);
 		sl_contentPane.putConstraint(SpringLayout.WEST, textMaximum, 6, SpringLayout.EAST, lblMax);
 		sl_contentPane.putConstraint(SpringLayout.EAST, textMaximum, 75, SpringLayout.EAST, lblMax);
@@ -235,97 +276,127 @@ public class ExpensesInfView extends JFrame implements ActionListener {
 
 		btnAcceptFilter = new JButton("Buscar");
 		sl_contentPane.putConstraint(SpringLayout.NORTH, btnAcceptFilter, -1, SpringLayout.NORTH, comboFilter);
+		btnAcceptFilter.setFont(new Font("Arial", Font.PLAIN, 12));
 		contentPane.add(btnAcceptFilter);
 		btnAcceptFilter.addActionListener(this);
 
 		btnExit = new JButton("Salir");
+		btnExit.setFont(new Font("Arial", Font.PLAIN, 12));
 		sl_contentPane.putConstraint(SpringLayout.WEST, btnExit, 0, SpringLayout.WEST, lblBrand);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, btnExit, 0, SpringLayout.SOUTH, table);
 		contentPane.add(btnExit);
 		btnExit.addActionListener(this);
 
 		JLabel lblTitle_p1 = new JLabel("Gastos");
+		lblTitle_p1.setFont(new Font("Arial", Font.BOLD, 28));
+		lblTitle_p1.setForeground(Color.BLACK);
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblTitle_p1, 318, SpringLayout.WEST, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblTitle_p1, -6, SpringLayout.NORTH, lblSelecCar);
-		lblTitle_p1.setFont(new Font("Arial", Font.PLAIN, 25));
 		contentPane.add(lblTitle_p1);
 
 		JLabel lblTitle_p2 = new JLabel("&");
+		lblTitle_p2.setFont(new Font("Arial", Font.BOLD, 28));
+		lblTitle_p2.setForeground(Color.BLACK);
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblTitle_p2, 0, SpringLayout.NORTH, lblTitle_p1);
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblTitle_p2, 6, SpringLayout.EAST, lblTitle_p1);
-		lblTitle_p2.setFont(new Font("Arial", Font.PLAIN, 25));
 		contentPane.add(lblTitle_p2);
 
 		JLabel lblTitle_p3 = new JLabel("Información");
+		lblTitle_p3.setFont(new Font("Arial", Font.BOLD, 28));
+		lblTitle_p3.setForeground(Color.BLACK);
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblTitle_p3, 0, SpringLayout.NORTH, lblTitle_p1);
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblTitle_p3, 6, SpringLayout.EAST, lblTitle_p2);
-		lblTitle_p3.setFont(new Font("Arial", Font.PLAIN, 25));
 		contentPane.add(lblTitle_p3);
 
 		Component horizontalStrut = Box.createHorizontalStrut(20);
-		sl_contentPane.putConstraint(SpringLayout.WEST, btnAddExpense, 2, SpringLayout.EAST, horizontalStrut);
-		sl_contentPane.putConstraint(SpringLayout.WEST, horizontalStrut, 668, SpringLayout.WEST, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.EAST, btnAcceptFilter, -6, SpringLayout.WEST, horizontalStrut);
 		sl_contentPane.putConstraint(SpringLayout.NORTH, horizontalStrut, 0, SpringLayout.NORTH, comboFilter);
+		sl_contentPane.putConstraint(SpringLayout.EAST, horizontalStrut, -6, SpringLayout.WEST, btnAddExpense);
 		contentPane.add(horizontalStrut);
+
+		comboFilter.setSelectedItem("Todos");
+		handleFilterSelection("Todos");
+		comboFilter.setSelectedItem("Todos");
+		
+
+		setEditingMode(false);
+		tglbtnEditCar.setSelected(false);
+		tglbtnEditCar.setEnabled(false);
+		btnAccept.setVisible(false);
+	}
+
+	private void handleFilterSelection(String selectedFilter) {
+		if (selectedFilter.equals("Todos")) {
+			textMinimum.setVisible(false);
+			textMaximum.setVisible(false);
+			lblMin.setVisible(false);
+			lblMax.setVisible(false);
+			btnAcceptFilter.setVisible(false);
+			textMinimum.setText("");
+			textMaximum.setText("");
+			CarResponseDto selectedCar = (CarResponseDto) comboSelectCar.getSelectedItem();
+			requestExpenseList(selectedCar, selectedFilter, textMinimum.getText(), textMaximum.getText());
+		} else {
+			textMinimum.setVisible(true);
+			textMaximum.setVisible(true);
+			lblMin.setVisible(true);
+			lblMax.setVisible(true);
+			btnAcceptFilter.setVisible(true);
+		}
+	}
+
+	private void setEditingMode(boolean isEditing) {
+		textBrand.setEditable(isEditing);
+		textModel.setEditable(isEditing);
+		textPlate.setEditable(isEditing);
+		textYear.setEditable(isEditing);
+		btnAccept.setVisible(isEditing);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == comboSelectCar) {
-			System.out.println("Evento de JComboBox disparado");
-
 			if (comboSelectCar.getSelectedItem() != null) {
 				tglbtnEditCar.setEnabled(true);
 				btnDeleteCar.setEnabled(true);
 				btnAddExpense.setEnabled(true);
-				CarResponseDto selectedCar = (CarResponseDto) comboSelectCar.getSelectedItem();
+				this.selectedCar = (CarResponseDto) comboSelectCar.getSelectedItem();
 				textBrand.setText(selectedCar.getBrand());
 				textModel.setText(selectedCar.getModel());
 				textPlate.setText(selectedCar.getPlate());
 				textYear.setText(Integer.toString(selectedCar.getYear()));
 
+				setEditingMode(false);
+				tglbtnEditCar.setSelected(false);
+				requestExpenseList(selectedCar, "Todos", "", "");
+
 			} else {
 				tglbtnEditCar.setEnabled(false);
 				btnDeleteCar.setEnabled(false);
 				btnAddExpense.setEnabled(false);
+				clearCarTextFields();
+				
+				DefaultTableModel model = (DefaultTableModel) table.getModel();
+				model.setRowCount(0);
+				setEditingMode(false);
+				tglbtnEditCar.setSelected(false);
 			}
 		}
 
 		if (e.getSource() == comboFilter) {
-			System.out.println("Evento de JComboBox disparado");
 			String selectedFilter = (String) comboFilter.getSelectedItem();
-			CarResponseDto selectedCar = (CarResponseDto) comboSelectCar.getSelectedItem();
-
-			if (selectedFilter.equals("Todos")) {
-				textMinimum.setVisible(false);
-				textMaximum.setVisible(false);
-				btnAcceptFilter.setVisible(false);
-				textMinimum.setText("");
-				textMaximum.setText("");
-				requestExpenseList(selectedCar, selectedFilter, textMinimum.getText(), textMaximum.getText());
-			} else {
-				textMinimum.setVisible(true);
-				textMaximum.setVisible(true);
-				//lblMin.setVisible(true);
-				//lblMax.setVisible(true);
-				btnAcceptFilter.setVisible(true);
-			}
+			handleFilterSelection(selectedFilter);
 		}
 
 		if (e.getSource() == btnAcceptFilter) {
-			System.out.println("Filtrando gastos");
 			String selectedFilter = (String) comboFilter.getSelectedItem();
 			CarResponseDto selectedCar = (CarResponseDto) comboSelectCar.getSelectedItem();
 			requestExpenseList(selectedCar, selectedFilter, textMinimum.getText(), textMaximum.getText());
-
 		}
 
 		if (e.getSource() == btnDeleteCar) {
-			System.out.println("Borrar coche de propietario");
 			CarResponseDto selectedCar = (CarResponseDto) comboSelectCar.getSelectedItem();
 			if (selectedCar != null && mainController.deleteCar(selectedCar, userName)) {
-				System.out.println("Coche eliminado");
 				viewShow();
 			} else {
 				System.out.println("Coche NO eliminado");
@@ -333,18 +404,8 @@ public class ExpensesInfView extends JFrame implements ActionListener {
 		}
 
 		if (e.getSource() == tglbtnEditCar) {
-
 			boolean isEditing = tglbtnEditCar.isSelected();
-			textBrand.setEditable(isEditing);
-			textModel.setEditable(isEditing);
-			textPlate.setEditable(isEditing);
-			textYear.setEditable(isEditing);
-
-			if (isEditing) {
-				btnAccept.setVisible(true);
-			} else {
-				btnAccept.setVisible(false);
-			}
+			setEditingMode(isEditing);
 		}
 
 		if (e.getSource() == btnAccept) {
@@ -354,17 +415,12 @@ public class ExpensesInfView extends JFrame implements ActionListener {
 						textPlate.getText(), Integer.parseInt(textYear.getText()));
 
 				if (mainController.editCar(editedCar, oldPlate)) {
-					System.out.println("Coche editado");
 					mainView.updateList(userName);
 					viewShow();
 				} else {
 					System.out.println("Coche no editado");
 				}
-				textBrand.setEditable(false);
-				textModel.setEditable(false);
-				textPlate.setEditable(false);
-				textYear.setEditable(false);
-				btnAccept.setVisible(false);
+				setEditingMode(false);
 				tglbtnEditCar.setSelected(false);
 			} catch (NumberFormatException i) {
 				System.out.println("Algo salió mal");
@@ -378,7 +434,6 @@ public class ExpensesInfView extends JFrame implements ActionListener {
 		}
 
 		if (e.getSource() == btnAddExpense) {
-			System.out.println("Añadir gasto");
 			CarResponseDto selectedCar = (CarResponseDto) comboSelectCar.getSelectedItem();
 			try {
 				this.expenseView = new ExpenseView(selectedCar.getPlate());
@@ -388,6 +443,13 @@ public class ExpensesInfView extends JFrame implements ActionListener {
 			expenseView.viewShow();
 
 		}
+	}
+
+	private void clearCarTextFields() {
+		textBrand.setText("");
+		textModel.setText("");
+		textPlate.setText("");
+		textYear.setText("");
 	}
 
 	public void requestCarList(String userName) {
@@ -409,15 +471,14 @@ public class ExpensesInfView extends JFrame implements ActionListener {
 	}
 
 	public void requestExpenseList(CarResponseDto selectedCar, String selectedFilter, String textMin, String textMax) {
-		/*TODO
-		 * Si no hay coches no hace nada
-		 * */
-		List<ExpenseDto> expenseList = mainController.requestExpenses(selectedCar, selectedFilter, textMin, textMax);
-		DefaultTableModel model = (DefaultTableModel) table.getModel();
-		model.setRowCount(0);
-		for (ExpenseDto expense : expenseList) {
-			model.addRow(new Object[] { expense.getExpenseType(), expense.getMileage() + "km", expense.getDate(),
-					expense.getAmount() + "€", expense.getDescription() });
+		if (selectedCar != null) {
+			List<ExpenseDto> expenseList = mainController.requestExpenses(selectedCar, selectedFilter, textMin, textMax);
+			DefaultTableModel model = (DefaultTableModel) table.getModel();
+			model.setRowCount(0);
+			for (ExpenseDto expense : expenseList) {
+				model.addRow(new Object[] { expense.getExpenseType(), expense.getMileage() + " km", expense.getDate(),
+						expense.getAmount() + "€", expense.getDescription() });
+			}
 		}
 	}
 
@@ -427,6 +488,8 @@ public class ExpensesInfView extends JFrame implements ActionListener {
 
 	public void viewShow() {
 		requestCarList(this.userName);
+		requestExpenseList(this.selectedCar, "Todos", "", "");
 		this.setVisible(true);
 	}
 }
+

@@ -1,6 +1,7 @@
 package com.practicaf.view;
 
 import java.awt.event.ActionEvent;
+
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -17,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.JLabel;
 import javax.swing.JButton;
+import java.awt.Font;
 
 public class SignIn extends JFrame implements ActionListener {
 
@@ -29,10 +31,6 @@ public class SignIn extends JFrame implements ActionListener {
 	private IAuthController auth;
 	private Login login;
 
-	/**
-	 * Launch the application.
-	 */
-
 	public void run() {
 		try {
 			SignIn frame = new SignIn(login);
@@ -41,14 +39,6 @@ public class SignIn extends JFrame implements ActionListener {
 			e.printStackTrace();
 		}
 	}
-
-	/**
-	 * Create the frame.
-	 * 
-	 * @throws IOException
-	 * @throws SQLException
-	 * @throws ClassNotFoundException
-	 */
 
 	public SignIn(Login login) throws ClassNotFoundException, SQLException, IOException {
 		setResizable(false);
@@ -66,11 +56,13 @@ public class SignIn extends JFrame implements ActionListener {
 		contentPane.setLayout(sl_contentPane);
 
 		JLabel lblNewLabel = new JLabel("Usuario:");
+		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 12));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblNewLabel, 102, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblNewLabel, 12, SpringLayout.WEST, contentPane);
 		contentPane.add(lblNewLabel);
 
 		textUser = new JTextField();
+		textUser.setFont(new Font("Arial", Font.PLAIN, 12));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, textUser, 123, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, textUser, 12, SpringLayout.WEST, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.EAST, textUser, 207, SpringLayout.WEST, contentPane);
@@ -78,11 +70,13 @@ public class SignIn extends JFrame implements ActionListener {
 		contentPane.add(textUser);
 
 		JLabel lblContrasea = new JLabel("Contraseña:");
+		lblContrasea.setFont(new Font("Arial", Font.PLAIN, 12));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblContrasea, 187, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblContrasea, 12, SpringLayout.WEST, contentPane);
 		contentPane.add(lblContrasea);
 
 		textPassword = new JTextField();
+		textPassword.setFont(new Font("Arial", Font.PLAIN, 12));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, textPassword, 208, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, textPassword, 12, SpringLayout.WEST, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.EAST, textPassword, 207, SpringLayout.WEST, contentPane);
@@ -90,12 +84,14 @@ public class SignIn extends JFrame implements ActionListener {
 		contentPane.add(textPassword);
 
 		btnAccept = new JButton("Aceptar");
+		btnAccept.setFont(new Font("Arial", Font.PLAIN, 12));
 		sl_contentPane.putConstraint(SpringLayout.WEST, btnAccept, 0, SpringLayout.WEST, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, btnAccept, -10, SpringLayout.SOUTH, contentPane);
 		btnAccept.addActionListener(this);
 		contentPane.add(btnAccept);
 
 		btnCancel = new JButton("Cancelar");
+		btnCancel.setFont(new Font("Arial", Font.PLAIN, 12));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, btnCancel, 0, SpringLayout.NORTH, btnAccept);
 		sl_contentPane.putConstraint(SpringLayout.EAST, btnCancel, 0, SpringLayout.EAST, contentPane);
 		btnCancel.addActionListener(this);
@@ -108,6 +104,7 @@ public class SignIn extends JFrame implements ActionListener {
 			UserSignInDto user = new UserSignInDto(textUser.getText(), textPassword.getText(), "");
 			if (auth.register(user)) {
 				System.out.println("Usuario agregado");
+				clearText();
 				this.dispose();
 				login.setVisible(true);
 			}
@@ -115,5 +112,10 @@ public class SignIn extends JFrame implements ActionListener {
 			this.dispose();
 			login.setVisible(true);
 		}
+	}
+	
+	public void clearText() {
+		textUser.setText("");
+		textPassword.setText("");
 	}
 }

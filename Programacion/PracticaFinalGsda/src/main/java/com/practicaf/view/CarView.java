@@ -2,6 +2,7 @@ package com.practicaf.view;
 
 import javax.swing.JFrame;
 
+
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -19,6 +20,7 @@ import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SpringLayout;
+import java.awt.Font;
 
 public class CarView extends JFrame implements ActionListener {
 
@@ -35,10 +37,6 @@ public class CarView extends JFrame implements ActionListener {
 	private MainView mainView;
 
 	/**
-	 * Launch the application.
-	 */
-
-	/**
 	 * Create the frame.
 	 * 
 	 * @param mainView
@@ -53,7 +51,9 @@ public class CarView extends JFrame implements ActionListener {
 		this.textUserName = new JTextField();
 		this.mainView = mainView;
 
-		setTitle("Car Information");
+		
+		
+		setTitle("Adding Car");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 320, 230);
 		contentPane = new JPanel();
@@ -64,57 +64,67 @@ public class CarView extends JFrame implements ActionListener {
 		contentPane.setLayout(sl_contentPane);
 
 		textBrand = new JTextField();
+		textBrand.setFont(new Font("Arial", Font.PLAIN, 12));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, textBrand, 12, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, textBrand, 108, SpringLayout.WEST, contentPane);
 		contentPane.add(textBrand);
 		textBrand.setColumns(10);
 
 		textModel = new JTextField();
+		textModel.setFont(new Font("Arial", Font.PLAIN, 12));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, textModel, 39, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, textModel, 108, SpringLayout.WEST, contentPane);
 		contentPane.add(textModel);
 		textModel.setColumns(10);
 
 		textPlate = new JTextField();
+		textPlate.setFont(new Font("Arial", Font.PLAIN, 12));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, textPlate, 66, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, textPlate, 108, SpringLayout.WEST, contentPane);
 		contentPane.add(textPlate);
 		textPlate.setColumns(10);
 
 		textYear = new JTextField();
+		textYear.setFont(new Font("Arial", Font.PLAIN, 12));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, textYear, 93, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, textYear, 108, SpringLayout.WEST, contentPane);
 		contentPane.add(textYear);
 		textYear.setColumns(10);
 
 		btnAccept = new JButton("Aceptar");
-		sl_contentPane.putConstraint(SpringLayout.NORTH, btnAccept, 120, SpringLayout.NORTH, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.WEST, btnAccept, 12, SpringLayout.WEST, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, btnAccept, -23, SpringLayout.SOUTH, contentPane);
+		btnAccept.setFont(new Font("Arial", Font.PLAIN, 12));
 		contentPane.add(btnAccept);
 		btnAccept.addActionListener(this);
 
 		btnCancel = new JButton("Cancelar");
-		sl_contentPane.putConstraint(SpringLayout.NORTH, btnCancel, 120, SpringLayout.NORTH, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.WEST, btnCancel, 201, SpringLayout.WEST, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.NORTH, btnCancel, 0, SpringLayout.NORTH, btnAccept);
+		sl_contentPane.putConstraint(SpringLayout.EAST, btnCancel, -10, SpringLayout.EAST, contentPane);
+		btnCancel.setFont(new Font("Arial", Font.PLAIN, 12));
 		contentPane.add(btnCancel);
 		btnCancel.addActionListener(this);
 
 		JLabel lblNewLabel = new JLabel("Marca:");
+		sl_contentPane.putConstraint(SpringLayout.WEST, btnAccept, 0, SpringLayout.WEST, lblNewLabel);
+		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 12));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblNewLabel, 12, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblNewLabel, 12, SpringLayout.WEST, contentPane);
 		contentPane.add(lblNewLabel);
 
 		JLabel lblNewLabel_1 = new JLabel("Modelo:");
+		lblNewLabel_1.setFont(new Font("Arial", Font.PLAIN, 12));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblNewLabel_1, 39, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblNewLabel_1, 12, SpringLayout.WEST, contentPane);
 		contentPane.add(lblNewLabel_1);
 
 		JLabel lblNewLabel_2 = new JLabel("Matrícula:");
+		lblNewLabel_2.setFont(new Font("Arial", Font.PLAIN, 12));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblNewLabel_2, 66, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblNewLabel_2, 12, SpringLayout.WEST, contentPane);
 		contentPane.add(lblNewLabel_2);
 
 		JLabel lblNewLabel_3 = new JLabel("Año:");
+		lblNewLabel_3.setFont(new Font("Arial", Font.PLAIN, 12));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblNewLabel_3, 93, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblNewLabel_3, 12, SpringLayout.WEST, contentPane);
 		contentPane.add(lblNewLabel_3);
@@ -133,6 +143,8 @@ public class CarView extends JFrame implements ActionListener {
 					mainView.updateList(textUserName.getText());
 					this.dispose();
 					clearText();
+				}else {
+					System.out.println("Coche NO agregado");
 				}
 			} catch (NumberFormatException i) {
 				System.out.println("El texto introducido no es un número entero válido.");

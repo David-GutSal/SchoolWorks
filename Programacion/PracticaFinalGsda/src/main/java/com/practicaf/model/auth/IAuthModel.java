@@ -1,4 +1,4 @@
-package com.practicaf.model;
+package com.practicaf.model.auth;
 
 import com.practicaf.model.dto.UserLogInDto;
 import com.practicaf.model.dto.UserSignInDto;

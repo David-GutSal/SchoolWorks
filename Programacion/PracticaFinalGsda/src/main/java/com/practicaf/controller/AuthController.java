@@ -6,8 +6,8 @@ import java.util.UUID;
 
 import org.jasypt.util.password.StrongPasswordEncryptor;
 
-import com.practicaf.model.AuthModel;
-import com.practicaf.model.IAuthModel;
+import com.practicaf.model.auth.AuthModel;
+import com.practicaf.model.auth.IAuthModel;
 import com.practicaf.model.dto.UserLogInDto;
 import com.practicaf.model.dto.UserSignInDto;
 

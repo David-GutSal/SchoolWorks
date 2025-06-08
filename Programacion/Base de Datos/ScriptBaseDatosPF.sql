@@ -1,7 +1,9 @@
+create database PracticaFinalGsda;
+use PracticaFinalGsda;
 create table Car(
 	id_car int primary key auto_increment,
-    brand varchar(50),
-    model varchar(20),
+    brand varchar(11),
+    model varchar(11),
     plate varchar(7) unique,
     year int CHECK (year >= 1 AND year <= 9999)
 );
@@ -28,18 +30,6 @@ create table Expense(
     mileage int,
     date date,
     amount double,
-    description varchar(400),
+    description varchar(55),
     foreign key (car_plate) references Car (plate)
 );
-
-/*drop table Expense;
-drop table Owner;
-drop table Car;
-drop table User;*/
-
-SELECT * FROM Expense;
-SELECT * FROM User;
-SELECT * FROM Owner;
-SELECT * FROM Car;
-
-SELECT c.brand AS b, c.model AS m, c.plate AS p, c.year AS y FROM Car c INNER JOIN Owner o ON c.plate = o.car_plate INNER JOIN User u ON u.name = o.user_name WHERE u.name = ?

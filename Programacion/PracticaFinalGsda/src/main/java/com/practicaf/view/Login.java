@@ -2,6 +2,7 @@ package com.practicaf.view;
 
 import javax.swing.JFrame;
 
+
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -18,13 +19,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.sql.SQLException;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-import com.jgoodies.forms.layout.FormSpecs;
 import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
 import java.awt.SystemColor;
+import java.awt.Font;
 
 public class Login extends JFrame implements ActionListener {
 
@@ -37,6 +35,7 @@ public class Login extends JFrame implements ActionListener {
 	private SignIn signIn;
 	private MainView mainView;
 	private JPasswordField textPassword;
+	private JLabel lblUserNotFound;
 
 	/**
 	 * Launch the application.
@@ -50,14 +49,6 @@ public class Login extends JFrame implements ActionListener {
 			e.printStackTrace();
 		}
 	}
-
-	/**
-	 * Create the frame.
-	 * 
-	 * @throws IOException
-	 * @throws SQLException
-	 * @throws ClassNotFoundException
-	 */
 
 	public Login() throws ClassNotFoundException, SQLException, IOException {
 		setResizable(false);
@@ -86,7 +77,7 @@ public class Login extends JFrame implements ActionListener {
 		contentPane.add(textPassword);
 		contentPane.add(btnAccept);
 
-		btnSignIn = new JButton("Registrarce");
+		btnSignIn = new JButton("Registrarse");
 		sl_contentPane.putConstraint(SpringLayout.NORTH, btnSignIn, 6, SpringLayout.SOUTH, textPassword);
 		sl_contentPane.putConstraint(SpringLayout.WEST, btnSignIn, 0, SpringLayout.WEST, textPassword);
 		btnSignIn.setBackground(SystemColor.menu);
@@ -117,25 +108,41 @@ public class Login extends JFrame implements ActionListener {
 		textUser.setHorizontalAlignment(SwingConstants.CENTER);
 		textUser.setColumns(10);
 		contentPane.add(textUser);
+		
+		lblUserNotFound = new JLabel("Usuario o Contraseña incorrectos");
+		lblUserNotFound.setForeground(Color.RED);
+		sl_contentPane.putConstraint(SpringLayout.WEST, lblUserNotFound, 45, SpringLayout.WEST, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.EAST, lblUserNotFound, 0, SpringLayout.EAST, textPassword);
+		lblUserNotFound.setHorizontalAlignment(SwingConstants.CENTER);
+		lblUserNotFound.setFont(new Font("Arial", Font.BOLD, 11));
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblUserNotFound, 0, SpringLayout.SOUTH, contentPane);
+		contentPane.add(lblUserNotFound);
+		lblUserNotFound.setVisible(false);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnAccept) {
+			@SuppressWarnings("deprecation")
 			UserLogInDto user = new UserLogInDto(textUser.getText(), textPassword.getText());
 			if (auth.login(user)) {
 				System.out.println("Acceso concedido");
+				lblUserNotFound.setVisible(false);
 				this.setVisible(false);
 				mainView.viewShow(textUser.getText());
-				
 			}else {
 				System.out.println("Acceso denegado");
+				lblUserNotFound.setVisible(true);
 			}
-		} else if (e.getSource() == btnSignIn) {
+		}
+		if (e.getSource() == btnSignIn) {
 			this.setVisible(false);
 			signIn.run();
 
 		}
 	}
-	
+	public void clearText() {
+		textUser.setText("");
+		textPassword.setText("");
+	}
 }

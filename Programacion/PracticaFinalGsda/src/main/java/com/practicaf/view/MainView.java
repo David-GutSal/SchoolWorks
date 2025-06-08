@@ -2,6 +2,7 @@ package com.practicaf.view;
 
 import javax.swing.JFrame;
 
+
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -32,7 +33,7 @@ public class MainView extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JLabel lblNewLabel_1;
+	private JLabel lblMyCars;
 	private JButton btnAddCar;
 	private JButton btnShareCar;
 	private JButton btnExpense_Information;
@@ -44,7 +45,7 @@ public class MainView extends JFrame implements ActionListener {
 	private ShareCarView shareCarView;
 	private ExpensesInfView expensesInfView;
 	private IMainController mainController;
-	private JTextField textUuid;
+	private JTextField textUserUuid;
 
 	/**
 	 * Launch the application.
@@ -61,15 +62,16 @@ public class MainView extends JFrame implements ActionListener {
 		this.login = login;
 		this.mainController = new MainController();
 		this.carView = new CarView(this);
-		this.shareCarView = new ShareCarView();
+		this.shareCarView = new ShareCarView(this);
 		this.expensesInfView = new ExpensesInfView(this);
 
 		listModel = new DefaultListModel<>();
 		carList = new JList<>(listModel);
+		carList.setFont(new Font("Arial", Font.PLAIN, 12));
 
 		setTitle("Menu");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 467, 440);
+		setBounds(100, 100, 570, 446);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -77,37 +79,44 @@ public class MainView extends JFrame implements ActionListener {
 
 		JLabel lblTitle = new JLabel("Menú Principal");
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTitle.setFont(new Font("Arial", Font.BOLD, 25));
+		lblTitle.setFont(new Font("Arial", Font.BOLD, 26));
 
-		lblNewLabel_1 = new JLabel("Mis coches");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMyCars = new JLabel("Mis coches");
+		lblMyCars.setFont(new Font("Arial", Font.PLAIN, 12));
+		lblMyCars.setHorizontalAlignment(SwingConstants.CENTER);
 
 		btnAddCar = new JButton("Añadir coche");
+		btnAddCar.setFont(new Font("Arial", Font.PLAIN, 12));
 		btnAddCar.addActionListener(this);
 
 		btnShareCar = new JButton("Compartir coche");
+		btnShareCar.setFont(new Font("Arial", Font.PLAIN, 12));
 		btnShareCar.addActionListener(this);
 
 		btnExpense_Information = new JButton("Gastos & Información");
+		btnExpense_Information.setFont(new Font("Arial", Font.PLAIN, 12));
 		btnExpense_Information.addActionListener(this);
 
 		btnLogOut = new JButton("Cerrar sesion");
+		btnLogOut.setFont(new Font("Arial", Font.PLAIN, 12));
 		
-		textUuid = new JTextField();
-		textUuid.setBackground(SystemColor.menu);
-		textUuid.setEditable(false);
-		textUuid.setForeground(new Color(192, 192, 192));
-		textUuid.setColumns(10);
+		textUserUuid = new JTextField();
+		textUserUuid.setFont(new Font("Arial", Font.PLAIN, 11));
+		textUserUuid.setBackground(SystemColor.menu);
+		textUserUuid.setEditable(false);
+		textUserUuid.setForeground(new Color(192, 192, 192));
+		textUserUuid.setColumns(10);
 		
 		JLabel lblUuid = new JLabel("ID:");
+		lblUuid.setFont(new Font("Arial", Font.PLAIN, 12));
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGap(5)
 					.addComponent(lblTitle, GroupLayout.PREFERRED_SIZE, 441, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
-				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addContainerGap()
@@ -118,15 +127,15 @@ public class MainView extends JFrame implements ActionListener {
 								.addComponent(btnAddCar, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE)
 								.addComponent(btnShareCar, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE)
 								.addComponent(btnExpense_Information, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE))
-							.addPreferredGap(ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(lblNewLabel_1, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(carList, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 211, GroupLayout.PREFERRED_SIZE))))
+							.addPreferredGap(ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblMyCars)
+								.addComponent(carList, GroupLayout.PREFERRED_SIZE, 297, GroupLayout.PREFERRED_SIZE))))
 					.addGap(27))
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addComponent(lblUuid)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(textUuid, GroupLayout.PREFERRED_SIZE, 238, GroupLayout.PREFERRED_SIZE)
+					.addComponent(textUserUuid, GroupLayout.PREFERRED_SIZE, 238, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(199, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
@@ -134,10 +143,12 @@ public class MainView extends JFrame implements ActionListener {
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblUuid)
-						.addComponent(textUuid, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(textUserUuid, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(31)
 					.addComponent(lblTitle)
-					.addGap(31)
+					.addGap(26)
+					.addComponent(lblMyCars)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(btnAddCar)
@@ -145,10 +156,7 @@ public class MainView extends JFrame implements ActionListener {
 							.addComponent(btnShareCar)
 							.addGap(56)
 							.addComponent(btnExpense_Information))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(lblNewLabel_1)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(carList, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE)))
+						.addComponent(carList, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE))
 					.addGap(31)
 					.addComponent(btnLogOut)
 					.addGap(24))
@@ -162,7 +170,7 @@ public class MainView extends JFrame implements ActionListener {
 		this.carView.setUserName(userName);
 		this.shareCarView.setUserName(userName);
 		this.expensesInfView.setUserName(userName);
-		this.textUuid.setText(mainController.requestUuid(userName));
+		this.textUserUuid.setText(mainController.requestUuid(userName));
 		updateList(userName);
 		this.setVisible(true);
 	}
@@ -180,6 +188,7 @@ public class MainView extends JFrame implements ActionListener {
 		if (e.getSource() == btnLogOut) {
 			this.setVisible(false);
 			login.setVisible(true);
+			login.clearText();
 		}
 		if (e.getSource() == btnAddCar) {
 			System.out.println("Menu: Agregar coche");
@@ -196,5 +205,8 @@ public class MainView extends JFrame implements ActionListener {
 			this.setVisible(false);
 		}
 
+	}
+	public String getUserUuid() {
+		return this.textUserUuid.getText();
 	}
 }

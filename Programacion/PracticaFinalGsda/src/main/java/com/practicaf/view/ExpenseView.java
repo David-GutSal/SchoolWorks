@@ -11,6 +11,7 @@ import com.practicaf.model.dto.ExpenseDto;
 
 import javax.swing.JButton;
 import javax.swing.SpringLayout;
+import javax.swing.WindowConstants;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
 import java.util.regex.Pattern;
@@ -44,6 +45,9 @@ public class ExpenseView extends JFrame implements ActionListener {
 	public ExpenseView(String plate) throws ClassNotFoundException, SQLException, IOException {
 		this.carPlate = plate;
 		this.mainController = new MainController();
+		
+		this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		
 		setTitle("Expense");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -55,20 +59,23 @@ public class ExpenseView extends JFrame implements ActionListener {
 		SpringLayout sl_contentPane = new SpringLayout();
 		contentPane.setLayout(sl_contentPane);
 		
-		comboExpenseType = new JComboBox();
+		comboExpenseType = new JComboBox<String>();
+		comboExpenseType.setFont(new Font("Arial", Font.PLAIN, 12));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, comboExpenseType, 79, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, comboExpenseType, 30, SpringLayout.WEST, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.EAST, comboExpenseType, 138, SpringLayout.WEST, contentPane);
-		comboExpenseType.setModel(new DefaultComboBoxModel(new String[] {"Revision", "Gasolina", "ITV", "Aceite", "Otros"}));
+		comboExpenseType.setModel(new DefaultComboBoxModel<String>(new String[] {"Revision", "Gasolina", "ITV", "Aceite", "Otros"}));
 		contentPane.add(comboExpenseType);
 		
 		textMileage = new JTextField();
+		textMileage.setFont(new Font("Arial", Font.PLAIN, 12));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, textMileage, 79, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, textMileage, 163, SpringLayout.WEST, contentPane);
 		contentPane.add(textMileage);
 		textMileage.setColumns(10);
 		
 		textDate = new JTextField();
+		textDate.setFont(new Font("Arial", Font.PLAIN, 12));
 		sl_contentPane.putConstraint(SpringLayout.EAST, textMileage, -6, SpringLayout.WEST, textDate);
 		sl_contentPane.putConstraint(SpringLayout.NORTH, textDate, 79, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, textDate, 275, SpringLayout.WEST, contentPane);
@@ -77,12 +84,14 @@ public class ExpenseView extends JFrame implements ActionListener {
 		textDate.setColumns(10);
 		
 		textImport = new JTextField();
+		textImport.setFont(new Font("Arial", Font.PLAIN, 12));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, textImport, 145, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, textImport, 30, SpringLayout.WEST, contentPane);
 		contentPane.add(textImport);
 		textImport.setColumns(10);
 		
 		textDescription = new JTextField();
+		textDescription.setFont(new Font("Arial", Font.PLAIN, 12));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, textDescription, 145, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, textDescription, 163, SpringLayout.WEST, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, textDescription, 185, SpringLayout.NORTH, contentPane);
@@ -91,6 +100,7 @@ public class ExpenseView extends JFrame implements ActionListener {
 		textDescription.setColumns(10);
 		
 		btnAccpet = new JButton("Aceptar");
+		btnAccpet.setFont(new Font("Arial", Font.PLAIN, 12));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, btnAccpet, 199, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, btnAccpet, 163, SpringLayout.WEST, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.EAST, btnAccpet, 271, SpringLayout.WEST, contentPane);
@@ -98,6 +108,7 @@ public class ExpenseView extends JFrame implements ActionListener {
 		btnAccpet.addActionListener(this);
 		
 		btnCancel = new JButton("Cancelar");
+		btnCancel.setFont(new Font("Arial", Font.PLAIN, 12));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, btnCancel, 199, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, btnCancel, 275, SpringLayout.WEST, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.EAST, btnCancel, 384, SpringLayout.WEST, contentPane);
@@ -105,26 +116,31 @@ public class ExpenseView extends JFrame implements ActionListener {
 		btnCancel.addActionListener(this);
 		
 		JLabel lblExpenseType = new JLabel("Tipo de Gasto*");
+		lblExpenseType.setFont(new Font("Arial", Font.PLAIN, 12));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblExpenseType, 59, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblExpenseType, 30, SpringLayout.WEST, contentPane);
 		contentPane.add(lblExpenseType);
 		
 		JLabel lblMileage = new JLabel("Kilometraje aprox.*");
+		lblMileage.setFont(new Font("Arial", Font.PLAIN, 12));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblMileage, 59, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblMileage, 163, SpringLayout.WEST, contentPane);
 		contentPane.add(lblMileage);
 		
 		JLabel lblDate = new JLabel("Fecha (aaaa-mm-dd) *");
+		lblDate.setFont(new Font("Arial", Font.PLAIN, 12));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblDate, 59, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblDate, 275, SpringLayout.WEST, contentPane);
 		contentPane.add(lblDate);
 		
 		JLabel lblImport = new JLabel("Importe (0.0)*");
+		lblImport.setFont(new Font("Arial", Font.PLAIN, 12));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblImport, 125, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblImport, 30, SpringLayout.WEST, contentPane);
 		contentPane.add(lblImport);
 		
 		JLabel lblDescription = new JLabel("Descripción (opcional)");
+		lblDescription.setFont(new Font("Arial", Font.PLAIN, 12));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblDescription, 125, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblDescription, 167, SpringLayout.WEST, contentPane);
 		contentPane.add(lblDescription);
@@ -132,7 +148,7 @@ public class ExpenseView extends JFrame implements ActionListener {
 		JLabel lblTitle = new JLabel("Añadiendo gasto");
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblTitle, 10, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.EAST, lblTitle, -99, SpringLayout.EAST, contentPane);
-		lblTitle.setFont(new Font("Arial", Font.PLAIN, 25));
+		lblTitle.setFont(new Font("Arial", Font.BOLD, 26));
 		contentPane.add(lblTitle);
 	}
 
@@ -145,6 +161,8 @@ public class ExpenseView extends JFrame implements ActionListener {
 					System.out.println("Gasto agregado a la base de datos");
 					this.dispose();
 				}
+			}else {
+				System.out.println("Datos incorrectos");
 			}
 		}
 		

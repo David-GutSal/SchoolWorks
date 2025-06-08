@@ -34,18 +34,12 @@ public class ExpenseView extends JFrame implements ActionListener {
 	private JComboBox<String> comboExpenseType;
 	private IMainController mainController;
 	private String carPlate;
+	private ExpensesInfView expensesInf;
 
-	/**
-	 * Create the frame.
-	 * @param comboSelectCar 
-	 * @throws IOException 
-	 * @throws SQLException 
-	 * @throws ClassNotFoundException 
-	 */
-	public ExpenseView(String plate) throws ClassNotFoundException, SQLException, IOException {
+	public ExpenseView(String plate, ExpensesInfView expensesInfView) throws ClassNotFoundException, SQLException, IOException {
 		this.carPlate = plate;
 		this.mainController = new MainController();
-		
+		this.expensesInf = expensesInfView;
 		this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		
 		setTitle("Expense");
@@ -159,6 +153,7 @@ public class ExpenseView extends JFrame implements ActionListener {
 				ExpenseDto expense = new ExpenseDto(comboExpenseType.getSelectedItem().toString(), Integer.parseInt(textMileage.getText()), textDate.getText(), Double.parseDouble(textImport.getText()), textDescription.getText());
 				if(mainController.addExpense(carPlate, expense)) {
 					System.out.println("Gasto agregado a la base de datos");
+					expensesInf.setEnableBtnAddExpense();
 					this.dispose();
 				}
 			}else {
@@ -167,6 +162,7 @@ public class ExpenseView extends JFrame implements ActionListener {
 		}
 		
 		if (e.getSource() == btnCancel) {
+			expensesInf.setEnableBtnAddExpense();
 			this.dispose();
 		}
 		

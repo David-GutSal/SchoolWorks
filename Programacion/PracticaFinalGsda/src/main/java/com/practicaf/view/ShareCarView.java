@@ -2,14 +2,13 @@ package com.practicaf.view;
 
 import javax.swing.*;
 
+
 import javax.swing.border.EmptyBorder;
 
 import com.practicaf.controller.IMainController;
 import com.practicaf.controller.MainController;
 import com.practicaf.model.dto.CarResponseDto;
 import com.practicaf.model.dto.OwnerDto;
-
-import net.miginfocom.swing.MigLayout;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,10 +29,8 @@ public class ShareCarView extends JFrame implements ActionListener {
 	private JTextField textUuid;
 	private IMainController mainController;
 	private String userName;
-	private Component horizontalStrut;
 	private Component horizontalGlue;
 	private Component horizontalGlue_1;
-	private Component horizontalStrut_1;
 	private MainView mainView;
 	private JLabel lblErrorMessage;
 
@@ -44,60 +41,75 @@ public class ShareCarView extends JFrame implements ActionListener {
 
 		setTitle("Share Car");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 460, 163);
+		setBounds(100, 100, 580, 163);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[30px][grow][][][][][grow]", "[20px][][][]"));
+		SpringLayout sl_contentPane = new SpringLayout();
+		contentPane.setLayout(sl_contentPane);
 		
 		lblErrorMessage = new JLabel("NO puedes compartirte a ti mismo un coche");
+		sl_contentPane.putConstraint(SpringLayout.NORTH, lblErrorMessage, 16, SpringLayout.NORTH, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.WEST, lblErrorMessage, 114, SpringLayout.WEST, contentPane);
 		lblErrorMessage.setHorizontalAlignment(SwingConstants.CENTER);
 		lblErrorMessage.setFont(new Font("Arial", Font.BOLD, 11));
 		lblErrorMessage.setForeground(new Color(255, 0, 0));
-		contentPane.add(lblErrorMessage, "cell 3 0 4 1");
+		contentPane.add(lblErrorMessage);
 		lblErrorMessage.setVisible(false);
 
 		JLabel lblNewLabel_1 = new JLabel("Seleccione un coche:");
+		sl_contentPane.putConstraint(SpringLayout.NORTH, lblNewLabel_1, 39, SpringLayout.NORTH, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.WEST, lblNewLabel_1, 12, SpringLayout.WEST, contentPane);
 		lblNewLabel_1.setFont(new Font("Arial", Font.PLAIN, 12));
-		contentPane.add(lblNewLabel_1, "cell 0 1 5 1");
+		contentPane.add(lblNewLabel_1);
 
 		JLabel lblNewLabel = new JLabel("ID: Usuario");
+		sl_contentPane.putConstraint(SpringLayout.NORTH, lblNewLabel, 0, SpringLayout.NORTH, lblNewLabel_1);
+		sl_contentPane.putConstraint(SpringLayout.EAST, lblNewLabel, 0, SpringLayout.EAST, lblErrorMessage);
 		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 12));
-		contentPane.add(lblNewLabel, "cell 6 1");
+		contentPane.add(lblNewLabel);
 
 		comboSelectCar = new JComboBox<>();
+		sl_contentPane.putConstraint(SpringLayout.NORTH, comboSelectCar, 60, SpringLayout.NORTH, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.WEST, comboSelectCar, 12, SpringLayout.WEST, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.EAST, comboSelectCar, 254, SpringLayout.WEST, contentPane);
 		comboSelectCar.setFont(new Font("Arial", Font.PLAIN, 12));
-		contentPane.add(comboSelectCar, "cell 0 2 5 1,growx");
+		contentPane.add(comboSelectCar);
 		comboSelectCar.addActionListener(this);
 
 		textUuid = new JTextField();
+		sl_contentPane.putConstraint(SpringLayout.NORTH, textUuid, 32, SpringLayout.SOUTH, lblErrorMessage);
+		sl_contentPane.putConstraint(SpringLayout.EAST, textUuid, 539, SpringLayout.WEST, contentPane);
 		textUuid.setFont(new Font("Arial", Font.PLAIN, 12));
-		contentPane.add(textUuid, "cell 6 2,growx");
+		contentPane.add(textUuid);
 		textUuid.setColumns(10);
 
 		btnAccept = new JButton("Aceptar");
+		sl_contentPane.putConstraint(SpringLayout.WEST, btnAccept, 0, SpringLayout.WEST, textUuid);
 		btnAccept.setFont(new Font("Arial", Font.PLAIN, 12));
-		contentPane.add(btnAccept, "flowx,cell 6 3,alignx left");
+		contentPane.add(btnAccept);
 		btnAccept.addActionListener(this);
 		btnAccept.setEnabled(false);
 
-		horizontalStrut = Box.createHorizontalStrut(20);
-		contentPane.add(horizontalStrut, "cell 6 3,alignx right");
-
 		horizontalGlue = Box.createHorizontalGlue();
-		contentPane.add(horizontalGlue, "cell 6 3");
+		sl_contentPane.putConstraint(SpringLayout.WEST, textUuid, 0, SpringLayout.WEST, horizontalGlue);
+		sl_contentPane.putConstraint(SpringLayout.NORTH, horizontalGlue, 101, SpringLayout.NORTH, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.WEST, horizontalGlue, 292, SpringLayout.WEST, contentPane);
+		contentPane.add(horizontalGlue);
 
 		horizontalGlue_1 = Box.createHorizontalGlue();
-		contentPane.add(horizontalGlue_1, "cell 6 3");
-
-		horizontalStrut_1 = Box.createHorizontalStrut(20);
-		contentPane.add(horizontalStrut_1, "cell 6 3");
+		sl_contentPane.putConstraint(SpringLayout.NORTH, horizontalGlue_1, 101, SpringLayout.NORTH, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.WEST, horizontalGlue_1, 299, SpringLayout.WEST, contentPane);
+		contentPane.add(horizontalGlue_1);
 
 		btnCancel = new JButton("Cancelar");
+		sl_contentPane.putConstraint(SpringLayout.NORTH, btnCancel, 8, SpringLayout.SOUTH, textUuid);
+		sl_contentPane.putConstraint(SpringLayout.NORTH, btnAccept, 0, SpringLayout.NORTH, btnCancel);
+		sl_contentPane.putConstraint(SpringLayout.EAST, btnCancel, 0, SpringLayout.EAST, textUuid);
 		btnCancel.setFont(new Font("Arial", Font.PLAIN, 12));
 		btnCancel.setHorizontalAlignment(SwingConstants.RIGHT);
-		contentPane.add(btnCancel, "cell 6 3,alignx right");
+		contentPane.add(btnCancel);
 		btnCancel.addActionListener(this);
 
 	}
@@ -115,7 +127,7 @@ public class ShareCarView extends JFrame implements ActionListener {
 			}
 		}
 		if (e.getSource() == btnAccept) {
-			if (!mainView.getUserUuid().equals(textUuid.getText()) ) {
+			if (!mainView.getUserUuid().equals(textUuid.getText())) {
 				CarResponseDto selectedCar = (CarResponseDto) comboSelectCar.getSelectedItem();
 				OwnerDto owner = new OwnerDto(userName, textUuid.getText(), selectedCar);
 				if (mainController.addCarOwner(owner)) {

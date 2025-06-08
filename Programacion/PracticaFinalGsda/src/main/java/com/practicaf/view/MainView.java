@@ -47,16 +47,6 @@ public class MainView extends JFrame implements ActionListener {
 	private IMainController mainController;
 	private JTextField textUserUuid;
 
-	/**
-	 * Launch the application.
-	 * 
-	 * @param string
-	 * @param userName
-	 * @throws IOException
-	 * @throws SQLException
-	 * @throws ClassNotFoundException
-	 */
-
 	public MainView(Login login) throws ClassNotFoundException, SQLException, IOException {
 		setResizable(false);
 		this.login = login;

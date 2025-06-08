@@ -9,8 +9,10 @@
     - DB_PASSWORD= __Tu_contraseña__
     - DB_DATABASE=PracticaFinalGsda
 
-3. Abrir el IDE Eclipse u otro IDE.
+3. Asegurarse de tener instalado `jdk 23.0.3` y `lombok 1.18.38`.
 
-4. Importar el proyecto que se encuentra en: `Programacion/PracticaFinalGsda`.
+4. Abrir el IDE Eclipse u otro IDE.
 
-5. Ejecutar el `Main` para iniciar la aplicación.
+5. Importar el proyecto que se encuentra en: `Programacion/PracticaFinalGsda`.
+
+6. Ejecutar el `Main` para iniciar la aplicación.

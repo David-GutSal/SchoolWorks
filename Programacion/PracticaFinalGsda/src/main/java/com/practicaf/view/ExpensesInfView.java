@@ -57,13 +57,6 @@ public class ExpensesInfView extends JFrame implements ActionListener {
 	private JComboBox<String> comboFilter;
 	private JComboBox<CarResponseDto> comboSelectCar;
 
-	/**
-	 * Create the frame.
-	 * 
-	 * @throws IOException
-	 * @throws SQLException
-	 * @throws ClassNotFoundException
-	 */
 	public ExpensesInfView(MainView mainView) throws ClassNotFoundException, SQLException, IOException {
 		setTitle("Expenses & Information");
 		this.mainController = new MainController();
@@ -434,9 +427,10 @@ public class ExpensesInfView extends JFrame implements ActionListener {
 		}
 
 		if (e.getSource() == btnAddExpense) {
+			btnAddExpense.setEnabled(false);
 			CarResponseDto selectedCar = (CarResponseDto) comboSelectCar.getSelectedItem();
 			try {
-				this.expenseView = new ExpenseView(selectedCar.getPlate());
+				this.expenseView = new ExpenseView(selectedCar.getPlate(), this);
 			} catch (ClassNotFoundException | IOException | SQLException e1) {
 				e1.printStackTrace();
 			}
@@ -484,6 +478,10 @@ public class ExpensesInfView extends JFrame implements ActionListener {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+	
+	public void setEnableBtnAddExpense() {
+		btnAddExpense.setEnabled(true);
 	}
 
 	public void viewShow() {

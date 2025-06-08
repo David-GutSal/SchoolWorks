@@ -2,7 +2,6 @@ package com.practicaf.view;
 
 import javax.swing.JFrame;
 
-
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -21,6 +20,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SpringLayout;
 import java.awt.Font;
+import java.awt.Color;
 
 public class CarView extends JFrame implements ActionListener {
 
@@ -35,24 +35,14 @@ public class CarView extends JFrame implements ActionListener {
 	private JTextField textUserName;
 	private IMainController mainController;
 	private MainView mainView;
+	private JLabel lblErrorMessage;
 
-	/**
-	 * Create the frame.
-	 * 
-	 * @param mainView
-	 * 
-	 * @throws IOException
-	 * @throws SQLException
-	 * @throws ClassNotFoundException
-	 */
 	public CarView(MainView mainView) throws ClassNotFoundException, SQLException, IOException {
 		setResizable(false);
 		this.mainController = new MainController();
 		this.textUserName = new JTextField();
 		this.mainView = mainView;
 
-		
-		
 		setTitle("Adding Car");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 320, 230);
@@ -128,28 +118,40 @@ public class CarView extends JFrame implements ActionListener {
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblNewLabel_3, 93, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblNewLabel_3, 12, SpringLayout.WEST, contentPane);
 		contentPane.add(lblNewLabel_3);
+		
+		lblErrorMessage = new JLabel("Datos inválidos");
+		sl_contentPane.putConstraint(SpringLayout.WEST, lblErrorMessage, 0, SpringLayout.WEST, textBrand);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblErrorMessage, 0, SpringLayout.SOUTH, contentPane);
+		lblErrorMessage.setFont(new Font("Arial", Font.BOLD, 11));
+		lblErrorMessage.setForeground(Color.RED);
+		contentPane.add(lblErrorMessage);
+		lblErrorMessage.setVisible(false);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnAccept) {
 			try {
-
 				CarCreateDto car = new CarCreateDto(textBrand.getText(), textModel.getText(), textPlate.getText(),
 						Integer.parseInt(textYear.getText()), textUserName.getText());
-
-				if (mainController.carCreateDto(car)) {
-					System.out.println("Coche agregado");
-					mainView.updateList(textUserName.getText());
-					this.dispose();
-					clearText();
+				if (validateData(car)) {
+					lblErrorMessage.setVisible(false);
+					if (mainController.carCreateDto(car)) {
+						System.out.println("Coche agregado");
+						mainView.updateList(textUserName.getText());
+						this.dispose();
+						clearText();
+					} else {
+						System.out.println("Coche NO agregado");
+					}
 				}else {
-					System.out.println("Coche NO agregado");
+					lblErrorMessage.setVisible(true);
 				}
+
 			} catch (NumberFormatException i) {
 				System.out.println("El texto introducido no es un número entero válido.");
 			}
-			
+
 		}
 		if (e.getSource() == btnCancel) {
 			this.dispose();
@@ -160,11 +162,19 @@ public class CarView extends JFrame implements ActionListener {
 	public void setUserName(String userName) {
 		this.textUserName.setText(userName);
 	}
-	
+
 	public void clearText() {
 		textBrand.setText("");
 		textModel.setText("");
 		textPlate.setText("");
 		textYear.setText("");
+	}
+
+	public boolean validateData(CarCreateDto car) {
+		if ((car.getBrand().length()) <= 11 && car.getModel().length() <= 11 && car.getPlate().length() <= 7
+				&& car.getYear() <= 9999) {
+			return true;
+		}
+		return false;
 	}
 }

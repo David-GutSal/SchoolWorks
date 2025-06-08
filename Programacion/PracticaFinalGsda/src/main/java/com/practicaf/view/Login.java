@@ -37,10 +37,6 @@ public class Login extends JFrame implements ActionListener {
 	private JPasswordField textPassword;
 	private JLabel lblUserNotFound;
 
-	/**
-	 * Launch the application.
-	 */
-
 	public void run() {
 		try {
 			Login frame = new Login();
@@ -64,13 +60,17 @@ public class Login extends JFrame implements ActionListener {
 
 		setContentPane(contentPane);
 
-		btnAccept = new JButton("Aceptar");
+		btnAccept = new JButton("Acceder");
+		btnAccept.setBackground(SystemColor.menu);
+		btnAccept.setFont(new Font("Arial", Font.PLAIN, 11));
 		btnAccept.addActionListener(this);
 		SpringLayout sl_contentPane = new SpringLayout();
+		sl_contentPane.putConstraint(SpringLayout.NORTH, btnAccept, 202, SpringLayout.NORTH, contentPane);
 		contentPane.setLayout(sl_contentPane);
+		btnAccept.setBorderPainted(false);
 		
 		textPassword = new JPasswordField();
-		sl_contentPane.putConstraint(SpringLayout.NORTH, btnAccept, 6, SpringLayout.SOUTH, textPassword);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, textPassword, -6, SpringLayout.NORTH, btnAccept);
 		sl_contentPane.putConstraint(SpringLayout.EAST, btnAccept, 0, SpringLayout.EAST, textPassword);
 		sl_contentPane.putConstraint(SpringLayout.WEST, textPassword, 54, SpringLayout.WEST, contentPane);
 		textPassword.setHorizontalAlignment(SwingConstants.CENTER);
@@ -78,32 +78,32 @@ public class Login extends JFrame implements ActionListener {
 		contentPane.add(btnAccept);
 
 		btnSignIn = new JButton("Registrarse");
+		btnSignIn.setFont(new Font("Arial", Font.PLAIN, 11));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, btnSignIn, 6, SpringLayout.SOUTH, textPassword);
 		sl_contentPane.putConstraint(SpringLayout.WEST, btnSignIn, 0, SpringLayout.WEST, textPassword);
 		btnSignIn.setBackground(SystemColor.menu);
-		btnSignIn.setForeground(new Color(0, 0, 255));
+		btnSignIn.setForeground(new Color(0, 0, 0));
 		btnSignIn.addActionListener(this);
 		contentPane.add(btnSignIn);
 		btnSignIn.setBorderPainted(false);
 
 		JLabel lblPassword = new JLabel("Usuario:");
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblPassword, -231, SpringLayout.SOUTH, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.WEST, lblPassword, 0, SpringLayout.WEST, textPassword);
 		lblPassword.setHorizontalAlignment(SwingConstants.CENTER);
-		sl_contentPane.putConstraint(SpringLayout.WEST, lblPassword, 136, SpringLayout.WEST, contentPane);
 		contentPane.add(lblPassword);
 
 		JLabel lblContrasea = new JLabel("Contraseña:");
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblContrasea, -161, SpringLayout.SOUTH, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.NORTH, textPassword, 6, SpringLayout.SOUTH, lblContrasea);
+		sl_contentPane.putConstraint(SpringLayout.WEST, lblContrasea, 0, SpringLayout.WEST, textPassword);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblContrasea, -6, SpringLayout.NORTH, textPassword);
 		lblContrasea.setHorizontalAlignment(SwingConstants.CENTER);
-		sl_contentPane.putConstraint(SpringLayout.WEST, lblContrasea, 129, SpringLayout.WEST, contentPane);
 		contentPane.add(lblContrasea);
 
 		textUser = new JTextField();
-		sl_contentPane.putConstraint(SpringLayout.EAST, textPassword, 0, SpringLayout.EAST, textUser);
-		sl_contentPane.putConstraint(SpringLayout.NORTH, textUser, 6, SpringLayout.SOUTH, lblPassword);
-		sl_contentPane.putConstraint(SpringLayout.WEST, textUser, 54, SpringLayout.WEST, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.NORTH, textUser, 106, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, textUser, -20, SpringLayout.NORTH, lblContrasea);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblPassword, -6, SpringLayout.NORTH, textUser);
+		sl_contentPane.putConstraint(SpringLayout.EAST, textPassword, 0, SpringLayout.EAST, textUser);
+		sl_contentPane.putConstraint(SpringLayout.WEST, textUser, 54, SpringLayout.WEST, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.EAST, textUser, -53, SpringLayout.EAST, contentPane);
 		textUser.setHorizontalAlignment(SwingConstants.CENTER);
 		textUser.setColumns(10);

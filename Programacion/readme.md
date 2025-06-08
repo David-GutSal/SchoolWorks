@@ -15,8 +15,4 @@
 
 5. Importar el proyecto que se encuentra en: `Programacion/PracticaFinalGsda`.
 
-<<<<<<< HEAD
 6. Ejecutar el `Main` para iniciar la aplicación.
-=======
-6. Ejecutar el `Main` para iniciar la aplicación.
->>>>>>> 2da230c152bc54eef977ec75bd757cd85046e036

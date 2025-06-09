@@ -9,7 +9,7 @@
     - DB_PASSWORD= __Tu_contraseña__
     - DB_DATABASE=PracticaFinalGsda
 
-3. Asegurarse de tener instalado `jdk 23.0.3` y `lombok 1.18.38`.
+3. Asegurarse de tener instalado [`jdk 23.0.2`](https://jdk.java.net/archive/) y [`lombok 1.18.38`](https://projectlombok.org/download).
 
 4. Abrir el IDE Eclipse u otro IDE.
 

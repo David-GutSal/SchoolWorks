@@ -15,4 +15,6 @@
 
 5. Importar el proyecto que se encuentra en: `Programacion/PracticaFinalGsda`.
 
+6. Dentro de _Properties/ Java Build Path/ Libraries_ __asegúrate__ de tener el `jdk 23.0.2`
+
 6. Ejecutar el `Main` para iniciar la aplicación.
